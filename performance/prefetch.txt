@@ -1,0 +1,19 @@
+# Prefetch
+https://www.patterns.dev/vanilla/prefetch
+Prefetch (<link rel="prefetch">) is a browser optimization which allows us to fetch resources that may be needed for subsequent routes or pages before they are needed. Prefetching can be achieved in a few ways. It can be done declaratively in HTML (such as in the example below), via a HTTP Header (Link: </js/chat-widget.js>; rel=prefetch), Service Workers or via more custom means such as through Webpack.
+
+## Link Tag
+<link rel="prefetch" href="/pages/next-page.html" />
+<link rel="prefetch" href="/js/emoji-picker.js" />
+
+## Using Webpack
+const EmojiPicker = import(/* webpackPrefetch: true */ "./EmojiPicker");
+const EmojiPicker = lazy(() =>
+  import(/*webpackPrefetch: true,
+    webpackChunkName: "emoji-picker"*/
+  "./EmojiPicker")
+);
+Other techniques:
+
+# Faster navigations with predictive prefetching: https://web.dev/articles/predictive-prefetching
+

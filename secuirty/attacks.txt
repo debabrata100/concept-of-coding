@@ -1,0 +1,17 @@
+1. SQL Injection
+2. XSS
+3. insecure direct object references.
+4. remote code execution.
+5. hidden web pages
+6. insecure Deserialisation
+7. privilege escalation
+8. data tampering.
+9. DDoS attack and Brute force attack (Rate limit is a solution)
+
+Impacts:
+1. installing malware
+2. modifying system configurations
+3. taking control of the entire system.
+4. identity theft, fraud, or data breaches.
+5. 
+6. 

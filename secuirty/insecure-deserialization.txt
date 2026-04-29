@@ -1,0 +1,35 @@
+OWASP A7 - Insecure Deserialisation
+# Insecure Deserialization is a security vulnerability that occurs when untrusted data is deserialized by an application without proper validation or sanitization, leading to potentially dangerous consequences. Deserialization is the process of converting serialized data, often in the form of binary or text-based representations, back into its original object form. Attackers can exploit insecure deserialization vulnerabilities to manipulate serialized data in a way that results in unauthorized access, remote code execution, or other malicious actions.
+
+Here's an example to illustrate insecure deserialization:
+
+Vulnerable Application: Consider a web application that uses a serialization mechanism, such as Java Serialization or JSON/XML serialization, to transfer objects between the client and server or to store data persistently.
+
+# Untrusted Serialized Data:
+The application receives serialized data from an untrusted source, such as user input, network traffic, or data stored in a file or database.
+This serialized data represents an object that the application will deserialize and process.
+
+#Insecure Deserialization:
+The application deserializes the received data without performing proper validation or authentication checks.
+An attacker exploits this vulnerability by manipulating the serialized data to include malicious payloads, such as crafted objects or bytecode.
+
+# Exploitation:
+The malicious payload embedded in the serialized data triggers unintended behavior during deserialization, leading to security vulnerabilities.
+Depending on the context and capabilities of the deserialization process, the attacker may achieve various malicious objectives, such as remote code execution, privilege escalation, or data tampering.
+
+#Impact:
+The insecure deserialization vulnerability can have severe consequences, including:
+ - Remote code execution: The attacker can execute arbitrary code on the server, leading to complete compromise of the system.
+
+ - Data tampering: The attacker can modify serialized objects to alter application behavior or manipulate sensitive data.
+
+ - Denial of service (DoS): The attacker can exploit deserialization vulnerabilities to cause resource exhaustion or application crashes.
+
+# To prevent insecure deserialization vulnerabilities, developers should:
+
+- Implement strict input validation and authentication checks before deserializing untrusted data.
+- Use secure deserialization libraries or mechanisms that enforce integrity checks, such as digital signatures or whitelisting of allowed classes.
+- Avoid deserializing untrusted or tainted data in critical or high-risk environments.
+- Keep deserialization code up-to-date with security patches and best practices.
+- Consider alternative data interchange formats or serialization mechanisms that offer better security guarantees, such as JSON Web Tokens (JWT) or Protocol Buffers.
+- By following these best practices, developers can mitigate the risk of insecure deserialization vulnerabilities and enhance the security of their applications.

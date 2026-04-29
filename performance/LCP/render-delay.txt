@@ -1,0 +1,10 @@
+#Eliminate element render delay
+The goal in this step is to ensure the LCP element can render immediately after its resource has finished loading, no matter when that happens.
+
+The primary reason the LCP element wouldn't be able to render immediately after its resource finishes loading is if rendering is blocked for some other reason:
+
+1. Rendering of the entire page is blocked due to stylesheets or synchronous scripts in the <head> that are still loading.
+2. The LCP resource has finished loading, but the LCP element hasn't yet been added to the DOM because it's waiting for JavaScript code to load.
+3. The element is hidden by some other code, such as an A/B testing library that hasn't yet decided which experimental group to put the user in.
+4. The main thread is blocked due to long tasks, and rendering work has to wait until those long tasks complete.
+

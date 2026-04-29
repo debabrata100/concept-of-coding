@@ -1,0 +1,46 @@
+# What are import maps ?
+An import map is a JSON object that allows developers to control how the browser resolves module specifiers when importing JavaScript modules in an HTML File.
+
+JS:
+import { name as squareName, draw } from "./modules/shapes/square.js";
+import { name as circleName } from "https://example.com/shapes/circle.js";
+HTML:
+<script type="importmap">
+  {
+    "imports": {
+      "square": "./module/shapes/square.js",
+      "circle": "https://example.com/shapes/circle.js"
+    }
+  }
+</script>
+
+example:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "utils": "./index.js",
+          "lodash": "https://unpkg.com/lodash-es@4.17.21/lodash.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <script type="module">
+        // Importing and using Lodash functions
+        import { sum } from "utils";
+        import { map } from "lodash";
+        console.log(sum(1)(2));
+        var arr = [1, 2, 3];
+        var res = map(arr, (n) => n * n);
+        console.log(res);
+      </script>
+    </div>
+  </body>
+</html>

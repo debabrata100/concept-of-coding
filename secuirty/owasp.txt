@@ -1,0 +1,12 @@
+#https://chat.openai.com/share/b131e5e2-9271-40f3-9970-982aa03d9186 
+owasp top 10 list:
+1. Broken Access control
+2. Crypto Graphic Failure
+3. INJECTION
+4. Insecure Design
+5. Security Misconfiguration
+6. Vulnerable and outdate component
+7. Idenitification and authentication Failure
+8. Software and Data Integrity 
+9. Security Logging and Monitoring failures
+10. Server Side Request Forgery

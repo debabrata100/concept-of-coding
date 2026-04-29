@@ -1,0 +1,38 @@
+# Higher-Order Function:
+A Higher-order function takes one or more functions as arguments and returns as a result. A Higher-order function enables the creation of more abstract and reusable code.
+
+
+function multiplyBy(factor) { 
+  return function (number) {
+    return number * factor;
+  }
+}
+
+//creating a new function as Higher Order Function 
+const result = multiplyBy(5);
+
+//Using the new function
+console.log(result(10)); 
+
+//output: 50
+
+# Callback Function:
+A Callback function is a function that is passed as an argument to another function and is executed after the completion of some operation. Callbacks are commonly used to execute asynchronous use case such as data fetching, event handling, and other time-consuming operations.
+
+Let’s take an example for the same:
+
+function greet(name, callback) {
+    console.log(`Hello ${name}');
+    callback();
+  }
+  
+  //callback passed as an argument
+  function greetToGather() {
+    console.log("Hello callback function');
+  }
+  
+  //using the callback function
+  greet("Javascript", greetToGather); 
+  
+  //output: 
+  Javascript Hello callback function

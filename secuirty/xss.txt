@@ -1,0 +1,63 @@
+OWASP A7 - Cross Site Scripting
+
+What is cross Site Scripting ?
+XSS happens when an application updates a web page with unescaped content
+from an untrusted user.
+
+Different types of XSS:
+1. Stored/Persistent 
+- attack: occurs when an injected script is permanently stored on the target server such as  in a database, 
+- The malicious code get executed when the victim retrive it from the server
+Here's an example to illustrate a Stored XSS attack:
+
+Vulnerable Web Application: Consider a web application that allows users to post comments on a forum without proper input validation or output encoding.
+
+Malicious Comment Submission: An attacker, posing as a regular user, submits a comment containing a malicious script:
+## Prevention:
+Input Validation: Validate and sanitize all user-supplied input, including comments, before storing them in the database to prevent the injection of malicious scripts.
+
+Output Encoding: Encode user-controlled data appropriately when rendering it on the web page to prevent the execution of stored malicious scripts.
+
+Content Security Policy (CSP): Implement a Content Security Policy to restrict the execution of scripts and other resources to trusted sources, mitigating the impact of XSS vulnerabilities.
+
+Session Management: Implement secure session handling mechanisms, such as HttpOnly cookies and session timeouts, to reduce the risk of session hijacking via XSS attacks.
+
+Web Application Firewalls (WAFs): Deploy a WAF to monitor and filter incoming traffic for suspicious patterns and potential XSS attacks.
+* Reflected/Non-Persistent XSS: 
+- When the malicious code is reflected off the web server, such as in an error message or search result.An attacker embeds the script into a hyper link whch is then with potential vitim email or some other channel. When the link is clicked, the malicious code is sent to the web server and gets reflected back to the victims browser
+* DOM based xss: 
+- In this, the data flow never leaves the browser. The attack payload which again can be embeded in a hyperlink and can be shared to victim via email.
+DOM-based XSS (Cross-Site Scripting) is a type of XSS attack that occurs when the client-side JavaScript code manipulates the Document Object Model (DOM) of a web page in an insecure way, leading to the execution of malicious scripts in the context of a user's browser.
+
+example:
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Page</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <div id="results"></div>
+    <script>
+        // Get the query parameter from the URL
+        var query = window.location.search.substring(1);
+        
+        // Display the query in the page content
+        document.getElementById('results').innerHTML = 'Search results for: ' + query;
+    </script>
+</body>
+</html>
+Malicious URL: http://example.com/search?q=<script>alert('XSS')</script>
+Impact: The attacker can craft more sophisticated scripts to steal cookies, perform actions on behalf of the user, or modify the content of the web page, leading to various security threats such as session hijacking, defacement, or phishing attacks.
+
+
+
+
+
+Preventing Xss:
+
+Input Validation: Validate and sanitize all user-supplied input, including URL query parameters, before using them to manipulate the DOM.
+Output Encoding: Encode user-controlled data appropriately when inserting it into the DOM to prevent execution of malicious scripts.
+Use Trusted Libraries: Utilize trusted frameworks and libraries that provide built-in protections against XSS attacks, such as automatic output encoding.
+Content Security Policy (CSP): Implement a Content Security Policy to restrict the execution of scripts and other resources to trusted sources, reducing the impact of XSS vulnerabilities.
+Regular Security Audits: Conduct regular security reviews and penetration testing to identify and mitigate potential XSS vulnerabilities in web applications.

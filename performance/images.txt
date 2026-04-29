@@ -1,0 +1,38 @@
+# What Are Responsive Images?
+
+Responsive images are images that automatically adapt to different screen sizes, resolutions, and device types — improving performance and user experience across mobile, tablet, and desktop.
+
+<img
+  src="image-800.jpg"
+  srcset="
+    image-400.jpg 400w,
+    image-800.jpg 800w,
+    image-1200.jpg 1200w
+  "
+  sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px"
+  alt="Example responsive image"
+/>
+
+<picture>
+  <source srcset="image-mobile.jpg" media="(max-width: 600px)" />
+  <source srcset="image-desktop.jpg" media="(min-width: 601px)" />
+  <img src="image-default.jpg" alt="Responsive image" />
+</picture>
+
+# SVG vs PNG vs JPG. Where to use what ?
+
+Quick Comparison Table
+Format	    Best For	                        Scalability	            Transparency	  File Size	                    Animation	            Use Case
+SVG	        Icons, logos, illustrations	        ✅ Infinite (vector)	    ✅ Yes	        ⚡ Small (for simple graphics)	✅ Yes (CSS or SMIL)	    UI icons, charts, logos
+
+PNG	        Transparent images, sharp edges	    ❌ (raster)	            ✅ Yes	        ❌ Larger than JPG	            ❌ No	                Logos, UI images, images with text
+
+JPG	        Photos, complex images	            ❌ (raster)	            ❌ No	        ✅ Small (compressed)	        ❌ No	                Photos, backgrounds, product images
+
+
+WebP: Combines best of PNG and JPG — supports transparency and compression.
+
+AVIF: Newer, even better compression than WebP — smaller size, better quality.
+
+Use them for optimized performance when browser support is acceptable.
+

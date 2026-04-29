@@ -1,0 +1,38 @@
+# Clickjacking, 
+also known as UI redressing, is a web security vulnerability that allows an attacker to deceive a user into clicking on something different from what the user perceives, potentially leading to unintended actions or disclosure of sensitive information. This is achieved by overlaying or embedding a malicious webpage or element over legitimate content, making it appear as if the user is interacting with the intended content while, in reality, they are interacting with the attacker's content.
+
+Here's how clickjacking works:
+
+The attacker creates a malicious webpage containing elements or iframes that are transparent or hidden from view.
+
+The attacker lures the victim to visit the malicious webpage, either by enticing them with enticing content or by tricking them into visiting the page through social engineering techniques, such as phishing emails.
+
+When the victim visits the malicious webpage, they may not realize that hidden elements are overlaying legitimate content from another website.
+
+The attacker may position these hidden elements in such a way that when the victim clicks on seemingly innocuous elements on the webpage, they are actually clicking on buttons or links on the legitimate webpage, performing unintended actions such as transferring funds, liking a post, or submitting sensitive information.
+
+To prevent clickjacking, consider the following measures:
+
+1. X-Frame-Options Header: 
+Set the X-Frame-Options HTTP response header to restrict how a webpage can be embedded within a frame or iframe. Options include "DENY" (which prevents embedding in frames altogether), "SAMEORIGIN" (which allows embedding only on the same origin), or "ALLOW-FROM uri" (which allows embedding only on specified origins).
+X-Frame-Options: DENY
+
+2. Content Security Policy (CSP): 
+Implement a Content Security Policy with the frame-ancestors directive to specify which origins are allowed to embed the webpage in a frame or iframe.
+
+Example: Content-Security-Policy: frame-ancestors 'none';
+
+3. Frame-Busting Code: 
+Implement frame-busting JavaScript code within webpages to prevent them from being framed or iframed by other websites. This code typically detects if the page is being loaded within a frame and breaks out of it if detected.
+
+Example:
+if (top != self) {
+    top.location = self.location;
+}
+
+4. Clickjacking Protection Widget: 
+Implement a clickjacking protection widget within webpages to prevent them from being framed or iframed by other websites. This widget typically displays a visible warning message or overlay to alert users when the page is being framed.
+
+Example: <div id="clickjack-warning">This website is being framed. Please visit directly.</div>
+
+

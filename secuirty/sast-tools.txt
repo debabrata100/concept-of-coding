@@ -1,0 +1,18 @@
+SAST (Static Application Security Testing) tools are designed to analyze the source code or binary of an application to identify security vulnerabilities, including but not limited to XSS (Cross-Site Scripting), SQL injection, and insecure authentication mechanisms. These tools work by analyzing the code for known patterns and vulnerabilities without executing the application. Here are some examples of SAST tools along with a brief explanation of each:
+
+Fortify Static Code Analyzer:
+Fortify Static Code Analyzer, developed by Micro Focus, is a popular SAST tool that helps developers identify security vulnerabilities in their source code. It supports various programming languages and frameworks, including Java, .NET, and JavaScript. Fortify scans the source code, detects potential security weaknesses, and provides detailed reports with remediation guidance.
+
+Checkmarx:
+Checkmarx is another leading SAST tool that offers comprehensive static application security testing capabilities. It supports a wide range of programming languages and development environments, including Java, C#, JavaScript, Python, and PHP. Checkmarx scans the source code for vulnerabilities such as XSS, SQL injection, and insecure authentication, providing developers with actionable insights to improve code security.
+
+Veracode Static Analysis:
+Veracode Static Analysis is a cloud-based SAST solution that helps organizations identify and remediate security vulnerabilities in their applications. It supports a variety of programming languages and frameworks, including Java, .NET, PHP, and JavaScript. Veracode Static Analysis scans the source code for potential security flaws and provides detailed reports with prioritized remediation recommendations.
+
+SonarQube:
+SonarQube is an open-source platform for continuous inspection of code quality and security. While primarily known for its code quality analysis capabilities, SonarQube also includes security-focused plugins and rulesets for identifying security vulnerabilities, including XSS, SQL injection, and insecure authentication. It supports a wide range of programming languages and integrates seamlessly into the software development lifecycle.
+
+CodeQL:
+CodeQL, developed by GitHub (now part of Microsoft), is a powerful semantic code analysis engine that enables developers to write custom queries to identify security vulnerabilities in their codebase. It supports a variety of programming languages, including C/C++, Java, JavaScript, and Python. CodeQL allows developers to define custom security rules and analyze code for specific security weaknesses, including XSS, SQL injection, and insecure authentication.
+
+These are just a few examples of SAST tools available in the market. Each tool has its unique features, strengths, and weaknesses, so organizations should evaluate them based on their specific requirements, such as supported languages, integration capabilities, scalability, and reporting capabilities, to choose the most suitable SAST solution for their needs.

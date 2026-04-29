@@ -1,0 +1,5 @@
+# Menory Leak Symptoms
+
+- Page Unresponsive
+- Slow Browser
+- Slow Os

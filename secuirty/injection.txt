@@ -1,0 +1,19 @@
+* SQL 
+* LDAP 
+* SSI INJECTION 
+* Command Injection
+
+examples: 
+$dbCon->getRow("select * from users where id = $user_id") 
+$dbCon->getRow("select * from users where id = ?" array($user_id)) 
+
+authentication bypass:
+username: abc@gmail.com
+password: 12345 OR a = a
+
+Borken authentication:
+can be attacked by targeting 
+unencrypted login: Broken Authentication
+ - session management keeps track of stream of request by same user
+forgotten password functionality or actual password: week hints
+encrypted passwored Vulnerable due to storage in cookie

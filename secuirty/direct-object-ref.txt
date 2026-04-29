@@ -1,0 +1,24 @@
+# Insecure Direct Object References (IDOR) is a security vulnerability that occurs when an application exposes sensitive information or functionality by referencing internal implementation objects directly, without proper access controls. In other words, attackers can manipulate the application's parameters, such as URLs or form fields, to access unauthorized resources or perform actions on behalf of other users.
+
+Here's an example to illustrate Insecure Direct Object References:
+
+Vulnerable Web Application: Consider a web application that allows users to view their personal information after logging in. Each user's profile is identified by a unique numeric identifier (e.g., user ID), and the application retrieves the user's data based on this identifier.
+
+Insecure Implementation:
+
+User A logs in and accesses their profile by visiting the following URL:
+http://example.com/profile?id=123
+he web application retrieves the user's data associated with the user ID 123 and displays it on the profile page.
+
+## Exploitation:
+
+An attacker, who is also a registered user (User B), notices the predictable nature of the user IDs in the URL and attempts to manipulate the ID parameter to access other users' profiles.
+The attacker changes the user ID in the URL to another value, such as 124:
+http://example.com/profile?id=124
+
+Since the application does not enforce proper authorization checks, it retrieves the data associated with user ID 124 and displays it to the attacker, even though User B is not authorized to access this information.
+
+## Impact:
+
+The attacker successfully accesses sensitive information belonging to another user, such as personal details, financial records, or private messages.
+The attacker may exploit this vulnerability to perform further attacks, such as identity theft, fraud, or data breaches.

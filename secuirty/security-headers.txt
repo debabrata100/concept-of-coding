@@ -1,0 +1,10 @@
+// Sources
+# // https://www.youtube.com/watch?v=eWEgUcHPle0&list=PLI_rLWXMqpSl_TqX9bbisW-d7tDqcVvOJ&index=5
+# X-Nonce
+The X-Nonce header is a custom HTTP header often used in web applications as part of security measures, particularly in the context of preventing CSRF (Cross-Site Request Forgery) attacks.
+
+usecase: https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy#nonces
+
+
+
+

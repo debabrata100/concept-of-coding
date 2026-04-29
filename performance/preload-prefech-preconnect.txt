@@ -1,0 +1,126 @@
+# how preload of recources work in a webpage. Does it block the html parsing ? how it is different from preconnect and prefetch?
+Ans:
+
+## How Preloading Works in a Webpage
+Preloading allows a webpage to fetch and cache resources before they are needed to improve performance. It is done using the <link rel="preload"> tag.
+
+<link rel="preload" href="styles.css" as="style">
+<link rel="preload" href="script.js" as="script">
+<link rel="preload" href="image.jpg" as="image">
+📌 Does Preload Block HTML Parsing?
+❌ No, it does not block HTML parsing. loads resources in parrel.
+✅ But it competes for bandwidth with other resources.
+
+The HTML parser continues parsing while the resource is being downloaded.
+However, if bandwidth is limited, it may slow down other downloads.
+
+## Difference Between preload, preconnect, and prefetch
+Feature	        Purpose	                                                When to Use?	                        Blocks Parsing?
+Preload	        Fetch critical resources early(before browser dicovers)	When a resource is needed soon	        ❌ No (but competes for bandwidth)
+Preconnect	    Establish early connection (DNS, TCP, TLS)	            When fetching from third-party origins	❌ No
+Prefetch	    Fetch resources for next page navigation	            When expecting future page visits	    ❌ No (low priority)
+
+Summary
+Type	     Best For	                                        Example
+Preload	     Critical resources (fonts, images, scripts, CSS)	<link rel="preload" as="script" href="app.js">
+Preconnect	 Third-party servers (CDNs, APIs)	                <link rel="preconnect" href="https://example.com">
+Prefetch	 Future page navigation	                             <link rel="prefetch" href="nextpage.html">
+
+💡 Best Practices
+✔ Use preload for critical assets to improve loading speed.
+✔ Use preconnect for third-party resources to reduce latency.
+✔ Use prefetch only when expecting future navigation.
+
+Optimized HTML Example:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimized Page</title>
+
+  <!-- 🚀 1️⃣ Preconnect: Establish early connection to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- 🚀 2️⃣ Preload: Load critical resources ASAP -->
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="app.js" as="script">
+  <link rel="preload" href="hero-image.jpg" as="image">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style">
+
+  <!-- 🚀 3️⃣ Prefetch: Preload resources for the next page -->
+  <link rel="prefetch" href="nextpage.html">
+  <link rel="prefetch" href="nextpage-script.js">
+  
+  <!-- Regular CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Welcome to My Page</h1>
+  <p>Optimized with preload, preconnect, and prefetch!</p>
+
+  <!-- JavaScript -->
+  <script src="app.js" defer></script>
+</body>
+</html>
+
+🚀 When to Use What?
+✔ **Use preload for essential assets needed immediately (CSS, JS, fonts, hero images).
+✔ Use preconnect for third-party services (Google Fonts, APIs, CDNs).
+✔ Use prefetch for resources used in the next page (JavaScript, images, HTML).
+
+# difference between DNS, TCP and TLS. and How preconnect help in connection overhead?
+
+DNS, TCP, and TLS: Understanding the Basics
+When a browser loads a webpage, it needs to connect to the server hosting the requested resource. This connection process involves three key steps:
+
+Protocol	                        Purpose	                                            What It Does
+DNS (Domain Name System)	        Resolves domain names to IP addresses	            Converts example.com → 192.168.1.1
+TCP (Transmission Control Protocol)	Establishes a connection between browser & server	Ensures reliable data transfer
+TLS (Transport Layer Security)	    Encrypts communication for security	                Secures data from hackers
+
+How the Connection Process Works
+1️⃣ DNS Lookup 🔍
+
+The browser queries a DNS server to find the IP address of example.com.
+This takes ~20-120ms, depending on caching and location.
+2️⃣ TCP Handshake 🤝
+
+Once the IP is found, the browser establishes a connection with the server using TCP.
+Requires a 3-way handshake:
+Client → SYN → Server
+Server → SYN-ACK → Client
+Client → ACK → Server
+This adds ~50-100ms latency.
+3️⃣ TLS Handshake (If Secure Site, HTTPS) 🔒
+
+If the site uses HTTPS, an SSL/TLS handshake occurs.
+This verifies the server’s certificate and establishes encryption.
+Takes ~100-300ms, depending on the complexity.
+
+## How preconnect Helps Reduce Connection Overhead
+When you add preconnect, the browser performs these steps in advance before the actual resource request happens.
+
+Example:
+<link rel="preconnect" href="https://fonts.googleapis.com">
+✅ Without preconnect (Normal Process)
+
+Browser first discovers fonts.googleapis.com when parsing the CSS.
+Only then does it begin DNS lookup, TCP, and TLS setup, delaying font loading.
+
+🚀 With preconnect (Optimized Process)
+Browser immediately starts DNS, TCP, and TLS before the request happens.
+By the time the CSS requests the font, the connection is already ready, reducing delays.
+
+## Performance Gain with preconnect
+Step	                Without Preconnect	With Preconnect
+DNS Lookup	            100ms	            ✅ 0ms (already done)
+TCP Handshake	        50ms	            ✅ 0ms (already done)
+TLS Handshake	        150ms	            ✅ 0ms (already done)
+Total Connection Time	~300ms delay	    🚀 Near Instant
+
+🔍 Key Takeaways
+DNS → Resolves domain name to IP
+TCP → Establishes connection
+TLS → Secures communication

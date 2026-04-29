@@ -1,0 +1,27 @@
+# async vs defer
+
+##Without async or defer (Default)
+The script is fetched and executed immediately, blocking HTML parsing.
+
+##Using async
+The script is fetched asynchronously while HTML parsing continues.
+Once downloaded, it executes immediately, pausing HTML parsing.
+Order of execution is not guaranteed if multiple async scripts exist.
+
+##Use async when:
+The script doesn’t depend on other scripts or the DOM structure.
+Example: Analytics, Ads, Tracking scripts.
+
+##Using defer
+The script is fetched asynchronously while HTML parsing continues.
+Execution happens only after the document is fully parsed.
+Scripts execute in order.
+
+##Use defer when:
+The script needs access to the full DOM.
+You need to maintain execution order (e.g., loading jQuery before a dependent script).
+
+##Key Takeaways
+async → Fast but unpredictable execution order.
+defer → Predictable execution order, executes after HTML parsing.
+For most scripts (except independent ones like analytics), defer is the better choice.

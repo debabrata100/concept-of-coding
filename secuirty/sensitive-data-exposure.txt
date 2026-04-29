@@ -1,0 +1,22 @@
+What is senitive Data ?
+Any Data that can be seen by unauthorised users 
+ex: PII(credit card numbers, medical records, social security numers)
+How sensitive data get exposed ?
+- Not encrypting
+- Weak Algorithm and 
+- Insecure key management
+- Browser weekness (not having security headers)
+- Server weekness 
+- data in transit 
+
+Preventing sentive data exposure.
+- Classify all info and determine it is sensitive
+- Apply controls accordingly
+- Dave sensitive data if necessary
+- Encrypt all sensitive data at rest
+- Use Strong encryption and secure key management
+- Encrypt data in transit with secure protocols(https)
+- Disable caching for responses that contain sensitive data
+- Store passwords with atrong hashing alogorithm
+- Verify the effectiveness of configuration independently
+- 

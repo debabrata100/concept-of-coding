@@ -1,0 +1,49 @@
+# Web Security & Api Security:
+1. Injection: 
+Sql Injection: Attack happens using malicious sql query
+Prevention: 
+ - Sanitize Input, 
+ - Use ORM to insert values in query
+
+2. XSS
+ - Stored: malicious code stored in db permanently, execute when data is retrived
+ - Reflected: By clicking a malicious link, code executed on browser. Users is tricked using social engineering tactics
+ - Dom Based: Malicious code executed when user input malicious code during browser intercation like in a comment box
+Prevention:
+ - Sanitize user input 
+ - Use Output encoding before storing or executing on browser
+ - Use content security policy header to prevent user to sending any data to a server
+
+3. Broken authentication
+  - Bruteforce attack
+  - Weak Password policy
+Prevention:
+ - Rate Limiting Apis (API) 
+ - Strong Password Policy (API)
+ - Multi factor Authentication (API) or OAuth
+ - Use of HTTPS for data encryption at transit (API)
+ - Secure cookie with http-only flag (WEB)
+ - Logging and Alert
+
+ 4. Insecure Direct Object references and Broken Access Control
+ - Accessing user like http://abc.com/user/id , attackers can guess an id
+Impact: 
+ - Identity Theft, fraud, or data breaches
+Prevention
+ - Role based Authentication
+ - Proper Autorozation Check
+
+5. Click Jacking
+6. SubResource Integrity
+7. Remote code execution through XML Parsing
+8. Insecure Deserialisation
+9. Vulnerable and outdated component
+10. DDoS attack
+11. Sensitive Data Exposure
+12. CSRF attack
+An attack that forces end users to execute unwanted actions on an authenticated web application.
+It works because browser request automatically includes all cookies.
+Prevention:
+- Use get for fetching
+- Use Anti CSRF cookies(Csurf token)
+- Verfiy Http "origin" and "referrer" headers (API)

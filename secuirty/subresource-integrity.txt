@@ -1,0 +1,26 @@
+# Subresource Integrity (SRI) 
+This is a security feature that enables browsers to verify that resources they fetch (for example, from a CDN) are delivered without unexpected manipulation. It works by allowing you to provide a cryptographic hash that a fetched resource must match.
+
+#How Subresource Integrity helps
+Using Content Delivery Networks (CDNs) to host files such as scripts and stylesheets that are shared among multiple sites can improve site performance and conserve bandwidth. However, using CDNs also comes with a risk, in that if an attacker gains control of a CDN, the attacker can inject arbitrary malicious content into files on the CDN (or replace the files completely) and thus can also potentially attack all sites that fetch files from that CDN.
+
+Subresource Integrity enables you to mitigate some risks of attacks such as this, by ensuring that the files your web application or web document fetches (from a CDN or anywhere) have been delivered without a third-party having injected any additional content into those files — and without any other changes of any kind at all having been made to those files.
+
+# Using Subresource Integrity
+You use the Subresource Integrity feature by specifying a base64-encoded cryptographic hash of a resource (file) you're telling the browser to fetch, in the value of the integrity attribute of a <script> element or a <link> element with rel="stylesheet", rel="preload", or rel="modulepreload".
+
+An integrity value begins with at least one string, with each string including a prefix indicating a particular hash algorithm (currently the allowed prefixes are sha256, sha384, and sha512), followed by a dash, and ending with the actual base64-encoded hash.
+
+# Cross-Origin Resource Sharing and Subresource Integrity
+For subresource-integrity verification of a resource served from an origin other than the document in which it's embedded, browsers additionally check the resource using Cross-Origin Resource Sharing (CORS), to ensure the origin serving the resource allows it to be shared with the requesting origin. Therefore, the resource must be served with an Access-Control-Allow-Origin header that allows the resource to be shared with the requesting origin; for example:
+
+#Examples:
+Subresource Integrity with the <script> element
+You can use the following <script> element to tell a browser that before executing the https://example.com/example-framework.js script, the browser must first compare the script to the expected hash, and verify that there's a match.
+
+HTML
+Copy to Clipboard
+<script
+  src="https://example.com/example-framework.js"
+  integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"
+  crossorigin="anonymous"></script>

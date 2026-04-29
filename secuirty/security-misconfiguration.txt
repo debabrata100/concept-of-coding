@@ -1,0 +1,8 @@
+OWASP A6 - Security Misconfiguration
+
+Possible Misconfgis:
+- Out of date software
+- Unnecesary features
+- Default accounts and credentials
+- informative error messages
+- Disabled security features

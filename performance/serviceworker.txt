@@ -1,0 +1,7 @@
+
+https://medium.com/@rajreetesh7/push-notification-in-react-and-next-js-app-using-node-js-da39ad1332ef
+# What is Service Worker?
+
+service worker is a script that runs in the background of a web application, separate from the web page. It enables features like background sync, push notifications, and caching.
+
+Websites can leverage service workers to implement more advanced caching strategies, including offline caching and network optimization. Service workers provide developers with more control over caching behavior and can cache resources independent of browser caching mechanisms.

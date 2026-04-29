@@ -1,0 +1,23 @@
+In the context of a web page, critical resources refer to those assets that are essential for rendering the above-the-fold content, i.e., the portion of the webpage that is immediately visible to the user without scrolling. These resources are crucial for the initial rendering of the webpage and have a significant impact on the perceived page load speed and user experience.
+
+Examples of critical resources include:
+
+- HTML: The main HTML document of the webpage, which contains the structure and content of the page.
+
+- CSS: Stylesheets that define the visual presentation and layout of the webpage, including styles for the above-the-fold content.
+
+- JavaScript: Scripts that provide interactivity and functionality to the webpage, especially those required for rendering the above-the-fold content.
+
+- Images: Images that are part of the above-the-fold content and contribute to the visual presentation of the webpage.
+
+Non-critical resources, on the other hand, are assets that are not immediately necessary for rendering the above-the-fold content. These resources can be loaded asynchronously or deferred to improve page load performance without affecting the initial rendering and user experience.
+
+Examples of non-critical resources include:
+
+* Additional CSS and JavaScript: Stylesheets and scripts required for below-the-fold content or for enhancing interactivity after the initial page load.
+
+* Images, Videos, and Media: Media assets that are not part of the above-the-fold content or can be lazy-loaded to improve page load speed.
+
+* Third-party Scripts and Widgets: Scripts and widgets from third-party services (e.g., analytics, social media widgets) that are not critical for the initial rendering of the webpage.
+
+Optimizing the loading of critical resources, such as minimizing their size, leveraging browser caching, and prioritizing their delivery, is crucial for improving the perceived performance and user experience of a webpage. Non-critical resources can be loaded asynchronously or deferred to prioritize the loading of critical resources and accelerate the initial rendering of the webpage.

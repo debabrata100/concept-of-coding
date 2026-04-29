@@ -1,0 +1,23 @@
+# cdn vs reverse proxies
+reverse proxies primarily operate within an organization's network infrastructure and handle tasks like load balancing, caching, and security, while CDNs leverage distributed edge servers to cache and deliver content to end users efficiently.
+
+While reverse proxy servers and content delivery networks (CDNs) serve similar purposes in optimizing web content delivery, they have distinct roles and functionalities:
+
+Reverse Proxy Server:
+
+A reverse proxy server sits between clients (such as web browsers) and origin servers (where the website's content is hosted).
+It acts as an intermediary, forwarding client requests to the appropriate backend servers based on predefined rules or criteria.
+Reverse proxy servers can perform various functions, including load balancing, SSL termination, caching, security, and request filtering.
+Reverse proxies are typically deployed within an organization's network infrastructure to improve performance, security, and scalability of web applications.
+
+Content Delivery Network (CDN):
+
+A CDN is a distributed network of servers (called edge servers or edge nodes) located in various geographic locations around the world.
+CDNs cache copies of web content (such as HTML, CSS, JavaScript, images, and videos) at edge servers closest to end users, reducing latency and improving content delivery speed.
+CDNs use caching, replication, and optimization techniques to serve content from edge servers, minimizing the need for requests to travel long distances to origin servers.
+CDNs also offer additional services such as DDoS protection, web application firewall (WAF), content optimization, and analytics.
+CDNs are typically used by websites and web applications to enhance performance, scalability, and reliability by offloading content delivery tasks to distributed edge servers.
+
+# What is ssl termination.
+SSL termination refers to the process of decrypting encrypted traffic before passing it along to a web server.
+SSL termination at load balancer is desired because decryption is resource and CPU intensive. Putting the decryption burden on the load balancer enables the server to spend processing power on application tasks, which helps improve performance. It also simplifies the management of SSL certificates.

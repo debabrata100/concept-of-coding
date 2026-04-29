@@ -1,0 +1,19 @@
+OWASP A5: Broken Access Control
+
+Exploitation of Access Control is a core skill of attackers.
+SAST and DAST tools can detect absense of access control.
+But can not verify it is funcational.
+Access controlis detectable through manual means,
+or automation using certain frameworks.
+
+Ex: https://abc.com?userId=321
+
+Preventing:
+- Deny by default
+- Implement access control mechanisms once and reuse
+- Enforce record ownership
+- Enforce unique business limit requrement
+- Disable web server directory listing
+- Log Access control failures
+- Rate Limit Api and controller access
+- Invaliate JWT token after logout

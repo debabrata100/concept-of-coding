@@ -1,0 +1,65 @@
+# Front End security attacks
+- Cross-site scripting (XSS):
+- Dependency risks:
+- Cross-site request forgery (CSRF):
+- Clickjacking:
+- CDN tampering:
+- HTTPS downgrades:
+- Man-in-the-middle attacks:
+- Typo Squatting
+
+
+# Cross-site scripting (XSS):
+
+Description: XSS occurs when an attacker injects malicious scripts into a web application, which then executes in the context of a user's browser.
+Prevention:
+Sanitize user input by validating and encoding data before rendering it on the page.
+Implement Content Security Policy (CSP) headers to restrict the types of content that can be loaded on a page.
+
+# Dependency risks:
+
+Description: Dependency risks arise when using third-party libraries or packages with vulnerabilities that can be exploited.
+Prevention:
+Regularly update dependencies to the latest secure versions.
+Use package managers that automatically check for and report vulnerabilities.
+Monitor security advisories for the libraries and frameworks you use.
+Cross-site request forgery (CSRF):
+
+Description: CSRF involves an attacker tricking a user's browser into making an unintentional request to a trusted site.
+Prevention:
+Implement anti-CSRF tokens in forms and requests.
+Verify the origin and referrer headers to ensure requests come from trusted sources.
+
+# Clickjacking:
+
+Description: Clickjacking involves tricking a user into clicking on something different from what the user perceives, often by overlaying an invisible element on a legitimate page.
+Prevention:
+Implement X-Frame-Options header to prevent your site from being embedded in iframes.
+Use the frame-ancestors directive in your Content Security Policy.
+CDN tampering:
+
+Description: CDN tampering occurs when an attacker modifies or replaces assets served by a Content 
+
+# Delivery Network (CDN).
+Prevention:
+Use integrity checks (Subresource Integrity - SRI) for script and style tags to ensure that the loaded resources haven't been tampered with.
+Regularly audit and monitor the CDN for any unauthorized changes.
+# HTTPS downgrades:
+
+Description: Attackers may attempt to force a connection to downgrade from HTTPS to HTTP, exposing data to potential interception.
+Prevention:
+Strictly enforce HTTPS using HTTP Strict Transport Security (HSTS) headers.
+Ensure all links and resources are loaded over HTTPS.
+
+# Man-in-the-middle attacks:
+
+Description: In a man-in-the-middle attack, an attacker intercepts and potentially alters the communication between two parties.
+Prevention:
+Use HTTPS to encrypt data in transit.
+Implement secure protocols and encryption algorithms.
+Regularly check and update SSL/TLS certificates.
+It's important to stay informed about the latest security best practices and tools, conduct regular security audits, and involve security experts in the development process to minimize the risk of these front-end security threats.
+
+# Typo Squatting
+
+# Prevention

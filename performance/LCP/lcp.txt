@@ -1,0 +1,7 @@
+# LCP sub-part	% of LCP
+
+Time to first byte (TTFB)	~40%
+Resource load delay	<10%
+Resource load time	~40%
+Element render delay	<10%
+TOTAL	100%

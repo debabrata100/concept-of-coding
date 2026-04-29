@@ -1,0 +1,43 @@
+1. How to add dynamic classes ?
+Ans:
+when you try to dynamically add classes like these following ways:
+
+document.querySelector(".container").classList.add("text-xl");
+<div className={`bg-${color}-500`}></div>
+
+Solution is to declare a variable with classname in some parts of your code:
+const classNames = ['bg-red-500', 'bg-blue-700'];
+
+- The way Tailwind scans your source code for classes is intentionally very simple — we don’t actually parse or execute any of your code in the language it’s written in, we just use regular expressions to extract every string that could possibly be a class name.
+- Always map props to static class names
+
+# Another option is Safelisting classes:
+For the smallest file size and best development experience, we highly recommend relying on your content configuration to tell Tailwind which classes to generate as much as possible.
+
+Safelisting is a last-resort, and should only be used in situations where it’s impossible to scan certain content for class names. These situations are rare, and you should almost never need this feature.
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './pages/**/*.{html,js}',
+    './components/**/*.{html,js}',
+  ],
+  safelist: [
+    'bg-red-500',
+    'text-3xl',
+    'lg:text-4xl',
+  ]
+  // ...
+}
+
+2. How to merge classNames ?
+Ans: Write a utility function:
+import { twMerge } from 'tailwind-merge';
+import {clsx, ClassValue } from 'clsx';
+
+function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs))
+}
+
+<button className={cn("bg-blue-500 py-2 px-4",classNames, {
+    "bg-gray-500": pending
+})}>Submit</button>

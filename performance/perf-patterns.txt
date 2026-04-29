@@ -1,0 +1,14 @@
+Lazyload Patterns:
+1. Import on Visibility
+2. Import on Interaction
+3. Route Based Spliting
+4. Bundle Splitting
+5. PRPL Pattern - optimize initial load precaching, lazyloading and minimizing roundtrips
+
+6. Tree Shaking - Reduce bundle size by eliminating dead code
+7. preload - Inform the browser of critical resources before they are discovered
+8. prefetch - Fetch and cache resources that may be requested some time soon
+- https://www.patterns.dev/vanilla/prefetch
+9. optimize loading third party script
+10. List Virtualization: Optimiza the list performance with list virtualization
+11. Compressing Javascript: Reduce the time needed to transfer scripts over the network

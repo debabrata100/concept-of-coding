@@ -1,0 +1,71 @@
+OWASP A4 - XML External Entities(XXE)
+
+What are XXE ?
+According to OWASP (Open Web Application Security Project) guidelines, XXE (XML External Entity) attacks are a type of security vulnerability that targets applications processing XML input. In an XXE attack, an attacker exploits the XML parsing functionality of an application to include references to external entities or files that can be processed by the XML parser.
+
+* How does XXE work ?
+Here's how an XXE attack typically works:
+
+XML Input: The attacker provides XML input to the application, which includes a reference to an external entity.
+XML Parsing: The application processes the XML input using an XML parser, which resolves the external entity references.
+External Entity Resolution: The XML parser fetches the external entity content specified by the attacker, which could be sensitive information such as files on the server or network resources accessible to the application.
+Exploitation: The attacker can leverage this access to perform various malicious activities, such as reading sensitive files, performing SSRF (Server-Side Request Forgery) attacks, or executing arbitrary code.
+* Preventing XXE flaws:
+Implementing following mesures mitigate XXE 
+- Traning
+- Less Complex
+- Patch XML
+- Disable XXE
+- Input Validation
+- XSD Validation
+- Manual Code Analysis
+
+from chatgpt:
+To prevent XXE attacks, you can implement the following measures:
+
+Disable External Entity Processing: Configure the XML parser to disable the processing of external entities or restrict it to a safe subset of XML features. This prevents attackers from injecting malicious external entity references.
+
+Input Validation and Sanitization: Validate and sanitize all user-supplied XML input to remove or encode potentially dangerous characters and prevent injection of external entity references.
+
+Use Safe XML Parsers: Utilize XML parsers that are not vulnerable to XXE attacks or have built-in protections against them. For example, consider using modern XML processing libraries that have XXE prevention mechanisms enabled by default.
+
+Firewall Configuration: Configure firewalls to block outgoing requests from the application to internal or external resources unless absolutely necessary.
+
+Regular Security Audits: Conduct regular security audits and penetration testing of your applications to identify and mitigate any potential XXE vulnerabilities.
+
+By implementing these preventive measures, you can reduce the risk of XXE attacks and enhance the security of your applications
+
+Exmaple:
+Suppose we have a web application that allows users to upload an XML file, which is then processed by the server. The server parses the XML input using an XML parser without proper validation and security measures.
+
+Here's an example XML file that a legitimate user might upload:
+<?xml version="1.0" encoding="UTF-8"?>
+<bookstore>
+  <book>
+    <title>XML Security</title>
+    <author>John Doe</author>
+  </book>
+</bookstore>
+
+Now, an attacker might craft a malicious XML file like this:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE foo [
+  <!ELEMENT foo ANY >
+  <!ENTITY xxe SYSTEM "file:///etc/passwd" >
+]>
+<bookstore>
+  <book>
+    <title>XML Security</title>
+    <author>&xxe;</author>
+  </book>
+</bookstore>
+
+Let's break down how this malicious XML file works in an XXE attack:
+
+DOCTYPE Declaration: The attacker starts by defining a Document Type Definition (DTD) using the <!DOCTYPE> declaration. This DTD allows the definition of external entities.
+
+External Entity Declaration: Within the DTD, the attacker declares an external entity named xxe using the <!ENTITY> declaration. This entity references the content of the /etc/passwd file on the server using the file:// protocol.
+
+Entity Reference: In the <author> element, the attacker includes the &xxe; entity reference. When the XML parser processes this entity reference, it replaces &xxe; with the contents of the /etc/passwd file.
+
+Exploitation: As a result, when the server processes the malicious XML file, it reads the contents of the /etc/passwd file and includes it in the response. The attacker can then extract sensitive information such as usernames and password hashes from the /etc/passwd file.

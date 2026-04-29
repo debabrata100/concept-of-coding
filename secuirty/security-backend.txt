@@ -1,0 +1,34 @@
+Types of attacks
+- Stolen Authentication
+- Man-in-the middle
+- code injection
+    - SQL Injection
+- denial of service attack
+
+
+How to prevent
+- Implement Authenication and Authorization
+    - OAuth
+    - JWT
+    - Role based access control
+    - MFA
+- Validate all requests
+    - Input validation, Sanitize all inputs
+- Encrypt all requests and responses
+    - HTTPS for network security
+- Only include necessary infomration
+- Throttle Api Requests
+- Log Api Security
+- Conduct Security Test
+- DDOS
+    - Slow Down Attackers
+    - WAF protection
+- Secure by design
+    - SAST - scans you code (Whitebox testing)
+    - DAST - mimics malicious attacks
+- Encrypt and protect secrets
+    - store in env variables
+    - aws KMS
+    - Hashicorp vault
+- CSURF
+    - csrf token middleware
