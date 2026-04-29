@@ -1,0 +1,663 @@
+# https://www.youtube.com/watch?v=MWmMvudBgFU
+# Aggregation Pipeline
+The aggregation pipeline lets you transform, filter, group, and calculate — think of it as MongoDB’s SQL GROUP BY + JOIN + WHERE + SELECT.
+
+## Basic Structure
+- db.collection.aggregate(pipeline, options);
+
+1. Match users over age 25
+aggregate([
+  { $match: { age: { $gt: 25 } } }
+])
+2. Project only name and age
+aggregate([
+  { $project: { _id: 0, name: 1, age: 1 } }
+])
+3. Group Teachers by hobbies and count by each hobbies (after unwinding)
+db.teachers.aggregate([
+  {
+    $unwind: "$hobbies"
+  },
+  {
+    $group: {
+      _id: "$hobbies",
+      count: {
+        $sum: 1
+      }
+    }
+  }
+])
+4. Sort teachers by age descending
+db.teachers.aggregate([
+  {
+    $sort: {
+      age: -1
+    }
+  }
+])
+5. Average age of all Teachers
+aggregate([
+  {
+    $group: {
+      _id: null,
+      averageAge: { $avg: "$age" }
+    }
+  }
+])
+6. Count total users
+db.users.aggregate([
+  {
+    $count: "totalUsers"
+  }
+])
+7. Total user of age 35
+db.teachers.aggregate([
+  {
+    "$match": {
+      age: 35
+    }
+  },
+  {
+    $count: "TotalUserOfAge35"
+  }
+])
+
+8. Find the minimum and maximum age in the collection
+db.teachers.aggregate([
+  {
+    $group: {
+      _id: null,
+      minAge: {
+        $min: "$age"
+      },
+      maxAge: {
+        $max: "$age"
+      }
+    }
+  }
+])
+9. Count how many users have each role
+db.users.aggregate([
+  {
+    $unwind: "$roles"
+  },
+  {
+    $group: {
+      _id: "$roles",
+      count: {
+        $sum: 1
+      }
+    }
+  }
+])
+10. List roles and the average age of users in each role
+db.users.aggregate([
+  {
+    $unwind: "$roles"
+  },
+  {
+    $group: {
+      _id: "$roles",
+      averageAge: {
+        $avg: "$age"
+      }
+    }
+  }
+])
+11. Group users by age range (0–20, 21–30, 31+)
+aggregate([
+  {
+    $bucket: {
+      groupBy: "$age",
+      boundaries: [0, 21, 31, 200],
+      default: "Unknown",
+      output: {
+        count: { $sum: 1 }
+      }
+    }
+  }
+])
+12. For each user, return name and number of roles they have
+db.users.aggregate([
+  {
+    $project: {
+      _id: 0,
+      name: 1,
+      rolesCount: {
+        $size: "$roles"
+      }
+    }
+  }
+])
+13. Return the top 2 oldest users
+db.users.aggregate([
+  {
+    $sort: {
+      age: -1
+    }
+  },
+  {
+    $limit: 2
+  }
+])
+14. List users with "editor" but not "admin"
+db.users.aggregate([
+  {
+    $match: {
+      roles: {
+        $ne: "admin",
+        $eq: "editor"
+      }
+    }
+  }
+])
+15. Group users by number of roles, count how many in each group
+db.users.aggregate([
+  {
+    $project: {
+      name: 1,
+      rolesCount: {
+        "$size": "$roles"
+      }
+    }
+  },
+  {
+    $group: {
+      _id: "$rolesCount",
+      userCount: {
+        $sum: 1
+      }
+    }
+  }
+])
+16. Return a list of all unique roles
+db.users.aggregate([
+  {
+    $unwind: "$roles"
+  },
+  {
+    $group: {
+      _id: "$roles"
+    }
+  }
+])
+17. Join orders with inventory based on sku
+db.orders.aggregate([
+  {
+    "$lookup": {
+      "from": "inventory",
+      "localField": "item",
+      "foreignField": "sku",
+      "as": "inventory_docs"
+    }
+  }
+])
+18. $facet: Run multiple pipelines on same data
+Return:
+All users under 30
+Count of total users 
+db.users.aggregate([
+  {
+    $facet: {
+      under30: [
+        { $match: { age: { $lt: 30 } } }
+      ],
+      totalUsers: [
+        { $count: "total" }
+      ]
+    }
+  }
+])
+19. Return user and their uppercased roles.
+db.users.aggregate([
+  {
+    $project: {
+      name: 1,
+      upperRoles: {
+        $map: {
+          input: "$roles",
+          as: "role",
+          in: {
+            $toUpper: "$$role"
+          }
+        }
+      }
+    }
+  }
+])
+20. 
+
+
+
+
+# where 
+sql: select * from teachers where gender = 'Male'
+mongo: db.teachers.aggregate([{"$match": { gender: "Male"}}])
+# group by db.collection.aggregate([{"$group": {_id: expression, field1: expression, field2: expression}}])
+- Give id age unique identifiler of teacher per age
+mongo: db.teachers.aggregate([{"$group": {_id: "$age"}}])
+- Give names per age of teachers
+mongo: db.teachers.aggregate([{"$group": {_id: "$age", "names": { $push: "$name" }}}])
+- Give documents per age of teachers
+mongo: db.teachers.aggregate([{"$group": {_id: "$age", puraDoc: { $push: "$$ROOT" }}}])
+- Give a count per age of male treachers
+mongo: db.teachers.aggregate([{ $match: { gender: "Male" }}, { $group: {_id: "$age", documentCountInThisAgeGroup: { $sum: 1} } }])
+# count documents in each group and sort them ascending
+db.teachers.aggregate([
+    {
+      $match: {
+        gender: "Female"
+      }
+    },
+    {
+      $group: {
+        _id: "$age",
+        documentCountInThisAgeGroup: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      "$sort": {
+        documentCountInThisAgeGroup: 1
+      }
+    }
+  ])
+  # find average age of all teachers
+  db.teachers.aggregate([
+    {
+      "$group": {
+        "_id": null,
+        "averageAge": {
+          "$avg": "$age"
+        }
+      }
+    }
+  ])
+  # find list of hobbies of teachers, This will return array of array of hobbies
+  db.teachers.aggregate([
+    {
+      "$group": {
+        "_id": "$age",
+        count: {
+          $sum: 1
+        },
+        hobbiesList: {
+          "$push": "$hobbies"
+        }
+      }
+    }
+  ])
+  # flatten hobby list using unwind
+  db.teachers.aggregate([
+    {
+      "$unwind": "$hobbies"
+    },
+    {
+      "$group": {
+        "_id": "$age",
+        count: {
+          $sum: 1
+        },
+        hobbiesList: {
+          "$push": "$hobbies"
+        }
+      }
+    }
+  ])
+  # remove duplicate
+  db.teachers.aggregate([
+    {
+      "$unwind": "$hobbies"
+    },
+    {
+      "$group": {
+        "_id": "$age",
+        count: {
+          $sum: 1
+        },
+        hobbiesList: {
+          "$addToSet": "$hobbies"
+        }
+      }
+    }
+  ])
+  # find average score of all teaches whose age os greater than 40
+  db.teachers.aggregate([
+    {
+      "$match": {
+        age: {
+          "$gt": 40
+        }
+      }
+    },
+    {
+      $unwind: "$scores"
+    },
+    {
+      "$group": {
+        "_id": null,
+        "averageScrore": {
+          "$avg": "$scores"
+        }
+      }
+    }
+  ])
+  # find average score of each teacher
+  db.teachers.aggregate([
+    {
+      "$addFields": {
+        averageScore: {
+          "$avg": "$scores"
+        }
+      }
+    }
+  ])
+
+
+
+  # https://mongoplayground.net/
+  db={
+    "teachers": [
+      {
+        "name": "Alice Johnson",
+        "age": 35,
+        "subject": "Mathematics",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Robert Smith",
+        "age": 35,
+        "subject": "Physics",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "writing"
+        ]
+      },
+      {
+        "name": "Karen Patel",
+        "age": 50,
+        "subject": "English",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "singing"
+        ]
+      },
+      {
+        "name": "James Williams",
+        "age": 50,
+        "subject": "Chemistry",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Linda Nguyen",
+        "age": 40,
+        "subject": "Biology",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "writing"
+        ]
+      },
+      {
+        "name": "David Brown",
+        "age": 40,
+        "subject": "History",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Emily Clark",
+        "age": 50,
+        "subject": "Geography",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Michael Lewis",
+        "age": 35,
+        "subject": "Computer Science",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Jessica Davis",
+        "age": 35,
+        "subject": "Mathematics",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Daniel Garcia",
+        "age": 50,
+        "subject": "Physics",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Sophie Wilson",
+        "age": 40,
+        "subject": "English",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Andrew Martinez",
+        "age": 39,
+        "subject": "Chemistry",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Olivia Anderson",
+        "age": 50,
+        "subject": "Biology",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Christopher Lee",
+        "age": 40,
+        "subject": "History",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Natalie Walker",
+        "age": 35,
+        "subject": "Geography",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Joshua Hall",
+        "age": 35,
+        "subject": "Computer Science",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Megan Young",
+        "age": 20,
+        "subject": "Mathematics",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Benjamin King",
+        "age": 40,
+        "subject": "Physics",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Chloe Scott",
+        "age": 35,
+        "subject": "English",
+        "gender": "Female",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      },
+      {
+        "name": "Matthew Green",
+        "age": 50,
+        "subject": "Chemistry",
+        "gender": "Male",
+        "scores": [
+          10,
+          20,
+          50
+        ],
+        "hobbies": [
+          "cricket",
+          "football"
+        ]
+      }
+    ]
+  }

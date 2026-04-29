@@ -1,0 +1,65 @@
+*HCL Interview Questions*
+1. What components you remember in React Native.
+2. How have you done performance in your project you mentioned here.
+3. How will you setup redux in your project and How redux works behind the scene ?
+4. When to use context api and when to use redux?
+5. Is it good approach to use both redux and context api in the project ? if so, How do you decide.
+6. Write a React component , fetch dome data and store it and display a list of users
+7. What is hoisting, Does hoisting happens with priority means variable first then function.
+8. What will be Output and Why ?
+console.log(parent());
+function parent() {
+  var sample = "I am a variable";
+  function sample() {
+    return "Im a function";
+  }
+return sample();
+}
+9. What will be output and Why ?
+const a = {x: 5,  y: {q: 6}}
+const b = { ...a }
+b.x = 6
+b.y.q = 7
+console.log(a.y === b.y)
+console.log(a)
+console.log(b)
+10. Tell the logic for this problem ?
+Input: const a = [1, 2, [3, 4, [5], 6]]
+Expected Output : [1, 2, 3, 4, 5, 6]
+11. What will be output ?
+function main(){
+    console.log('A');
+        setTimeout(
+            function display(){
+            console.log('B');
+            }, 0
+        );
+    console.log('C')
+    }
+main();
+12. Tell me the logic of how to reverse
+Input: const a = [2, 4, 3, 8, 6]
+Expected Output: [6, 8, 3, 4, 2]
+13. Tell the output how will you acheve this withou using any library function ?
+Input: 783
+Output: 7*8*3 = __
+14. What will be output ?
+const clothes = ['jacket', 't-shirt'];
+clothes.length = 0;
+clothes[0];
+15. Do you know Mobile first approach while styling?
+16. What css style you will apply to get this layout
+|a| |b|      |c|
+  |c|   ==>  |b|
+             |a|
+  (D)        (M)
+
+17. What is a closure ? Explain with an example.
+18. WHat will be output and why ?
+(() => {
+  let x = (y = 0);
+})();
+console.log(typeof y);
+console.log(typeof x);
+19. Have you used React Error Boundaries. Can you explain how to implement ?
+20. Why do you use semantic html tags?

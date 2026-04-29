@@ -1,0 +1,38 @@
+#GPT#: https://chat.openai.com/share/fd868b93-3440-4cd3-8591-e5e9b2a83ec3
+1. Which version was Hydrate method of react inroduced ? 
+Ans: In React 16
+2. When was server side rendering introduced in React ? 
+Ans: Since Early versions. but became prominent in 0.13
+3. What are the most important features of React ?
+* Component-Based Architecture: 
+React promotes a component-based architecture where UIs are divided into reusable and composable components. This makes it easier to manage complexity, encourage code reuse, and maintainability.
+
+* Virtual DOM: 
+React uses a virtual DOM to efficiently update the user interface. Instead of directly manipulating the actual DOM, React creates a lightweight representation of the DOM in memory, compares it with the previous state, and only applies the necessary updates to the actual DOM. This approach improves performance by minimizing DOM manipulations.
+
+* Declarative Syntax: 
+React uses a declarative syntax to describe how the UI should look at any given point in time. Developers specify what the UI should look like based on the application state, and React takes care of updating the DOM to match the desired state. This leads to more predictable and easier-to-understand code.
+
+* JSX: 
+JSX is a syntax extension for JavaScript that allows developers to write HTML-like code within JavaScript. JSX makes it easy to create React elements and compose components directly within JavaScript, enhancing readability and maintainability.
+
+* Unidirectional Data Flow: 
+React follows a unidirectional data flow, where data flows only in one direction—from parent components to child components. This makes it easier to understand how data changes affect the UI and helps prevent bugs caused by unexpected side effects.
+
+* React Hooks: 
+Introduced in React 16.8, hooks are functions that enable developers to use state and other React features in functional components without needing to write a class. Hooks make it easier to reuse logic across components and manage state in functional components.
+
+* Reusable Components: 
+React encourages the creation of reusable components that can be composed together to build complex UIs. Components can encapsulate their own logic, state, and UI, making them easy to reuse and maintain.
+
+* Community and Ecosystem: 
+React has a large and active community, with a vast ecosystem of libraries, tools, and resources available to developers. This includes tools for state management (e.g., Redux, MobX), routing (e.g., React Router), testing (e.g., Jest, React Testing Library), and more.
+4. What are React fragments and why they are used ?
+5. Why React uses className instead of class? 
+A: class is a reserved keyword
+6. Difference between server component and client component.
+"use client": client component
+7. How to make a web page responsive ?
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+8. What is isomerphc rendering ?
+Ans: Isomorphic rendering, also known as universal rendering, refers to the ability of a web application to render both on the server and the client side. In an isomorphic React application, the initial rendering of the React components is done on the server, generating HTML that is sent to the client's browser. Once the HTML is loaded, React takes over on the client side, allowing for dynamic interactions and updates without requiring a full page reload.

@@ -1,0 +1,46 @@
+# Core Concepts to Start With
+* MongoDB Data Model
+- Documents, Collections, and Databases
+- BSON vs JSON
+
+* CRUD Operations
+
+- insertOne(), insertMany()
+- find(), findOne(), with projection and query filters
+- updateOne(), updateMany() with $set, $inc, $push, etc.
+- deleteOne(), deleteMany()
+
+📊 Advanced Querying
+* Operators
+-   Comparison: $eq, $ne, $gt, $lt, $in, $nin
+    - Logical: $and, $or, $not, $nor
+    - Element: $exists, $type
+    - Array: $all, $elemMatch, $size
+Regular Expressions and Text Search
+Geospatial Queries
+
+⚙️ Data Manipulation Techniques
+- Update Operators: $set, $unset, $addToSet, $pull, $push, $rename, etc.
+- Bulk Write Operations: bulkWrite() for optimized batch updates
+- Upserts: update + insert if not found
+
+🧠 Aggregation Framework
+- $match, $group, $project, $sort, $limit, $lookup, $unwind, $addFields, etc.
+- Nested pipelines and variable usage
+- Performance tuning with $merge, $out
+
+🚀 Performance and Indexing
+- Creating Indexes: createIndex(), compound indexes
+- Covered Queries
+- Explain Plans: explain()
+- Index types: TTL, text, geospatial, hashed
+
+🔁 Transactions (MongoDB ≥ 4.0)
+- ACID support with multi-document transactions
+- Sessions and startTransaction(), commitTransaction(), abortTransaction()
+
+💬 Bonus Topics
+- Schema validation (using JSON schema)
+- Change streams (real-time data)
+- MongoDB with Mongoose (if using Node.js)
+- MongoDB Atlas (cloud deployment)

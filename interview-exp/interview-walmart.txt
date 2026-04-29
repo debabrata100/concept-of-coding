@@ -1,0 +1,93 @@
+// Walmart Iterview
+# Round - 1
+// DSA
+/*
+If target is not found, it should return the correct position of target in the sorted array.
+you should solve it in O(logn)
+Example 1:
+Input: nums = [1,3,5,6], target = 5
+Output: 2
+Example 2:
+Input: nums = [1,3,5,6], target = 2
+Output: 1
+Example 3:
+Input: nums = [1,3,5,6], target = 7
+Output: 4
+ 
+Constraints:
+	•	1 <= nums.length <= 104
+	•	-104 <= nums[i] <= 104
+	•	nums contains distinct values sorted in ascending order.
+	•	-104 <= target <= 104
+*/
+
+function findTargetPos(arr, target) {
+    let n = arr.length;
+    let low = 0;
+    let high = n-1;
+    while(low <= high) {
+        let mid = ~~((low+high)/2);
+        mid
+        if(arr[mid] === target) return mid;
+        if(target < arr[mid]) {
+            high = mid - 1;
+        }else{
+            low = mid + 1;
+        }
+    }
+    return low;
+}
+const nums = [1,3,5,6]; 
+const target = 2;
+console.log(findTargetPos(nums, target))
+
+Tech:
+1 - How Javascript is different from Other languages ?
+2- Java has multi thread, how Javascript handle in single thread.
+3- What are the components of event loop ?
+4- How javascript decide between event queue and micro task queue ?
+5- What is hoisting ?
+6- What is the difference between var and let ?
+7- What is virtual DOM ?
+8- Explain useMemo and useCallback ?
+9- Why useMemo is used ?
+10- Why useCallback used ?
+11- When to use useReducer and when to use useState ?
+12- Explain How redux works with thunk or saga ?
+13- How do you handle Authenticaion in React Js ?
+14- What are the backend frameworks you have worked ?
+15- Explain How do you handle authentication in express js?
+16- What are other methods of authentication ?
+17- Explain how OAuth2 works and how do you implement this ?
+18- How do you handle security of the application ?
+19- How do you handle secirity in backend ?
+20- How to handle xss attack ?
+21- Tell me an example of grapqhl service you have used and what was the thought process choosing
+over REST API ?
+22- Do you write unit test case ?
+23- How React Router works ?
+24- Difference between normal function and arrow function.
+
+# Round - 2
+1- How your day looks like in your current role ?
+2- What frameworks you have worked for analytics and what is favorite ?
+3- Suppose a page is slow. How do you improve the load time ?
+4- How do you handle mobile device network bandwidth issue ?
+5- Why it is important to write test case ? What is you view ?
+6- How is client's view on test driven apparoach and how do you convince your client ?
+7- Which cloud you have used and what are the services you have used ?
+8- How do you handle tech debts ?
+
+# Round - 3
+1. start your introduction.
+2. Explain about your cuttent role ?
+3. Tell me abour your project architecture ?
+4. How do you resolve browser compatibility issues ?
+5. WHat are the browsers you support ?
+6. What are the non functional things you consider when you develop a feature ?
+7. How do you take care of accessibility ?
+8. What is the unit test coverage in your project ?
+9. Do you use docker to deploy your application ?
+10. What is the testing strategy you follow in your project ?
+11. How do you test in different device ?
+12. Design a back end front end of url shortner.

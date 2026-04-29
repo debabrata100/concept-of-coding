@@ -1,0 +1,17 @@
+# Javascript
+1. Shallow copy vs deep copy
+2. What is the difference between var, let and const?
+3. Promise vs Async Await
+4. Promise.all vs Promise.allSettled
+5. Eventloop
+6. Coding questions, check map, sort, filter, reduce, find, some, every
+
+# Typescript
+1. How do you combine two interfaces?
+2. How do you combine an interface and a type ?
+3. Readonly, Optional, Required, Pick, Omit
+
+# Angular
+1. What is the difference between a service and a factory?
+2. What is the difference between a component and a directive?
+3.

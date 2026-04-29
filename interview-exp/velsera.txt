@@ -1,0 +1,51 @@
+1. Difference between useState and useReducer. Give practical use case.
+2. What is a React fibre node ?
+3. Have you designed a service from scratch ? What is the thought process ?
+4. You have a user table, you have first name, last name. When you send respond to UI, will you send it by combing them with a space and send separate and Why ?
+5. When you do pagination, How do you implement it. Suppose you fetch 1st page and it take 500ms. How do you ensure that any page get fetched take same amount of time ?
+6. What is pnpm ?
+7. how npm manage dependancies ?
+8. Do you commit your package-lock.json ?
+Ans:
+- Commit it if you're building an app or service (e.g., web app, backend API).
+- Do not commit it if you're publishing a library/module to npm — let consumers control their own lock files.
+- In most real-world application projects, committing package-lock.json is strongly recommended for consistency and reliability.
+
+# 2. What is a React fibre node ?
+
+A React Fiber node is a data structure used internally by React to manage and schedule rendering work efficiently. It was introduced as part of the React Fiber architecture (React 16+) to enable features like:
+
+- Interruptible rendering
+- Prioritization
+- Concurrency (Concurrent Mode)
+- Better error handling and backtracking
+
+# 🔍 What is a Fiber Node?
+A Fiber node is an object that represents a unit of work or a React element (like a component, DOM element, etc.). It contains information about:
+
+- The type of component (div, MyComponent, etc.)
+- Props and state
+- The component's return (i.e., children)
+- The effect list (side-effects to commit)
+- References to parent, child, and sibling nodes
+- Flags for what needs to be updated
+
+# What is pnpm ?
+pnpm is a fast, disk space-efficient JavaScript package manager, an alternative to npm and yarn. It stands for "Performant npm" and was designed to solve some of the problems with traditional package managers, especially around speed, disk usage, and determinism.
+
+## Key Features of pnpm:
+- Content-addressable storage (deduplication):
+Instead of copying dependencies into each project’s node_modules, pnpm stores them in a global content-addressable store on disk and uses hard links.
+This drastically reduces disk usage and increases install speed.
+
+- Strict node_modules structure:
+pnpm creates a non-flat node_modules directory.
+This helps catch missing dependency declarations (e.g., if package A uses a package it doesn’t list in its dependencies).
+
+- Faster installs:
+Because of the global store and linking mechanism, repeated installs are much faster than npm or even yarn.
+
+- Monorepo support:
+Built-in support for managing monorepos using pnpm workspaces.
+- Deterministic installs:
+Ensures that every install yields the exact same node_modules structure given the same pnpm-lock.yaml.

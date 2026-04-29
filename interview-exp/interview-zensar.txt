@@ -1,0 +1,27 @@
+#Zensar
+## Round-1
+1. Remove duplicate arrays, Given an arr = [[1,2],[2,3],[2,1],[3,2]]. output: [[1,2],[2,3]];
+2. Difference between link and anchor tag
+3. What are semantic html elements
+4. What are closures. Why they are used ?
+5. How many years of experience you have in React.
+6. How do you implement shouldComponentUpdate and other lifecycle methods in functional react componets?
+7. What are the hooks you have used ?
+8. What are call, apply and bind?
+9. What is props drilling ?
+10. How redux works?
+11. How do you update to redux?
+12. How to get the state of redux ?
+
+## Round-2
+1. Difference between Object.seal vs Object.freeze
+2. What are debouncing and throttle
+3. What is React Profiler Api ?
+4. What are weakmaps and weaksets in es6?
+5. Have you implemented with wcag standards ?
+6. What are aria attributes ?
+7. Suppose you have 2 divs. You can drag one above the other and vise versa. How will you implement this?
+8. What is the disadvantage of context api ?
+9. What are error boundaries in react ?
+10. flex vs grid ?
+11. What do you mean by css specificity ?

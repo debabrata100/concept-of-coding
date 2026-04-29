@@ -1,0 +1,3 @@
+Micro services:
+1. Database per service
+Each microservice has its own database to ensure loose coupling and independent scalability. This approach prevents direct database sharing between services, promoting data encapsulation and service autonomy.

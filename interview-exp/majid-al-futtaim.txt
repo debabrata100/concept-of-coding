@@ -1,0 +1,168 @@
+# MAJID AL FUTTAIM
+# Round-1:
+# https://www.carrefouruae.com/mafuae/en/
+# https://www.majidalfuttaim.com/en/what-we-do/brand-family/all-brands
+
+1. can we create server using smiple javascript ? if not why ?
+2. Explain Event Loop ?
+3. What are html Semantic elements Why there are used ?
+4. Difference between rest and spread operator ?
+5. What are the react hooks you know ?
+6. Difference between useMemo and useCallback ?
+useMemo memoizes the result of a computation, while useCallback memoizes the function itself. Both are used for performance optimization, but should only be applied when there’s a measurable benefit, such as preventing unnecessary re-renders or avoiding expensive recalculations.
+Don’t overuse — both add memory + comparison overhead, so only use when there’s a clear performance gain. In many cases, React’s built-in optimizations are sufficient without needing to memoize.
+
+7. What are the hooks of Redux ?
+8. List down how you improve performance of a page ?
+9. How do you choose between nosql db and mysql db ?
+10. ACID property
+11. what are position attribute in css ?
+12. div {
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+    padding: 20px;
+    border: 2px;
+}
+What will be the actual height and width of the element ?
+13. Have you used next js ?
+14.Which version of react you are using ?
+15. SVG vs PNG vs JPG. Where to use what ?
+16. What are responsive images ?
+
+#Round: 2
+1. How do you debug a performance isssue ?
+2. How do you know when to use memoize ?
+3. What evenent bubbling and event capturing ? Does both happen ? 
+4. Question on event bubbling and event capturing:
+<div> // True has been passed to 2nd argument
+    <div>// false has been passed to addEvntlistener 2nd argument
+
+    </div>
+</div>
+when you click on div-2 what shoud print and when you click div-1 what should happen ?
+5. What are the advantages and disadvantages of closures ?
+6. Write a Singleton class, which will log a message. so only one instance is created every time when you create an object.
+7. Tell me 3 advantages of graphql. What do yob mean by underfetching in graphql ?
+8. React Question:
+I have my App component like this:
+import { useState } from "react";
+import Counter from "./Counter";
+import "./styles.css";
+
+const themes = {
+  lorem: "ipsum",
+  ipsum: "lorem",
+};
+export default function App() {
+  const [theme, setTheme] = useState(themes.lorem);
+  const toggleTheme = () => {
+    setTheme(themes[theme]);
+  };
+  return (
+    <div className="App">
+      <h1>{theme}</h1>
+      {theme === "lorem" ? (
+        <Counter themeName="Lorem" />
+      ) : (
+        <Counter themeName="ipsum" />
+      )}
+
+      <button onClick={toggleTheme}>Change Theme</button>
+    </div>
+  );
+}
+
+And my Counter Component Like this:
+import { useEffect, useState } from "react";
+
+const Counter = ({ themeName }) => {
+  useEffect(() => {
+    return () => {
+      console.log("Unmounted", themeName);
+    };
+  }, []);
+  const [count, setCount] = useState(0);
+  console.log(themeName);
+
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+      <button onClick={() => setCount(count - 1)}>-</button>
+      <button onClick={() => setCount(count + 1)}>+</button>
+    </div>
+  );
+};
+
+export default Counter;
+
+I am rendering Counter component conditionally, but when I am changing theme by clicking change theme button, Counter does not reset. Can you tell why and how to fix this?
+9. White a function transform
+Input: 
+console.log(
+    transform(
+      [
+        { date: "JAN", value: 5, weightage: 9 },
+        { date: "JAN", value: 2, weightage: 19 },
+        { date: "FEB", value: 9, weightage: 1 },
+        { date: "FEB", value: 10, weightage: 29 },
+      ],
+      "date"
+    )
+  );
+  Output: 
+  {
+    "JAN": {
+       value: [5,2]
+       weight: [9,19]
+     }
+  }
+
+  What I wrote:
+  function transform(arr, key) {
+    let res = {};
+  
+    arr.forEach((el) => {
+      if (!res[el[key]]) {
+        console.log(res[el[key]]);
+        res[el[key]] = {};
+        for (let prop in el) {
+          if (prop !== key) {
+            res[el[key]][prop] = [el[prop]];
+          }
+        }
+      } else {
+        for (let prop in el) {
+          if (prop !== key) {
+            res[el[key]][prop].push(el[prop]);
+          }
+        }
+      }
+    });
+    return res;
+  }
+
+10. Write function using one loop. 
+Input: "the boy is working", output: "eht yob si gnikrow"
+What I wrote:
+11. What are the steps in Jenkins ?
+12. Write a polyfill for bind method.
+
+# Round 3
+1. What is LCP and how it is constructed ?
+2. Why can not you write a React hook conditionally ? What data structure React uses under the hood ?
+3. Can you write a custom hook for useState ?
+4. Can you achive app router works in old page router of next js ?
+5. What are the advantages of Next Js ? WHat are the drawback of next js ?
+6. How fetchPriority attribute works ?
+7. Have you used micro frontends ? can you write micro front end without using webpack module federation ?
+8. can you use styled components in Server Components ?
+9. What are the components of LCP you see when you run the script ?
+10. What is the last challenging work you did ?
+11. How do you write unit test for a Custom Hook ?
+12. What are the list of core web vitals ?
+13. Where do you check performance metrices ?
+14. Have you created any server by your own to record performance metrices ?
+15. Without using next js how do you implement ssr ?
+16. How Javascript garbage collection works ?
+17. How to you indentify memory leaks ?

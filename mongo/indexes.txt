@@ -1,0 +1,110 @@
+# Indexes & Performance
+MongoDB creates a default _id index on every collection. But for real-world usage, you'll often need to add your own.
+
+# Why Index?
+Without an index:
+MongoDB must scan every document.
+Queries become slower as collection grows.
+
+# Create Index in Mongoose
+UserSchema.index({ email: 1 }, { unique: true });
+PostSchema.index({ title: 'text', content: 'text' });
+OrderSchema.index({ userId: 1, status: 1 });
+# Compound Indexes
+OrderSchema.index({ userId: 1, createdAt: -1 });
+This improves queries like: Order.find({ userId }).sort({ createdAt: -1 });
+# TTL Index (Auto-delete documents)
+SessionSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
+
+1. What an Index Is, Conceptually
+An index in MongoDB is basically a data structure that helps the database quickly locate documents without scanning every document in a collection.
+Think of it like the index in a book — instead of flipping every page, you just go to the right page.
+
+Without an index:
+➔ MongoDB scans the whole collection (this is called a collection scan) to find matching documents.
+With an index:
+➔ MongoDB jumps directly to the right document(s).
+
+2. What Data Structure MongoDB Uses
+✅ MongoDB uses a B-Tree (technically, a B+ Tree) for most of its indexes.
+B-Tree is a self-balancing tree.
+It keeps keys in sorted order.
+Searching, inserting, deleting = all happen in logarithmic time (O(log n)).
+Leaf nodes (bottom) store the actual pointers to documents in the collection.
+👉 So when you create an index on a field, MongoDB builds a B-Tree where:
+Each key is the value of that field.
+Each value is a pointer (reference) to the corresponding document.
+
+Example:
+If you index { age: 1 }, MongoDB creates a tree like:
+
+Key (age)	Document Pointer
+18	ptr to Doc #1
+22	ptr to Doc #2
+35	ptr to Doc #3
+
+3. Behind the Scenes: How Index is Built
+When you run:
+db.users.createIndex({ age: 1 });
+MongoDB does:
+
+Collection scan — read each document's age field.
+Insert into B-Tree — for each document:
+Find correct spot in the tree (based on age).
+Insert (key = age, value = document pointer).
+Maintain tree balance (split nodes if necessary).
+➡️ This is backgrounded by default, so your app can keep running.
+
+4. What Happens During a Query
+Suppose you query:
+db.users.find({ age: 22 });
+
+MongoDB looks at the B-Tree index on age.
+Navigates down the tree quickly.
+Finds all documents where age == 22.
+Fetches those documents using pointers.
+👉 Much faster than scanning every document.
+
+5. More on Index Types
+MongoDB has many types of indexes:
+
+Single Field Index – e.g., { age: 1 }
+Compound Index – e.g., { age: 1, name: 1 }
+Multikey Index – for arrays
+Text Index – for searching text
+Hashed Index – for sharded collections
+Wildcard Index – for dynamic schema (indexing all fields!)
+
+Internally, they are all some version of a tree-based structure, though multikey and text indexes have extra layers on top.
+
+6. Index Maintenance
+Every time you:
+Insert a document
+Update an indexed field
+Delete a document
+
+MongoDB must also update the B-Tree.
+That's why:
+    - Indexes speed up reads ✅
+    - Indexes slow down writes a little ⚡ (because of the maintenance)
+
+7. Quick Visual (B-Tree Sample)
+
+         [22]
+        /    \
+    [18]      [35]
+   /    \    /    \
+[doc1] [doc2] [doc3] [doc4]
+
+8. How Storage Looks Internally
+MongoDB stores indexes in special system collections inside WiredTiger (the storage engine).
+Indexes are compressed and split into pages (~4KB blocks) for efficient memory/disk usage.
+
+MongoDB tries to cache hot parts of indexes in RAM for ultra-fast lookups.
+
+* TL;DR
+MongoDB indexes = B-Tree structures.
+Keys = field values, Values = document pointers.
+Fast lookups, moderate write overhead.
+Maintained automatically during document changes.
+Stored compressed inside WiredTiger engine.

@@ -1,0 +1,28 @@
+1st Round:
+1. What is your current role in your organization
+2. What you consider when you think of performance 
+3. What is a recent production support issue you have resolved. Elaborate on it.
+4. Any API you have ddesigned  from scratch ? Elaborate on it.
+5. You have an mobile app that gives you notification 3 times to take your medcine.
+How do you design this system both in front end and backend
+6. What is you recent achievement?
+7. How do you scale the system ? Any Aws service you have used?
+8. What you have done in AWS Lamda ?
+
+2nd Round:
+1. Who took your interview.
+2. What questions were covered ?
+3. Suppose for a storybook component, css is not getting applied. How do you debug it?
+4. What are the things you do improve performance of a page
+5. How do you do authentication in a React Application
+6. Do you know cms ? What is it used for ? Can you give an example of any cms?
+7. Have you managed  a team? How do you do ?
+8. How do you manage your work when your team member is blocked somewhere ?
+9. Do you follow agile model?
+10. Do you manage scrum ?
+11. Do you do unit testing ? What library you have used ?
+12. What is sprint duration ?
+13. Have you worked on microfrontend ? How do you share authentication token between apps ?
+
+
+

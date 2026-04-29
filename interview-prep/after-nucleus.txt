@@ -1,0 +1,10 @@
+# About Nucleus Project:
+- Nucleus is a place for customer to place an order for a genetic test of a patient' dna and later generate report after the order become analysis successful.
+- A test is done in this way, Sample(Blood/Salaiva) collected from patient, DNA gets extracted then run through sequencing machine, Ater Successfully analysing the sample, output is sent to bio informatics pipeline which is responsible for classification of varints and send the information to geneticists. which they analysis and prepare a report for patiets who have ordered.
+- In the first part of the project we did several feature enhancement, Then in the second part we started with a brand new feature that batch orders. which was completed successfully and released on May first week. The batch orders enable the client collecting a batch of max 200 samples and generating report for all the successfully analysed sample. Each sample has to go throgh a seqeunce of statuses like: waiting for sample, sample received, sample in analysis, sample on hold, sample failed, cancelled, 
+
+
+Things needed to start a project from scratch
+React core concepts with hard Questions
+practice some programs
+Have working knowledge of server components

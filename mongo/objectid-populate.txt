@@ -1,0 +1,28 @@
+Relationships & Population
+MongoDB is non-relational, but Mongoose lets you simulate relationships using ObjectId references.
+
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
+const userSchema = new Schema({
+  name: String,
+  email: String
+});
+
+const postSchema = new Schema({
+  title: String,
+  content: String,
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User' // 👈 reference to User model
+  }
+});
+
+const User = mongoose.model('User', userSchema);
+const Post = mongoose.model('Post', postSchema);
+
+const user = await User.create({ name: "Alice", email: "alice@mail.com" });
+await Post.create({ title: "My Post", content: "Hello world!", author: user._id });
+
+const posts = await Post.find().populate('author');
+console.log(posts[0].author.name); // Alice

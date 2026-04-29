@@ -1,0 +1,12 @@
+*Cognizant*
+1. Diff between rest and spread operator
+2. how do you destructure 1st and third variable from a array of 4 values
+3. Difference between class and functional component
+4. Difference between useState and older state logic
+5. Why do you use context api
+6. Context Api vs Redux
+7. Can we use Redux as a caching layer
+8. What are the steps you follow in system design
+9. Is there any performance benefit using context api
+10. Arrow functions vs normal functions
+11. What is callback hell ? How do you avoid?

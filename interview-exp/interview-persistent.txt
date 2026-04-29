@@ -1,0 +1,63 @@
+# Persistent Interview
+1. How to find the 10th largest number from an array ?
+2. Puzzle: out of 8 balls, 7 balls has same weight, one is less. How will you find from a weight balance.
+   How many iterations it ll take. How do you further ptimize it ?
+3. There is user page on a dashboard where there is a list of users. When you click on an user, it will take you to
+profile page, then edit, go to profile page. after saving it will return to profile page. 
+How would you design and implement this feature?
+4. How would you 50k user in a page ?
+5. How do you find out there is a performance issue in your page.
+- for finding perf index pageSpeedIndex, webpageorg
+- for debugging: chrome dev tools: 
+   - network tab: [resource size, download time] 
+   - react profiler: [component rendering time, component props change behavious]
+      - 2 tools: component, profiler
+   - redux devtool: tracking redux action and state change
+   - performnace tab: [screenshots, function execution sequence and execution time]
+6. How will you improve performance of a web page ?
+- Reduce initial pageload time
+- reduce execution time 50ms
+- Serviver side rendering
+- load only above the fold page and lazy load rest component during initial load or transtion(from one page to another)
+7. How would you improve performance of a React application ?
+- Memoize functions and complex computations to avoid unnecessary rerenders
+- Avoid unnecessary state updates
+- Avoid memory leaks
+   - clear setTimeouts, setIntervals
+   - Clean subscription and promises before unmounting
+   - Keep track of application memeory usage
+   - Implement periodic cache clearance
+- Implement Error Boundries to avoid runtime errors from UI
+8. There is a list of users in a user array each having id, name. Suppose you want to update second user.
+How do you update it ? WHy do you create a new array and then update the details of that ?
+- React does shallow comparison. The second array holds the shalow copy which is provided to react
+9. How React compares objects ?
+10. What is immutable update ?
+11. How data flow happens in React uni or bi directional ?
+12. How do you send data to a parent component in React?
+13. How do you make api call with headers with apollo client?
+14. How do you find out there is an error in apollo client ?
+
+client round:
+- How do you performance improvemnt of a input field ?
+- const arr = [
+   {label: 'aa', score: 32},
+   {label: 'aaaa', score: 8},
+   {label: 'aaa', score: 20},
+   {label: 'bb', score: 52},
+]
+output: [8,20,32] which have 'a'
+
+
+# Some more answers
+What is immutable update ?
+https://chatgpt.com/share/9302b375-9cc7-4dc9-afc1-2a38954a899d
+In React, an immutable update refers to updating the state in a way that does not mutate (change) the original state object. Instead, a new state object is created with the desired updates. This practice is important because it ensures that React can correctly detect changes to the state and efficiently update the user interface.
+
+Here's why immutable updates are crucial in React:
+
+Efficient Re-rendering: React relies on a virtual DOM to determine what parts of the actual DOM need to be updated. If state changes are done immutably, React can quickly compare the previous and new state objects (using shallow comparison) to see what has changed, leading to efficient re-rendering.
+
+Predictability and Debugging: Immutable updates ensure that previous state objects are not altered, which makes the application more predictable and easier to debug. You can trace state changes over time without worrying about unintended side effects from mutated state objects.
+
+Pure Components: Immutable updates align well with the concept of pure components in React. A pure component re-renders only when its props or state changes. Immutable updates help ensure that these changes are detected accurately.
