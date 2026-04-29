@@ -1,0 +1,47 @@
+# What are caching benefits by next js?
+- it caches fetch request result in a server component
+- it caches the result of the render of the server component(RSC payload)- React Server component Payload
+- Also a client side cache - The network request does not fire again
+- Prefetching with link tag in production mode
+
+# Need for React Query
+When you want to do client side fetching, for example infinite scrolling
+
+# What Next Js does not cache ?
+- fetch results in server action
+- post requests in route handlers
+
+4 ways next js caching works
+1. Data Cache: Responses from requests made with fetch are stored and used across requests
+2. Router Cache: Soft Navigation netween routes are cached in the browser and resued when the use revisits
+3. Request memoization: Make two or more 'GET' requests with 'fetch' during  user's request to your server?Only One get is actually executed 
+4. Full Route cache: At build time next decided whether a route is static or dynamic. if it is static, the page is rendered and the result is stored. In the production user is given this prerendered result.
+
+# dynamic routes
+# What make a page dynamic ?
+1. Calling a 'dynamic function' or referencing a 'dynamic variable' when your routr renders
+- cookies.set() cookies.delete()
+- useSearchParams() searchParams prop
+2. Assigning specific 'route sengment config' options
+- export const dynamic = 'force -dynamic'
+- export const revalidate = 0
+3. Calling fetch and opting out of caching of the Responses
+fetch(...,{next: { revalidate: 0}})
+4. Using dynamic route 
+/snippets/[id]/page.tsx
+/snippets/[id]/edit/page.tsx
+
+# When to use cache control
+1. Time based cache
+export const revaldate = 3;
+2. One-Demand
+revalidatePath('/snippets')
+3. Disable caching
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
+# Difference between the Router Cache and Full Route Cache:
+The Router Cache temporarily stores the React Server Component Payload in the browser for the duration of a user session, whereas the Full Route Cache persistently stores the React Server Component Payload and HTML on the server across multiple user requests.
+
+While the Full Route Cache only caches statically rendered routes, the Router Cache applies to both statically and dynamically rendered routes.
+

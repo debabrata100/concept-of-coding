@@ -1,0 +1,7 @@
+# Benefits of next js
+
+* Improved intial Page load time
+* Improved performance
+* Improved SEO
+* Improved Security
+* Improved accessibility

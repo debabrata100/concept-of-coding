@@ -1,0 +1,8 @@
+# trpc:
+Fetching data with type safe
+
+# with orm
+if you are using next js server componnets, you do not need trpc, you can diretcly use any orm(ex. prisma) and query from you database. 
+
+# with server action
+you can define server action with typescript, then you do not need trpc

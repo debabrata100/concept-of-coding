@@ -1,0 +1,35 @@
+# Server Components are rendered only on the server-side and their output is sent to the client as HTML. They are not part of the JavaScript bundle sent to the client and are never rendered on the client-side.
+
+# Client Component:
+A component becomes a client component if it uses "use client" directive or
+if it is imported in a client component.
+A client component renders once on server and thenon client
+
+# ServerComponent:
+A component in next js is server component by default. 
+
+# Server Component in client component:
+You can use a server component inside client component, only if you are not importing it inside client component, rather you are passing it as children
+example1: 
+<ClientComponent> 
+    <ServerComponent />
+</ClientComponent>
+
+example2: 
+// When ThemeProvider is a client component
+function Layout({children}) {
+    return (
+        <ThemeProvider>
+            {children}
+        </ThemeProvider>
+    );
+}
+
+# Server Actions
+Server Actions are asynchronous functions that are executed on the server. They can be used in Server and Client Components to handle form submissions and data mutations in Next.js applications.
+
+# Fetching Data on the Client with Route Handlers
+If you need to fetch data in a client component, you can call a Route Handler from the client. Route Handlers execute on the server and return the data to the client. This is useful when you don't want to expose sensitive information to the client, such as API tokens.
+
+# Server Components and Route Handlers
+Since Server Components render on the server, you don't need to call a Route Handler from a Server Component to fetch data. Instead, you can fetch the data directly inside the Server Component.

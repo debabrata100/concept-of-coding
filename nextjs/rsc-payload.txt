@@ -1,0 +1,8 @@
+# WHat is RSC Payload ?
+
+The React Server Component Payload is a compact binary representation of the rendered React Server Components tree. It's used by React on the client to update the browser's DOM. The React Server Component Payload contains:
+
+- The rendered result of Server Components
+- Placeholders for where Client Components should be rendered and references to their JavaScript files
+- Any props passed from a Server Component to a Client Component
+ref: https://nextjs.org/docs/app/building-your-application/caching#full-route-cache

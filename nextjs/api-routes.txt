@@ -1,0 +1,25 @@
+# Api Routes or Route Handlers(Next14)
+Helps to build public apis.
+# Benefits of Api Routes:
+
+- Never exposed to client
+- They are server side bundles only
+- Super cost effective
+
+When to choose Api routes vs Individual api ?
+
+I've put some thought into this as well. Here are my recommendations:
+
+If your use-case is fairly straightforward and doesn't rely on much external software, Next API routes are a nice win. You can just develop with a single project folder and don't need to worry about keeping your client and API in sync. It's simple, super cost-effective, and easy to deploy using Vercel's infrastructure.
+
+For a simple example, if you have a portfolio site with a contact-me form, you can use an API route to sanitize that form and send yourself an email or push to a downstream tool using that API.
+
+Once you start to have a more complex use case, the trade-offs are trickier to manage. Consider an example when you're relying on two key pieces of external software: PostgreSQL, as a database, and Redis, for caching and session management. If you're using Next API routes, you'll need to find a compatible database-as-a-service provider for both of those tools. I've seen FaunaDB suggested as a database, though I don't know of a Redis provider offhand.
+
+This could be a great use-case for you, and between API routes and a service like that you may be able to live on a free tier. (Not having to deal with all of the database layer yourself might also be a big win.)
+
+On the other hand, you/your team may make the decision that you'd rather handle all that separately, which might involve a DigitalOcean droplet that serves that API and runs the relevant database software itself, or a service like Heroku that serves the API and has its own integrated Postgres tools. It's a trade-off and depends on what you're comfortable with.
+
+Finally, it's worth considering how complex your API will become, and whether you'd prefer to deal with that complexity inside your Next application or in a separate repo. For example, if you have web-hook routes to listen for external services, a lot of middleware for different content-types, or a complex authorization/authentication scheme, you may prefer to handle those in their own separate application.
+
+Like all things in web-dev, it's a trade-off. The main takeaway: choose what works for you. API routes aren't inherently better or worse than a separate API service in terms of overall performance.

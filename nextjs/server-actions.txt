@@ -1,0 +1,5 @@
+# Server Actions and Mutations
+Server Actions are asynchronous functions that are executed on the server. They can be used in Server and Client Components to handle form submissions and data mutations in Next.js applications.
+
+https://www.youtube.com/watch?v=RadgkoJrhu0
+https://www.youtube.com/watch?v=Qo_lxOI9GZU

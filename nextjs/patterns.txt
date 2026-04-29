@@ -1,0 +1,30 @@
+1. Server components and client components
+2. Server Action
+3. App Router
+4. Loader
+5. Not Found
+6. error page
+7. Api Routes 
+8. Cache Revalidation
+    - revalidatePath from 'next/cache' ex: revalidatePath("/path")
+    - fetch(url, {cache: 'no-store'})
+    - fetch(url, {next: {revalidate: 3}) // in 3 secs
+    - fetch(url); export const revalidate = 3 // segment level caching or page level
+    - revalidateTag('posts'); fetch(url, { next: { tags: ["posts"] } });
+9. prefetch: 
+Prefetching happens when a <Link /> component enters the user's viewport (initially or through scroll). Next.js prefetches and loads the linked route (denoted by the href) and its data in the background to improve the performance of client-side navigations. Prefetching is only enabled in production.
+
+null (default): Prefetch behavior depends on whether the route is static or dynamic. For static routes, the full route will be prefetched (including all its data). For dynamic routes, the partial route down to the nearest segment with a loading.js boundary will be prefetched.
+true: The full route will be prefetched for both static and dynamic routes.
+false: Prefetching will be disabled.
+11. generate meta data for a page 
+for static metadata:
+export const metadata: Metadata = {
+    title: '...',
+    description: '...',
+  }
+For Dynamic meta Data:
+export async function generateMetadata(
+    { params, searchParams }: Props,
+    parent: ResolvingMetadata
+  ): Promise<Metadata> {}
