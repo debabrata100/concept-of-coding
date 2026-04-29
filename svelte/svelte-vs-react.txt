@@ -1,0 +1,6 @@
+https://www.youtube.com/watch?v=lYYGhm7p74Q
+
+
+* React components are 40% larger than its React equivalent
+* Unilike React, Svelte is a complier. it does not run in the browser.
+* Compiled code will directly modify the DOM without the overhead of virtual DOM.
