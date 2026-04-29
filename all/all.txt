@@ -1,0 +1,124 @@
+# 5 things to take care
+1. SEO
+2. Accessibility
+3. Security
+4. Performance
+5. Scaling
+6. Internationalization/Localization
+7. Analytics(Deriving a meaningful conclusion out of data logged)
+8. Logging and Monitoring
+1. SEO
+    - Server Side Rendering:
+      Make the page content available while web crawlers acess your webpage
+    - Meta Information per Page:
+      Meta information should be genarted per page to identify each page uniquely
+    - Seo firendly URL
+      Make url structure seo friendly that include keywords relevant to your webpage content
+    - Heading Tags
+      Structure your content with proper heading tags(h1, h2, h3 etc..) with relevant keywords for each section
+    - Image Optimization
+      Optimized images with descriptive file names and alt attributes that include relevant keyswords. Compress images to improve page load speed, which is a ranking factor for SEO
+    - Mobile Friendliness
+      Ensure your website is responsive and provides seamless exprerience across different devices including smart phones and tablets. This is a significant ranking factor
+    - Page Speed: 
+    - SSL Certificate:
+      HTTPS is ranking signal and secure websites are favoured by search engines.
+    - Schema Markup (https://moz.com/learn/seo/schema-structured-data)
+      Implement structured data markup.(Schema.org) to provide search engines with additional context about your content. https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data
+    - Inernal Linking
+    - External Linking
+    - Social Sharing Integration
+      Encourage social sharing of your content by integrating social media sharing buttons. Increased social engagement can indirectly impact SEO by driving traffic and generating backlinks.
+2. Accessibility
+    - Semantic HTML Element: 
+      Use Semantic HTML tags <header> <nav> <main> <footer> to properly structure your content. This helps readers and other assitive technologies understand the proganization of the page.
+    - Alternate Text for Images:
+    - Keyboard Navigation
+    - Focus Indication
+    - Contrast and color
+      4:5 for small text
+      3:1 fro bigger text
+    - Accessible forms
+    - Video and audio accessibility
+      Provide captions or transcripts for videos and audio content to make them accessible to users who are deaf or hard of hearing. Additionally, provide controls for users to adjust the volume or pause/play the media.
+    - Resizable Text
+    - Aria Roles and Attributes
+    - Skip Navigation link
+    - Responsive Design
+    - Testing with assistive technology
+3. Security
+    - HTTPS Encryption
+    - Sql Injection protection
+    - XSS attacks protection
+        - Http Only Cookies for session management
+        - Input validation
+        - Output encoding
+        - Implement content security policy
+    - Authentication and Authorization
+        - MFA, Strong Password Policy
+        - Role based Authetication
+        - Limit Access Control
+    - Secure Password
+        - Strong Password policy
+    - Content Security Policy (CSP): 
+      Implement a Content Security Policy to mitigate the risk of XSS attacks by restricting the sources from which content (scripts, stylesheets, images) can be loaded. Use CSP directives to whitelist trusted sources and prevent inline scripts and unsafe eval() functions.
+    - Cross-Origin Resource Sharing (CORS):
+    - Secure Communication between different services
+    - Security Headers:
+        - X-Content-Type-Options
+        - X-Frame-Options
+        - X-XSS-Protection
+        - Strict-Transport-Security: max-age=<expire-time>(Protect HTTPS Downgrade)
+    - Regular Security Audits against component vulnerability
+    - SAST tools like SonarQube
+    - Logiing and Monitoring
+    - Rate Limiting to prevent Dodos attack
+    - csrf token
+      By requiring a valid CSRF token for each request that modifies state (e.g., submits a form, changes user settings), the web application can mitigate CSRF attacks. Since an attacker cannot predict or obtain the user's CSRF token, they cannot forge a request that includes a valid token.
+    - CDN tampering (Subrerouce intergrity)
+    - Remote Code execution(through file upload)
+        - Insequre deserilization
+        - XXE
+    - Click Jacking
+    - Indiect Object reference
+4. Performance
+    - Improve Page Load Time
+        - Render Above the fold of the page
+        - Lazy load below the fold page
+        - Compress assets files like, html, css, and js files using gzip and brotli
+        - Optimize Images and use format like webp, use image sprite to reduce number of network calls
+        - preload images, so that browsers can discover them early hence reducing the resouce load delay
+        - Implement prefetch of resouces by guessing which page users visit next by studying user behaviour through analytics
+        - Serve static assets from cdn and reverse proxy servers to reduce network latency. Examples: Cloudflare, Akamai, Amazon cloudfront, Fastly
+        - Leverage browser caching
+            - http cache (cache-control header)
+                - ETag
+                - max-age, no-cache, no-store, public, private
+                - holds instructions both browser and reverse proxy server 
+            - memory cache (Application level)
+            - service worker cache
+            - http2 Server push cache
+        - Streaming server side rendering
+    - Improve other core web vitals
+      - LCP
+      - CLS
+      - INP
+    - Improve Application Performance 
+      - Improve Page Transition time
+      - Break Down Long running tasks
+      - Optimize number of dom updates
+
+5. Scalling:
+
+8. Loggin and Monitoring
+Building is easier and monitoring is toupher.
+Gives confidence that client does not need to tell you customers are facing issues, you tell them you know what the problem going on.
+- How do you debug live user data ?
+- What all do you log ?
+- What are things that need to be monitored ?
+- How do you categorize alerts ?
+- What are the non-critical logging you do not bother much about it ?(interet exploer issues which have less traffic,dark mode and light mode not workin, you have some extra good to have features)
+-- do not include pii data
+-- Raygun, Qunatum Metrics, Sumo Logic
+
+https://drive.google.com/drive/folders/1PvOo2_Gml6ri-0scJcrGL-UyABUdo6Xk
