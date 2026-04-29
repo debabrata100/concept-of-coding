@@ -1,0 +1,49 @@
+
+Generate code for reusable input text component using
+ReactJS
+You are tasked with creating a reusable Input Text
+component which will be part of a UI Component library,
+please use ReactJS to build the component. The component
+should adhere to best practices for accessibility, semantic
+code, and performance. Write code for the component that
+meets the following requirements:
+- Accessibility:
+- Ensure the component has a clear and descriptive
+label.
+- Include appropriate ARIA and role attributes to
+enhance accessibility.
+- If applicable please ensure to add label and input
+mapping using 'for' and 'id' attribute mapping
+- If applicable implement proper keyboard navigation and
+focus management.
+- Semantic Code:
+- Use semantic HTML elements to structure the component.
+If applicable, apply appropriate HTML attributes for
+input validation, such as 'required' and 'pattern'.
+- If applicable, utilize HTML5 input types and
+attributes to enhance user experience.
+- Performance:
+- Optimize the component for fast rendering and
+interaction.
+- Implement efficient event handling and minimize
+unnecessary re-renders.
+- Consider using memoization or other performance
+optimization techniques.
+- Reusability
+- Component should be reusable in nature to accept any
+valid HTML Attributes, so please ensure to inject all
+remaining Pops which are not destructured in component with
+help of spread operator or any other valid approach.
+This component can be reused across different projects
+so please ensure it follows descriptive documentation above
+the file, documentation should follow how to use and
+capabilities of component
+- Also, please provide some standard CSS styles for the
+mponent in a separate code block for developers'
+reference. If no specific CSS methodology is chosen,
+include standard CSS styles. Ensure that the generated code
+includes both the React component logic and the associated
+CSS styles.
+Please generate code for the component that adheres to
+these requirements and can be easily reused across
+different projects.

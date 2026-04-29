@@ -1,0 +1,46 @@
+# some commands
+* git lf-files
+* git commit -am "commit message" // add modified file then commmit
+* git reset HEAD readme.md // unstage
+* git checkout -- readme.txt // discard changes
+* git log --online --graph --decorate --all
+# Adding an alias
+* git config --global alias.hist "log --online --graph --decorate --all"
+* git config --global --list // check the list
+* git hist
+# renaming and removing a file
+- touch example.txt
+- git add example.txt
+- git commit -m "some messgae"
+* git mv example.txt demo.txt
+- ls -l
+* git rm demo.txt
+- git status
+--- end ---
+* git add -A 
+* git add -U
+# Comparing changes
+- git hist
+* git diff <commitID> HEAD
+* git difftool <commitID> HEAD
+* git diff branch1 branch2
+---------
+* git stash save "ample"
+* git stash list
+* git stash apply stash{0}
+# Reseting and Time Travelling
+* git reset <commitID> --soft
+* git reset <commitID> --mixed
+* git reset <commitID> --hard
+- git status 
+nothing to commit, working directory is clean
+* git reflog
+* git reset --hard <commitID>
+# remote
+* git remote -v
+* git remote add origin <url>
+* git remote rm origin
+* git push -u origin master --tags // push all tags creaed as well
+* git clone <url> FolderName
+* git fetch origin master
+* git pull origin master

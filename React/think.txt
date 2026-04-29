@@ -1,0 +1,98 @@
+1. Why to functional components over class components ?
+Ans:
+- You do not have to remember component life cycle mthods
+- With functional component you will write less lines code and more clean way.
+- you get benefit of useMemo and useCallback hook and other hooks as well
+2. Context Api vs Redux
+Ans:
+# Performance issues: 
+The potential for unnecessary component re-renders with the Context API can arise when the context provider value changes frequently. If the context provider value changes, all components consuming that context will re-render, even if the changes are irrelevant to certain components.
+In case of redux any component consuming a perticular state will rerender if that state changes.
+Managing a central state for whole application remains as a chalenge with context api.
+
+# Problem with Multiple Context Providers:
+In more complex scenarios where you have multiple context providers or nested providers, it might be challenging to track how changes in one context affect another.
+# Limited Middleware Support:
+Unlike state management libraries such as Redux, the Context API doesn't have built-in middleware support for handling asynchronous actions or side effects. Managing side effects within the context can sometimes make the code harder to follow.
+# Caching Layer:
+If your context provider is unmounted, you will loose context values. But Redux persist all values. You can use redux as a caching layer.
+# Impossible to reuse
+If you want to reuse the component outside its provides, its impossible to do that. You have to use its provider as a parent.
+# Benefits
+both solves the the props drilling proble
+
+* When you are sure you want to always manage some state only for some closely related components and not outside their hierachy and you do not want to cache the state values after unmounting the components(Unmounting the component with context provider clear you state object from memory), you can use context api. But when you feel some state need to be shared across different modules and multiple hierarchy of components, then you can use redux. Because overusing redux can lead to unnecessary memory usage issue due to untracked objects.
+
+3. useState vs useReducer
+Ans: 
+- Performance benefit: When you are updating your a state within you child components, you can say a deep update, instaed passing a callback you can dispatch method returned by useReducer Hook, because React gurrantee that identity of dispatch method will be stable througout rerenders. This is why it’s safe to omit from the useEffect or useCallback dependency list.
+- Centralized State logic: UseReducer is prefered, when you have a state with multiple sub values or your next state depends upon previous state, so instaed of writing different logic in different event handlers, you can out the whole logic in a reducer, that way code is more organized.
+Signature: const [state, dispatch] = useReducer(reducer, initialArg, init);
+4. What are advantages and disadvantages of using closures ?
+Advantages:
+## Encapsulation:
+Closures allow you to encapsulate variables within a function's scope, preventing them from polluting the global scope. This helps in avoiding naming conflicts and unintended variable modifications.
+
+## Data Privacy:
+Closures provide a way to create private variables and functions. Variables defined within a closure are not directly accessible from outside the function, offering a level of data privacy and security.
+
+## Function Factories:
+Closures enable the creation of function factories, where a function returns another function with specific behavior based on the context in which it was created. This is useful for creating reusable and configurable components.
+
+## Callback Functions:
+Closures are often used with callback functions, allowing you to maintain the context in which a function was created even when it's called later. This is common in asynchronous operations, event handling, and various design patterns.
+
+# Disadvantages
+## Memory Consumption:
+Closures can lead to increased memory consumption, especially when large amounts of data are enclosed within the closure. This is because the enclosed variables and functions are kept alive as long as the closure exists.
+
+## Potential for Memory Leaks:
+If closures are not handled carefully, they can lead to memory leaks. If a closure retains references to objects that are no longer needed, those objects won't be garbage collected, causing memory to be occupied unnecessarily.
+5. Explain memory leaks due to closure with an exmple.
+function createClosure() {
+    // Data that should be private
+    let data = [1, 2, 3];
+  
+    // Closure function
+    function getData() {
+      console.log(data);
+    }
+  
+    // Return the closure function
+    return getData;
+  }
+  
+  // Create a closure
+  const closure = createClosure();
+  
+  // Call the closure function
+  closure(); // Outputs: [1, 2, 3]
+  
+  // Assume that the data is no longer needed and should be garbage collected
+  // However, the closure still has a reference to the 'data' array
+
+  Solutions:
+  function createClosure() {
+    let data = [1, 2, 3];
+  
+    function getData() {
+      console.log(data);
+    }
+  
+    function releaseData() {
+      // Nullify the reference to 'data'
+      data = null;
+    }
+  
+    return { getData, releaseData };
+  }
+  
+  const { getData, releaseData } = createClosure();
+  
+  getData(); // Outputs: [1, 2, 3]
+  
+  // After using the data, release the reference
+  releaseData();
+  
+  // Now, the 'data' array is eligible for garbage collection
+  

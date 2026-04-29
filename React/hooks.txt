@@ -1,0 +1,19 @@
+# useLayoutEffect
+
+The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
+
+useLayoutEffect is a React Hook that is similar to useEffect in its purpose but is specifically designed for synchronously affecting the layout before the browser has painted. It is recommended to use useEffect in most cases because it runs asynchronously and doesn't block the browser's painting phase, allowing for a smoother user experience. However, there are certain scenarios where useLayoutEffect can be beneficial:
+1. Synchronous Execution:
+2. Avoiding Flickering or Layout Jank:
+
+NOTE: Since its run before the browser has a chance to paint, if the callback function is expensive, it will lead to performance issues.
+
+# useDeferredValue
+useDeferredValue is a React Hook that lets you defer updating a part of the UI.
+##Usage
+- Showing stale content while fresh content is loading
+- Indicating that the content is stale
+- Deferring re-rendering for a part of the UI
+
+# useTransition
+useTransition is a React Hook that lets you update the state without blocking the UI.

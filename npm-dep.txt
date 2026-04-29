@@ -1,0 +1,13 @@
+# How npm resolves dependancy hell ?
+your project
+    - package: a
+        - package: c 1.0.0
+    - package: b
+        - package: c 2.0.0
+In the above example both package a and package b need a 3rd dep package c. but versions of c are diff.
+How npm manages these packages?
+npm installs the package 1.0.0 on top level. and package 2.0.0 in package b folder.
+installing dependancy in ts own package folder is the old way of installing deps.
+After npm 3, it started installing like this to reduce space.
+## https://www.youtube.com/watch?v=9AyfXGHu56Y
+# npm ls --depth=1

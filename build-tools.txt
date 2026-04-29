@@ -1,0 +1,11 @@
+## https://www.youtube.com/watch?v=5F_k9q9HbAc
+# build tools
+## dependancy resolution
+The build tools solves an important problem that is dependancy graph. They creates bundles and put them in order in the html file, so that order of execution of the scripts are gurranted.
+
+When node came out, it comes with common js pattern. it uses require and module.exports
+
+# Why commojs pattern does not work in browser.
+in node js we use require to load a module. it works because both the code that is running and the dependancy module lives in same server. If you use that in browser you need to make a network requrest to the server to fetch the dependant module. Thats why common js pattern is not prefered in browers. And that where ES module system came to solve this problem. And these build tools do a great job in ES module system.
+
+## TC-39: The comunity behind javascript programming language

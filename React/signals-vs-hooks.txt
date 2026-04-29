@@ -1,0 +1,4 @@
+Preact Singals vs Hooks:
+https://www.youtube.com/watch?v=SO8lBVWF2Y8
+
+Signals eliminates the need for rendering optimization with useMemo and memo

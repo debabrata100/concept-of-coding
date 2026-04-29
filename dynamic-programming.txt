@@ -1,0 +1,36 @@
+Dynamic Programming: It divides the problem into series of overlapping sub-problems.
+Two features
+1) Optimal Substructure
+2) Overlapping Subproblems
+When we want to find max or minimum value, we use dynamic programming
+https://www.youtube.com/watch?v=0BhhiQGDbEA
+
+Key concepts:
+Optimal Substructure: A problem has an optimal substructure if an optimal solution to the overall problem can be constructed from optimal solutions of its subproblems. In dynamic programming, we solve and store solutions to subproblems, and then use these solutions to build the solution to the original problem.
+
+Overlapping Subproblems: Subproblems in a dynamic programming approach are not solved independently. Instead, the solutions to subproblems are reused, or overlap, multiple times. Dynamic programming algorithms typically involve a table or memoization to store and retrieve the results of overlapping subproblems.
+
+Memoization: This is a technique used to optimize the performance of a dynamic programming algorithm by storing the results of expensive function calls and returning the cached result when the same inputs occur again. In dynamic programming, a table or memoization array is often used to store intermediate results.
+
+Bottom-Up and Top-Down Approaches: Dynamic programming can be implemented in a bottom-up or top-down fashion. The bottom-up approach starts with solving the smallest subproblems and builds up to solve the original problem. The top-down approach, often called memoization, starts with the original problem and breaks it down into subproblems, solving them recursively.
+
+State Transition and Recurrence Relations: In dynamic programming, problems are often defined by recurrence relations that express the solution to a problem in terms of solutions to smaller instances of the same problem. State transition is the process of moving from one state to another, and dynamic programming algorithms are designed to efficiently explore the state space.
+
+Use Cases:
+- Perfect Square
+- Longest Increasing Subsequence
+- Fibonacci Sequence
+- Longest Common Subsequence (LCS): Finding the longest subsequence that is common to two sequences.
+- Longest Increasing Subsequence (LIS): Finding the length of the longest subsequence of a given sequence such that all elements of the subsequence are sorted in increasing order.
+- Edit Distance
+- 0/1 Knapsack Problem: Given a set of items, each with a weight and a value, determine the maximum value that can be obtained by selecting a subset of the items such that the total weight does not exceed a given limit.
+- Coin Change Problem: Finding the number of ways to make change for a given amount using a set of coins of different denominations.
+- Matrix Chain Multiplication: Optimally parenthesizing a product of matrices to minimize the number of scalar multiplications.
+- Subset Sum Problem: Determining whether there exists a subset of a given set of numbers that adds up to a specified sum.
+- Palindrome Partitioning: Partitioning a string into the minimum number of palindromic substrings.
+- Largest Sum Contiguous Subarray (Kadane's Algorithm): Finding the contiguous subarray with the largest sum.
+- Traveling Salesman Problem (TSP): Finding the shortest possible tour that visits a given set of cities and returns to the starting city.
+- Maximum Subarray Sum: Finding the maximum sum of a subarray within an array of integers.
+- Rod Cutting Problem: Maximizing the profit by cutting a rod into pieces of given lengths.
+- Word Break Problem: Determining whether a given string can be segmented into a space-separated sequence of dictionary words.
+- Binomial Coefficient: Computing the binomial coefficient "n choose k" efficiently.

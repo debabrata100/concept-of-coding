@@ -1,0 +1,55 @@
+What is the use of static varibales in a Javascript class ?
+Ans: In JavaScript, class static variables are shared among all instances of a class. 
+They are defined on the class itself, rather than on instances of the class. 
+Static variables are not tied to a specific instance of the class and are useful for 
+storing values or data that should be common across all instances of the class. 
+Here's how you can use static variables in a JavaScript class:
+
+class MyClass {
+  // Define a static variable
+  static staticVariable = 0;
+
+  constructor(value) {
+    this.instanceVariable = value;
+  }
+
+  // A method that accesses the static variable
+  static getStaticValue() {
+    return MyClass.staticVariable;
+  }
+
+  // A method that updates the static variable
+  static setStaticValue(newValue) {
+    MyClass.staticVariable = newValue;
+  }
+}
+
+const instance1 = new MyClass(1);
+const instance2 = new MyClass(2);
+
+console.log(instance1.instanceVariable); // Output: 1
+console.log(instance2.instanceVariable); // Output: 2
+
+// Access the static variable using the class
+console.log(MyClass.staticVariable); // Output: 0
+
+// Access the static variable using a class method
+console.log(MyClass.getStaticValue()); // Output: 0
+
+// Update the static variable using a class method
+MyClass.setStaticValue(42);
+
+console.log(MyClass.staticVariable); // Output: 42
+console.log(MyClass.getStaticValue()); // Output: 42
+
+Here are some use cases for static variables in JavaScript classes:
+
+Counters and Shared Data: You can use static variables to create counters, track the number of instances of a class, or share data between instances.
+
+Configuration: Storing configuration settings that are shared across all instances of a class.
+
+Utility Methods: Defining utility methods that don't need access to instance-specific data.
+
+Singleton Pattern: Implementing the Singleton pattern, where a class has only one instance.
+
+Keep in mind that because static variables are shared among all instances, if you modify a static variable, it affects all instances of the class. This can be useful for certain scenarios but should be used with caution to ensure data integrity.

@@ -1,0 +1,31 @@
+#Babel
+Babel is a toolchain that is mainly used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript in current and older browsers or environments. Here are the main things Babel can do for you:
+
+- Transform syntax
+- Polyfill features that are missing in your target environment (through a third-party polyfill such as core-js)
+- Source code transformations (codemods)
+
+Babel works in 3 stages:
+1- parsing - Do lexical and synatx analysis and conecrt source code to AST
+2- Transform - Add, edit, replace nodes in AST
+3- Generation - Turn the AST nodes into source code or source map
+
+What is Codemod ?
+Codemod is a tool developed by Facebook to help with the refactor of large-scale codebases. It enables the developer to refactor a large codebase in a small amount of time.
+ex: <Button type="submit"> Submit</Button> -> <button type="submit">Submit</button>
+
+Transform:
+// https://www.youtube.com/watch?v=HPJSoIRYeG4
+import { transform } from "@babel/core";
+// Babel-traverse: visitors, paths & nodes: 
+transform('console.log("Hello", "world")', {
+  plugins: [
+    {
+      visitor: {
+        StringLiteral() {
+          console.log("Found a string");
+        },
+      },
+    },
+  ],
+});

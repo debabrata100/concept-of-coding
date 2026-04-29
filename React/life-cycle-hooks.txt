@@ -1,0 +1,54 @@
+🧠 1. Lifecycle in Class Components
+Here’s a breakdown of the lifecycle methods grouped by phase:
+
+✅ Mounting (when the component is inserted into the DOM):
+constructor() – Initializes state and binds methods.
+
+static getDerivedStateFromProps() – Sync state from props before render (rarely used).
+
+render() – Required. Describes the UI.
+
+componentDidMount() – Called after component is rendered in the DOM. Used for side effects like API calls.
+
+🔁 Updating (when props or state changes):
+static getDerivedStateFromProps() – (again)
+
+shouldComponentUpdate() – Decide whether to re-render or not.
+
+render() – Re-renders the component.
+
+getSnapshotBeforeUpdate() – Capture some info from the DOM before it changes.
+
+componentDidUpdate() – Invoked after update is done.
+
+❌ Unmounting (when removed from DOM):
+componentWillUnmount() – Cleanup, such as clearing timers or removing subscriptions.
+
+🧠 2. Lifecycle in Function Components (Using Hooks)
+React Hooks simulate lifecycle behavior. The most important hook for lifecycle effects is:
+
+useEffect(() => { ... }, [dependencies])
+Depending on how you use it, it can act like different lifecycle phases:
+
+# Mounting:
+useEffect(() => {
+    // Runs once after component mounts
+    fetchData();
+  }, []); // empty dependency array
+
+# Updating:
+useEffect(() => {
+    // Runs when `someProp` or `someState` changes
+    doSomethingOnUpdate();
+  }, [someProp, someState]);
+
+# Unmounting (Cleanup):
+useEffect(() => {
+    const subscription = someAPI.subscribe();
+  
+    return () => {
+      // Cleanup logic runs on unmount
+      subscription.unsubscribe();
+    };
+  }, []);
+  

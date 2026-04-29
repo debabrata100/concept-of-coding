@@ -1,0 +1,58 @@
+# What is the actual use case of render props pattern where it ll be best fit and when to avoid ?
+This pattern is particularly useful when you want to share code between components or allow a component to customize its rendering logic.
+Use Cases for Render Props:
+Reusability:
+
+Shared Logic: Render props allow you to encapsulate and share rendering logic between components. The same logic can be reused in different parts of your application.
+Customization:
+
+Flexible Rendering: The render function passed as a prop allows the consumer of the component to have fine-grained control over the rendering output. This makes the component more customizable.
+Conditional Rendering:
+
+Dynamic Content: Render props are useful when you need to conditionally render different content based on the state or props of the component.
+Data Fetching:
+
+Custom Data Fetching: When dealing with asynchronous data fetching, the render props pattern allows you to pass functions to handle data fetching, error handling, and rendering loading states.
+State Management:
+
+Custom State Logic: Render props can be used to expose state management logic to the component's consumer, giving them control over the state and behavior.
+
+class MouseTracker extends React.Component {
+    state = { x: 0, y: 0 };
+  
+    handleMouseMove = (event) => {
+      this.setState({ x: event.clientX, y: event.clientY });
+    };
+  
+    render() {
+      return (
+        <div style={{ height: '100vh' }} onMouseMove={this.handleMouseMove}>
+          {this.props.render(this.state)}
+        </div>
+      );
+    }
+  }
+  
+  // Usage
+  const MousePosition = ({ x, y }) => (
+    <p>Mouse position: ({x}, {y})</p>
+  );
+  
+  const App = () => (
+    <MouseTracker render={(mousePosition) => <MousePosition {...mousePosition} />} />
+  );
+  
+# When to Avoid Render Props:
+Simple Components:
+
+For very simple components, especially those that don't involve much customization or shared logic, using render props might add unnecessary complexity.
+Prop Drilling:
+
+If you find yourself passing the same props through multiple levels of components just to reach a component that uses render props, consider using other patterns like React context or hooks to avoid prop drilling.
+Overuse:
+
+Avoid using render props for everything. While it's a powerful pattern, overusing it can make your code harder to understand, and there might be cases where other patterns, like higher-order components or hooks, make more sense.
+Component Hierarchy:
+
+If you have a deep component hierarchy and the render prop needs to be passed through many levels, it might lead to a less readable and maintainable codebase.
+In summary, the render props pattern is beneficial when you need to share rendering logic and allow customization, but it should be used judiciously, especially in simpler cases where it might introduce unnecessary complexity. Always consider the specific requirements and structure of your application when deciding whether to use the render props pattern.

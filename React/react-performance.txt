@@ -1,0 +1,6 @@
+What are the ways React provides to improve performance ?
+Ans:
+- React.memo, PureComponent, useMemo, useCallback solves rerendering issues
+- React.Lazy with Suspense makes page interactive faster. 
+- For rendering cached data, you can implement custom memozation
+- For consuming data from redux, you have memoized selectors

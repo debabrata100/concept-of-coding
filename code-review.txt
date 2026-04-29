@@ -1,0 +1,13 @@
+How do you review code ?
+1. Check for performance.
+2. Check for more readability
+3. Check if project specific best practices are followed. 
+Ex: instead of hard coding, you can consume
+the value from configuaration files
+4. Check for memory leak issue
+5. check for any regression
+6. Check if code is repatative 
+7. Check fr accessibility
+8. Unit Test
+9. Sacalibility
+10. How it affect other parts of the system

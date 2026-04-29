@@ -1,0 +1,14 @@
+Q1: Differentiate between the rest and spread operators. Can you provide examples of when each is 
+appropriately used in a real-world scenario?
+
+Ans: 
+Rest Operator: is used to represent indefinite number of values as an array
+ex: const [a, ...b] = [1,2,3,4];
+function foo(...args){} foo(1,2,3,4);
+Spread Operator: is used to merge two array, passing elements of an array as separate parameters to a function,
+Also used destructuring properties of an object into a new object.
+const a = [1,2,3,4];
+const b = [5,6];
+const res = [...a, ...b];
+const foo = (a,b,c,d) => a + b + c + d; foo(...a);
+const ob = {a: 1, b: 2 }; const ob2 = {...ob};

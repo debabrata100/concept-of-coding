@@ -1,0 +1,59 @@
+class Base64 {
+    protected static instance;
+    private base64Chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    constructor() {
+      if (Base64.instance) {
+        return Base64.instance;
+      }
+      Base64.instance = this;
+      return Base64.instance;
+    }
+    encode(str: string): string {
+      let finalStr = "";
+      let chunk: string;
+      for (let i = 0; i < str.length; i += 3) {
+        chunk = str.slice(i, i + 3);
+        let binaryRep = chunk
+          .split("")
+          .map((char) => char.charCodeAt(0).toString(2).padStart(8, "0"))
+          .join("");
+          // console.log("A".charCodeAt(0))
+        for (let j = 0; j < binaryRep.length; j += 6) {
+          let code = binaryRep.slice(j, j + 6).padEnd(6, "0");
+          let index = parseInt(code, 2);
+          finalStr += this.base64Chars[index];
+        }
+      }
+      return finalStr;
+    }
+    decode(str: string): string {
+      let binaryRep = "";
+      for (let ch of str) {
+        if (ch !== "=") {
+          let index = this.base64Chars.indexOf(ch);
+          binaryRep += index.toString(2).padStart(6, "0");
+        }
+      }
+      // binaryRep;
+      // split the binary rep to 8 bit chunks
+      const eightBitChunks = binaryRep.match(/.{8}/g);
+      const decodedString =
+        eightBitChunks
+          ?.map((chunk) => String.fromCharCode(parseInt(chunk, 2)))
+          .join("") || "";
+      return decodedString;
+    }
+  }
+  const b = new Base64();
+  const encoded = b.encode("A");
+  console.log(encoded);
+  console.log(b.decode(encoded));
+  
+  /*
+      encode: A
+      A -> ascii -> 65 -> 1000001 -> 100000, 100000 -> 16, 16 -> QQ
+      decode: QQ
+      QQ -> 16, 16-> 100000, 100000 -> 100000100000 -> 1000001(8)-> 65 -> A
+  
+  */

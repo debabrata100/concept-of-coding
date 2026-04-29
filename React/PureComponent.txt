@@ -1,0 +1,16 @@
+# PureComponent
+To skip re-rendering a class component for same props and state, extend PureComponent instead
+
+Skipping unnecessary re-renders for class components 
+React normally re-renders a component whenever its parent re-renders. As an optimization, you can
+create a component that React will not re-render when its parent re-renders so long as its new
+props and state are the same as the old props and state. Class components can opt into this
+behavior by extending PureComponent:
+
+# PureComponet vs Memo
+Unlike PureComponent, memo does not compare the new and the old state. In function components, calling the set function with the same state already prevents re-renders by default, even without memo.
+
+You should only rely on memo as a performance optimization. If your code doesn’t work without it, find the underlying problem and fix it first. Then you may add memo to improve performance.
+
+Even when a component is memoized, it will still re-render when its own state changes. Memoization only has to do with props that are passed to the component from its parent.
+

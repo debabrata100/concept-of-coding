@@ -1,0 +1,39 @@
+Both debounce and throttling are techniques used to control the rate at which a function is executed, especially in scenarios like handling user input or making API requests to avoid performance issues. Here's an example of how you might use debounce and throttling in JavaScript:
+
+
+
+
+#Debounce
+Debouncing is useful when you want to ensure that a function is only called after a certain amount of time has passed since the last invocation.
+function debounce(fn, delay) {
+  let timer = null;
+  let context = this;
+
+  return function (...args) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
+
+# Throttle
+Throttling is useful when you want to limit the rate at which a function is executed, ensuring it's not called more than once in a specified time interval.
+
+function throttle(fn, delay) {
+  let before = 0;
+  let isFirstCall = true;
+
+  return function (...args) {
+    let now = Date.now();
+
+    if (isFirstCall || now - before > delay) {
+      fn.apply(this, args);
+      before = now;
+      isFirstCall = false;
+    }
+  };
+}

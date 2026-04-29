@@ -1,0 +1,42 @@
+# React Query
+- client side caching
+- Error Handling
+- Refetching the data
+
+React Query solves the challenges of managing server state in React apps. It abstracts away boilerplate for data fetching, caching, error handling, and synchronization between the UI and remote APIs. Unlike local state with useState, server state is asynchronous and shared — React Query provides a robust, declarative way to handle it with built-in caching, background updates, and dev tools.
+
+#react query vs redux
+
+# React Query vs Redux (with Toolkit)
+Feature	                React Query	                                            Redux (with Toolkit)
+🔍 Purpose	            Manages server state (data from APIs)	                Manages client state (UI state, form data, etc.)
+
+🔁 Data Fetching	    Built-in (useQuery, useMutation)	                    You write logic using createAsyncThunk or middleware
+
+🧠 Caching	            Automatic and smart caching	                            Manual (you handle caching yourself)
+
+🧼 Boilerplate	        Minimal setup, less code	                            More setup (actions, reducers, thunks)
+
+🔄 Background Refresh	Yes (polling, refetch on focus/window refocus)	        No (you implement manually)
+
+♻️ Auto Refetching	     On invalidation or network change	                     Manual
+
+🔌 Devtools	            Rich devtools for cache & queries	                    Redux DevTools (good for action/state debugging)
+
+🔗 Persistence	        Automatically handled via cache	                        Manual (store + localStorage or middleware)
+
+⚛️ UI Coupling	        Closely tied to React (useQuery, useMutation)	         Framework-agnostic (can be used outside React)
+
+💥 Error Handling	    Built-in (onError, retry logic, fallback UI)	        Manual (try/catch in async thunk or middleware)
+
+🧠 When to Use Which?
+Use Case Example	                                Tool to Prefer
+Fetching data from a REST or GraphQL API	        ✅ React Query
+
+Managing forms, modals, toggles, UI state	        ✅ Redux
+
+Global state shared across many components	        ✅ Redux
+
+Need advanced caching or background sync	        ✅ React Query
+
+Large app with both server and client state	        🔁 Both (Redux + React Query)

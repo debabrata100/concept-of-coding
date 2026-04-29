@@ -1,0 +1,36 @@
+# RTK Query (from Redux Toolkit) 
+solves data fetching and caching problems in React/Redux apps — which are traditionally hard to manage with plain Redux.
+
+🎯 Problem RTK Query Solves
+Without RTK Query, you often need to:
+Write thunks or sagas to fetch data
+
+Dispatch multiple actions (FETCH_START, FETCH_SUCCESS, FETCH_ERROR)
+Manage loading, error, and data state manually
+Normalize and cache data if needed
+Manually refetch or invalidate stale data
+Handle race conditions and duplication
+Write boilerplate for every endpoint
+
+✅ RTK Query automates all of this.
+
+✅ What RTK Query Provides
+Feature	                        What It Does
+🔁 Data Fetching	            Automatically fetches data from an API via generated hooks
+📦 Caching	                    Keeps a cache of fetched data, avoids duplicate requests
+🔄 Auto Refetching	            Can refetch data when components remount or on interval
+✅ Status Flags	               Automatically tracks isLoading, isSuccess, isError etc.
+🧹 Cache Invalidation	        Lets you manually or automatically invalidate stale data
+⛔ Error Handling	           Built-in support for handling and tracking API errors
+🔧 Declarative API Endpoints	You declare endpoints once; hooks are auto-generated
+🧵 SSR/Prefetch Support	        Built-in support for prefetching and SSR
+
+
+Conceptual Difference
+React Query: Treats server state as external and lets components manage it directly through useQuery/useMutation hooks.
+
+RTK Query: Treats server state as part of the Redux state, managed through slices and reducers.
+Both are excellent choices, and you won't go wrong with either.
+Use React Query if you're building a React app without Redux or want fine-grained caching control.
+Use RTK Query if you already use Redux and want to eliminate extra boilerplate for API calls.
+

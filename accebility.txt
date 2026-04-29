@@ -1,0 +1,9 @@
+# https://www.youtube.com/watch?v=oFmHQsviAYo&list=PLWPvQ8T_TkijcVzrK-vw6eyh4fGlvKQ6y
+
+# tabindex: 0 -1 
+- use tabindex: 0 when there is a non interactive element or no semenatic element
+- use tabindex: -1, when you want to make a interactive element non interactive and want to focus using javascript
+
+# color contrast
+4:5 for small text
+3:1 fro bigger text

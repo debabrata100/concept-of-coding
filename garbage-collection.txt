@@ -1,0 +1,38 @@
+# How Garbage collection works in javascript ?
+JavaScript employs automatic memory management through a process called garbage collection. The primary goal of garbage collection is to identify and reclaim memory that is no longer in use by the program, preventing memory leaks and improving overall performance. The mechanism used for garbage collection in JavaScript is called the "Mark-and-Sweep" algorithm, and it involves several steps:
+
+* Allocation:
+
+When you create objects or variables in your JavaScript code, memory is allocated to store these entities.
+* Reference Tracking:
+
+JavaScript uses a system of references to keep track of which objects are still in use. If an object is referenced by other parts of your code, it is considered reachable and will not be eligible for garbage collection.
+* Marking Phase:
+
+The garbage collector identifies and marks all objects that are reachable by traversing the object graph starting from the global object (window in the case of browsers). It follows references from one object to another, marking each visited object as reachable.
+* Sweeping Phase:
+
+In this phase, the garbage collector identifies and reclaims memory occupied by objects that were not marked as reachable during the marking phase. These unreferenced objects are considered garbage.
+* Memory Compaction (Optional):
+
+Some garbage collectors may include an optional step of compacting memory after reclaiming unused space. This involves moving the remaining live objects closer together in memory to reduce fragmentation.
+Key Concepts:
+
+Roots:
+
+The roots are references to objects that are considered live and accessible from outside the JavaScript code. Examples of roots include global variables, local variables, and properties of currently executing functions.
+* Reachability:
+
+An object is considered reachable if it can be accessed or reached through a chain of references from the roots. Objects that are not reachable are candidates for garbage collection.
+Reference Counting (Not Used in JavaScript):
+
+While some programming languages use reference counting as a garbage collection technique, JavaScript relies on the Mark-and-Sweep algorithm. Reference counting involves keeping track of the number of references to each object, and when the count reaches zero, the object is considered garbage.
+Common Triggers for Garbage Collection:
+
+Manually Triggered:
+
+In JavaScript, developers typically don't manually trigger garbage collection. However, some environments provide methods (like window.gc() in browsers) that allow developers to request garbage collection.
+Automatic Triggering:
+
+Garbage collection is automatically triggered by the JavaScript runtime when certain conditions are met, such as when the system is low on memory or when a certain time interval has elapsed.
+Understanding how garbage collection works in JavaScript is essential for writing efficient and memory-friendly code. It helps prevent memory leaks and ensures optimal performance, especially in long-running applications.

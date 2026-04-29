@@ -1,0 +1,14 @@
+# Hydration
+The process of making server rendered html javascript enabled is called hydration.
+
+import React from 'react';
+import {  hydrateRoot } from 'react-dom/client';
+import App from './App';
+
+const container = document.getElementById('root');
+hydrateRoot(container, <App />);
+
+- hydrateRoot() expects the rendered content to be identical with the server-rendered content. 
+- You should treat mismatches as bugs and fix them.
+- In development mode, React warns about mismatches during hydration. There are no guarantees that attribute differences will be patched up in case of mismatches. This is important for performance reasons because in most apps, mismatches are rare, and so validating all markup would be prohibitively expensive.
+- You’ll likely have only one hydrateRoot call in your app. If you use a framework, it might do this call for you.

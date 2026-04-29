@@ -1,0 +1,10 @@
+Svelte vs. React: summary
+Here is a comparison table summarizing the key differences between Svelte and React.
+
+Aspect	    Svelte	                                    React
+Philosophy	Compiler-based, eliminates virtual DOM	    Virtual DOM-based, reconciles changes efficiently
+Bundle Size	1.6 KB	42.2 KB with ReactDOM
+Learning Curve	Gentle, easy for beginners	            Moderate, JSX and component lifecycle to learn
+Performance	Fast runtime, efficient updates	            Efficient but may have slight overhead due to VDOM
+Development Speed	Rapid development with less boilerplate	May require more setup and configuration
+Component-Based	Yes, encourages modular, reusable components	Yes, promotes component reusability

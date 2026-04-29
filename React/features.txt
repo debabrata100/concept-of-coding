@@ -1,0 +1,33 @@
+1. What is React Profiler Api ? How it is different from React dev tools ?
+The Profiler measures how often a React application renders and what the “cost” of rendering is. Its purpose is to help identify parts of an application that are slow and may benefit from optimizations such as memoization.
+usage: 
+import { Profiler } from 'react';
+
+function onRenderCallback(
+  id, // either "mount" (for the initial render) or "update" (for subsequent renders)
+  phase, // either "mount" (for the initial render) or "update" (for subsequent renders)
+  actualDuration, // time spent rendering the committed update
+  baseDuration, // estimated time to render the entire subtree without memoization
+  startTime, // when React began rendering this update
+  commitTime, // when React committed this update
+  interactions // the Set of interactions belonging to this update
+) {
+  // Aggregate or log profiling information
+}
+
+function MyComponent() {
+  return (
+    <Profiler id="MyComponent" onRender={onRenderCallback}>
+      {/* Your component's content */}
+    </Profiler>
+  );
+}
+
+React DevTools Profiler:
+
+Visual Interface: The React DevTools Profiler offers a visual interface for profiling your entire application or specific components. It provides a clear overview of the component hierarchy and their rendering performance.
+Browser Extension: As a browser extension or part of the browser's built-in developer tools, the React DevTools Profiler is easily accessible and can be used without modifying your application code.
+Global Performance Analysis: It's suitable for capturing a holistic view of your application's performance, making it easier to identify performance bottlenecks across different parts of the application.
+
+During development, you might find the React DevTools Profiler more convenient for quickly identifying performance issues. The React Profiler API can then be used for more in-depth analysis when needed.
+2. 

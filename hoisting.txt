@@ -1,0 +1,33 @@
+# What is hoisting, Does hoisting happens with priority means variable first then function.
+Ans: Hoisting is a concept in javascript that allows you to access varables and function before they are declared. This is because before code execution it creates a global execution context(window and this are created) along with memory for each variable and functions declared.
+
+Priority: Function Declarations → var Variables → let / const Variables
+
+🚀 Summary
+Type	                        Hoisted?	                Usable Before Declaration?
+Function Declaration	        ✅ Yes	                    ✅ Yes
+Function Expression (var)	    ✅ (Only variable)	        ❌ undefined
+var Variable	                ✅ (Only declaration)	    ✅ undefined
+let / const Variable	        ✅ (In TDZ)	                ❌ ReferenceError
+
+## Function Declarations Are Hoisted First
+Entire function is hoisted to the top.
+This means you can call myFunc() before its declaration.
+## var Variables Are Hoisted Next
+Only the declaration (var x;) is hoisted, but not the value (= 10).
+So, console.log(x); prints undefined (not an error).
+## let and const Are Hoisted Last
+They are hoisted, but placed in the "Temporal Dead Zone" (TDZ).
+Accessing them before initialization throws a ReferenceError.
+
+## Hoisting with Function Expressions
+Function expressions are treated like variables (hoisting only the declaration, not the definition).
+
+greet(); // ❌ TypeError: greet is not a function
+
+var greet = function () {
+  console.log("Hi!");
+};
+
+## Hoisting of Arrow Functions in JavaScript
+Arrow functions do not get fully hoisted like function declarations. Instead, they behave like function expressions, meaning only the variable declaration is hoisted, not the function definition.

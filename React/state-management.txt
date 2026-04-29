@@ -1,0 +1,8 @@
+List of state management libraries:
+* Redux
+* HookState
+* Recoil
+* Zustand
+* Mobx
+* Jotai
+* Rematch

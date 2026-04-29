@@ -1,0 +1,14 @@
+#Shadow DOM:
+
+* Definition: 
+The Shadow DOM is a web standard that allows encapsulation of DOM and CSS in a scoped subtree, separate from the main document DOM. It enables developers to create
+self-contained components with their own encapsulated styles and structure, which prevents style 
+and DOM leakage from the component to the rest of the page, and vice versa.
+
+* Purpose: 
+The primary purpose of the Shadow DOM is to encapsulate components, making them more
+maintainable, reusable, and modular.
+* Usage: 
+Shadow DOM is utilized when creating web components using technologies like Custom
+Elements. Each instance of a web component can have its own Shadow DOM, isolating its internal
+structure and styles.

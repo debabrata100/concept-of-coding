@@ -1,0 +1,19 @@
+# Patterns
+https://www.patterns.dev/
+#Lazy Loading assets
+https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading
+# Performance calender
+https://calendar.perfplanet.com/2023/
+
+# Resource hinting
+# preload
+## preconnect vs prefetch
+dns-prefetch = DNS and preconnect = DNS + TCP + TLS
+https://stackoverflow.com/questions/47273743/preconnect-vs-dns-prefetch-resource-hints
+
+#Autocomplete and select
+downshift by kentcdodds
+https://www.downshift-js.com/use-combobox/
+
+# perf
+https://perfnow.nl/

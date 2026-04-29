@@ -1,0 +1,347 @@
+https://medium.com/@arulvalananto/mastering-solid-principles-in-just-8-minutes-1df3425c6fff
+What are SOLID principles?
+SOLID principles are five design principles that help us keep our application reusable, maintainable, scalable, and loosely coupled. The SOLID principles are:
+
+Single-responsibility principle
+    - Code Reusability
+    - Improved colaboration
+    - Reduce Tight coupling
+    - Easier Testing
+Open-Closed principle
+Liskov substitution principle
+Interface segregation principle
+Dependency inversion principle
+
+- Single Responsibility Principle
+Principle: A component or class should have only one reason to change, meaning it should have only one responsibility.
+
+Bad practice:
+const Products = () => {
+    return (
+        <div className="products">
+            {products.map((product) => (
+                <div key={product?.id} className="product">
+                    <h3>{product?.name}</h3>
+                    <p>${product?.price}</p>
+                </div>
+            ))}
+        </div>
+    );
+};
+Instead, do this to adhere to SRP:
+import Product from './Product';
+import products from '../../data/products.json';
+
+const Products = () => {
+    return (
+        <div className="products">
+            {products.map((product) => (
+                <Product key={product?.id} product={product} />
+            ))}
+        </div>
+    );
+};
+
+// Product.js
+// Separate component responsible for rendering the product details
+const Product = ({ product }) => {
+    return (
+        <div className="product">
+            <h3>{product?.name}</h3>
+            <p>${product?.price}</p>
+        </div>
+    );
+};
+
+- Open-Closed principle
+
+// ❌ Bad Practice: Violating the Open-Closed Principle
+
+// Button.js
+// Existing Button component
+const Button = ({ text, onClick }) => {
+  return (
+    <button onClick={onClick}>
+      {text}
+    </button>
+  );
+}
+
+// Button.js
+// Modified Existing Button component with additional icon prop (modification)
+const Button = ({ text, onClick, icon }) => {
+  return (
+    <button onClick={onClick}>
+      <i className={icon} />
+      <span>{text}</span>
+    </button>
+  );
+}
+
+// Home.js
+// 👇 Avoid: Modified existing component prop
+const Home = () => {
+  const handleClick= () => {};
+
+  return (
+    <div>
+      {/* ❌ Avoid this */}
+      <Button text="Submit" onClick={handleClick} icon="fas fa-arrow-right" /> 
+    </div>
+  );
+}
+Instead, Do this:
+// ✅ Good Practice: Open-Closed Principle
+
+// Button.js
+// Existing Button functional component
+const Button = ({ text, onClick }) => {
+  return (
+    <button onClick={onClick}>
+      {text}
+    </button>
+  );
+}
+
+// IconButton.js
+// IconButton component
+// ✅ Good: You have not modified anything here.
+const IconButton = ({ text, icon, onClick }) => {
+  return (
+    <button onClick={onClick}>
+      <i className={icon} />
+      <span>{text}</span>
+    </button>
+  );
+}
+
+const Home = () => {
+  const handleClick = () => {
+    // Handle button click event
+  }
+
+  return (
+    <div>
+      <Button text="Submit" onClick={handleClick} />
+      {/* 
+      <IconButton text="Submit" icon="fas fa-heart" onClick={handleClick} />
+    </div>
+  );
+}
+
+- Liskov substitution principle
+Subtype objects should be substitutable for supertype objects
+
+/ ⚠️ Bad Practice
+// This approach violates the Liskov Substitution Principle as it modifies 
+// the behavior of the derived component, potentially resulting in unforeseen 
+// problems when substituting it for the base Select component.
+const BadCustomSelect = ({ value, iconClassName, handleChange }) => {
+  return (
+    <div>
+      <i className={iconClassName}></i>
+      <select value={value} onChange={handleChange}>
+        <options value={1}>One</options>
+        <options value={2}>Two</options>
+        <options value={3}>Three</options>
+      </select>
+    </div>
+  );
+};
+
+const LiskovSubstitutionPrinciple = () => {
+  const [value, setValue] = useState(1);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  return (
+    <div>
+      {/** ❌ Avoid this */}
+      {/** Below Custom Select doesn't have the characteristics of base `select` element */}
+      <BadCustomSelect value={value} handleChange={handleChange} />
+    </div>
+  );
+};
+
+Instead, Do this:
+
+// ✅ Good Practice
+// This component follows the Liskov Substitution Principle and allows the use of select's characteristics.
+
+const CustomSelect = ({ value, iconClassName, handleChange, ...props }) => {
+  return (
+    <div>
+      <i className={iconClassName}></i>
+      <select value={value} onChange={handleChange} {...props}>
+        <options value={1}>One</options>
+        <options value={2}>Two</options>
+        <options value={3}>Three</options>
+      </select>
+    </div>
+  );
+};
+
+const LiskovSubstitutionPrinciple = () => {
+  const [value, setValue] = useState(1);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  return (
+    <div>
+      {/* ✅ This CustomSelect component follows the Liskov Substitution Principle */}
+      <CustomSelect
+        value={value}
+        handleChange={handleChange}
+        defaultValue={1}
+      />
+    </div>
+  );
+};
+
+- Interface segregation principle
+No code should be forced to depend on methods it does not use.
+Solves these problems:
+* unnecessary dependancies
+* Tight coupling
+
+// ❌ Avoid: disclose unnecessary information for this component
+// This introduces unnecessary dependencies and complexity for the component
+const ProductThumbnailURL = ({ product }) => {
+  return (
+    <div>
+      <img src={product.imageURL} alt={product.name} />
+    </div>
+  );
+};
+
+// ❌ Bad Practice
+const Product = ({ product }) => {
+  return (
+    <div>
+      <ProductThumbnailURL product={product} />
+      <h4>{product?.name}</h4>
+      <p>{product?.description}</p>
+      <p>{product?.price}</p>
+    </div>
+  );
+};
+
+const Products = () => {
+  return (
+    <div>
+      {products.map((product) => (
+        <Product key={product.id} product={product} />
+      ))}
+    </div>
+  );
+}
+
+Let’s refactor to adhere to ISP:
+// ✅ Good: reducing unnecessary dependencies and making 
+// the codebase more maintainable and scalable.
+const ProductThumbnailURL = ({ imageURL, alt }) => {
+  return (
+    <div>
+      <img src={imageURL} alt={alt} />
+    </div>
+  );
+};
+
+// ✅ Good Practice
+const Product = ({ product }) => {
+  return (
+    <div>
+      <ProductThumbnailURL imageURL={product.imageURL} alt={product.name} />
+      <h4>{product?.name}</h4>
+      <p>{product?.description}</p>
+      <p>{product?.price}</p>
+    </div>
+  );
+};
+
+const Products = () => {
+  return (
+    <div>
+      {products.map((product) => (
+        <Product key={product.id} product={product} />
+      ))}
+    </div>
+  );
+};
+
+- Dependency inversion principle
+The Dependency Inversion Principle (DIP) states that high-level modules should not depend on low-level modules; both should depend on abstractions. Abstractions should not depend on details; details should depend on abstractions
+Bad way:
+// Concrete implementation of a data fetching service
+class ApiService {
+  fetchData() {
+    return fetch('https://api.example.com/data')
+      .then(response => response.json());
+  }
+}
+
+// Component without applying DIP
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.apiService = new ApiService(); // Direct dependency on a concrete implementation
+    this.state = {
+      data: null,
+    };
+  }
+
+  componentDidMount() {
+    this.apiService.fetchData()
+      .then(data => this.setState({ data }))
+      .catch(error => console.error('Error fetching data', error));
+  }
+
+  render() {
+    // Render component using fetched data
+  }
+}
+
+Good Way:
+// Abstraction for a data fetching service
+class IDataService {
+  fetchData() {
+    throw new Error('fetchData method must be implemented');
+  }
+}
+
+// Concrete implementation of the data fetching service
+class ApiService extends IDataService {
+  fetchData() {
+    return fetch('https://api.example.com/data')
+      .then(response => response.json());
+  }
+}
+
+// Component with dependency injection and DIP
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.dataService = props.dataService; // Injected dependency through props
+    this.state = {
+      data: null,
+    };
+  }
+
+  componentDidMount() {
+    this.dataService.fetchData()
+      .then(data => this.setState({ data }))
+      .catch(error => console.error('Error fetching data', error));
+  }
+
+  render() {
+    // Render component using fetched data
+  }
+}
+
+// Usage of the component with dependency injection
+const apiService = new ApiService();
+ReactDOM.render(<MyComponent dataService={apiService} />, document.getElementById('root'));

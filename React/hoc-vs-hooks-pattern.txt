@@ -1,0 +1,5 @@
+# Hooks vs Hoc
+1. Hoc allow injection of addtional props, which Hooks can not do.
+For example, you want to apply common styles to mupliple component, hoc can pnly help
+2. Hooks allow you direct access to state, where as hoc give access to state as props
+3. Hooks allow logic to be more localized within functional components. HOCs introduce a new layer of components, potentially leading to more separation in your code.

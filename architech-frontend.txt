@@ -1,0 +1,24 @@
+7 steps to be a Frontend Architect
+
+As a frontend developer, you've spent years honing your skills in HTML, CSS, and JavaScript. You've built countless features, fixed countless bugs, and have likely made a significant impact on the projects you've worked on. But now, you might be wondering what's next in your career. That's where becoming a Frontend Architect comes in.
+As a Frontend Architect, you'll take on a new level of responsibility and ownership in your projects. You'll use your technical expertise to design scalable, maintainable, and high-performing web applications.
+
+Here you will see 7 steps to get your game to the next level:
+1. Develop deep understanding of HTML, CSS, and JavaScript
+You will need to have in-depth knowledge of the core web technologies, including HTML, CSS, and JavaScript. You should be able to write efficient and maintainable code, understand the nuances of different browsers, and have solid understanding of how the different technologies work together. Knowing how to center a div will not be enough now, you will need to learn about images, forms, accessibility and more.
+2. Learn JavaScript frameworks and libraries.
+Are you proficient in one framework? Now the time to learn that new framework has come. You should have deep understanding of more than one JavaScript frameworks and libraries, such as React, Angular, or Vue. You should be able to use these frameworks to create scalable and maintainable web applications, and understand how to integrate them with other technologies. Maybe you are not using them in your day-to-day, but knowing them will help you a lot.
+3. Understand web performance optimization.
+You should have a solid understanding of web performance optimization techniques, such as lazy loading, code splitting, and caching. You should be able to identify performance bottlenecks and optimize web applications for speed and efficiency.
+4. Master accessibility and user experience design.
+Repeat after me, the internet is for EVERYONE. As a FE Architect, you will need to have deep understanding of accessibility and user experience design. You should be able to design web applications that are easy to use and accessible to all users. You can change the life of someone by keeping accessibility into account.
+5. Stay up-to-date with emerging technologies.
+You should stay up-to-date with emerging web technologies and trends, including new frameworks, libraries, and tools. You should be able to evaluate new technologies and determine if they are suitable for your projects all the time. Maybe that hacky custom library you wrote is now an NPM package that is meant to solve your problems once and for all.
+6. Learn how to work with APIs for real.
+In order to work effectively with APIs, Frontend Architects should have a good understanding of backend development. This includes concepts such as server-side programming, database management, and security. By understanding how the backend works, Frontend Architects can make informed decisions about how to structure their frontend code to interact with the backend.
+In addition to these foundational skills, Frontend Architects should also have experience working with different API protocols, such as RESTful APIs and GraphQL. RESTful APIs are the most common type of API used in web development, and Frontend Architects should be familiar with concepts such as endpoints, HTTP methods, and status codes. GraphQL is a newer API protocol that is gaining popularity due to its flexibility and efficiency, and Frontend Architects should be able to work with GraphQL APIs and understand its unique features.
+Finally, Frontend Architects should be able to handle common API-related tasks, such as user authentication, error handling, and working with different data formats. This includes understanding concepts such as JSON, XML, and CSV, and knowing how to parse and manipulate data from different sources.
+7. Develop leadership and communication skills.
+You can be a super black ninja that can hack his own microwave, but if you don't know how to communicate properly, you are done.
+As a Frontend Architect, you will need to have strong leadership and communication skills. You should be able to lead a team of developers, communicate technical requirements to non-technical stakeholders, and collaborate with designers, developers, and other stakeholders.
+This is probably the most challenging step for most of us, but the key here is to learn how to listen to everyone's opinion and ideas.

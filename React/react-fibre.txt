@@ -1,0 +1,17 @@
+# What is the idea behind React fibre over older reconciliation alogorihth
+
+React Fiber is a reimplementation of React's core algorithm designed to improve performance and enable more sophisticated features while maintaining the flexibility and simplicity of the React programming model. The idea behind React Fiber is to provide a more efficient and incremental approach to rendering and updating user interfaces compared to the older reconciliation algorithm.
+
+The key concepts and benefits of React Fiber include:
+
+* Incremental Rendering: React Fiber introduces the concept of incremental rendering, allowing the rendering work to be broken down into smaller chunks or "fibers." This enables React to pause and resume rendering work, making it more responsive and better able to prioritize rendering updates based on the user's interaction.
+
+* Priority Scheduling: React Fiber introduces a priority-based scheduling algorithm that allows the application to prioritize which updates to process first based on their importance. This enables React to ensure that high-priority updates, such as user interactions or animations, are processed quickly, providing a smoother user experience.
+
+* Better Support for Async Rendering: React Fiber provides better support for asynchronous rendering, allowing components to suspend rendering while waiting for data or other asynchronous operations to complete. This enables React to handle complex UI interactions more efficiently and smoothly, without blocking the main thread.
+
+* Improved Error Handling: React Fiber improves error handling by capturing and handling errors at the component level, preventing them from propagating to the entire application and causing it to crash. This makes it easier to debug and troubleshoot issues in React applications.
+
+* Support for Concurrent Mode: React Fiber introduces Concurrent Mode, which allows React to work on multiple tasks concurrently, making better use of available resources and improving performance. Concurrent Mode enables React to seamlessly switch between rendering and responding to user input, providing a more fluid and responsive user experience.
+
+Overall, the idea behind React Fiber is to provide a more efficient and flexible foundation for building complex user interfaces, allowing React to better handle the demands of modern web applications while maintaining its simplicity and ease of use

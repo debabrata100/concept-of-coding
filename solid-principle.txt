@@ -1,0 +1,21 @@
+# SOLID
+S: Single Responsibility Principle
+   Every Software component should have one and only responsibility and only one reason to change
+- Cohesion: 
+  * Cohesion is the degree to which various parts of a software components are related
+  * Aim for higher Cohesion
+- Coupling
+  * Coupling is defined as the level of inter dependency between various software components
+  * Aim for Loose Coupling
+
+O: Open/Closed Principle (OCP)
+Software entities should be open for extension but closed for modification, allowing behavior to be extended without altering existing code.
+
+L: Liskov Substitution Principle (LSP)
+Objects of a superclass should be replaceable with objects of its subclasses without breaking the correctness of the program.
+
+I: Interface Segregation Principle (ISP)
+Clients should not be forced to depend on interfaces they do not use; interfaces should be small and focused.
+
+D: Dependency Inversion Principle (DIP)
+High-level modules should not depend on low-level modules; both should depend on abstractions, and abstractions should not depend on details.

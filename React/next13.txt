@@ -1,0 +1,45 @@
+# Next 13 
+# Ref: https://javascript.plainenglish.io/things-you-dont-know-about-next-js-02ee54cb5b7f
+
+1. Route Groups: D: Directory, F: File
+URL: http:localhost:3000/sign-in
+Folder Structure: app(D) => auth(D) => signin(D) -> page.tsx(F)
+2. Static Metadata
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'Hero's Blog',
+  description: 'Blog created by Hero',
+}
+3. Dynamic Metadata
+You can use generateMetadata function to fetch metadata that requires dynamic values.
+// page.txt
+import type { Metadata } from "next";
+
+type Props = {
+    params: {
+        id: string
+    }
+};
+
+export const generateMetadata = ({ params }: Props): Metadata => {
+    return {
+        title: `Product ${params.id}`
+    }
+}
+
+export default function FavouriteProductDetails({ params }: Props) {
+    return <h1>Favouraite Product Details {params.id}</h1>
+}
+
+4. Private Routes
+a: Making a separate components directory outside the app directory.
+app
+components 
+b: Inside any directory, which is under the app directory, creating a _components folder
+app => signin => _components -> SubmitButton.tsx
+c: Creating different files inside a directory which won’t get served directly to the client until and unless added to the page.tsx file.
+app => signin ->  SubmitButton.tsx | page.tsx | Form.tsx
+5. Catch-all Segments
+/docs/[...slug]/page.tsx
+/docs/[[...slug]]/page.tsx

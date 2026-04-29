@@ -1,0 +1,12 @@
+What do you mean by asynchronous ?
+Asynchronous programming refers to a programming paradigm that allows certain operations to be executed independently of the main program flow. In a synchronous (or blocking) program, each operation is executed one after the other, and the program waits for each operation to complete before moving on to the next one. In contrast, asynchronous programming enables multiple operations to be initiated, and the program can continue executing other tasks while waiting for the asynchronous operations to complete.
+
+Here are some key concepts related to asynchronous programming:
+
+Concurrency: Asynchronous programming enables concurrency, meaning that multiple tasks can make progress independently. This is especially useful in scenarios where tasks involve waiting for external resources, such as data retrieval from a server, file I/O, or user input.
+
+Callbacks: Callbacks are functions that are passed as arguments to other functions. In the context of asynchronous programming, callbacks are often used to specify what should happen once an asynchronous operation completes. For example, when a file is read asynchronously, you might provide a callback function that will be executed when the reading is finished.
+
+Promises: Promises are a more modern and structured way to handle asynchronous operations in JavaScript. A Promise represents a value that may not be available yet but will be resolved at some point in the future. It has methods like then and catch that allow you to attach functions to handle the success or failure of the asynchronous operation.
+
+Async/Await: Introduced in ECMAScript 2017 (ES8), the async and await keywords provide a more concise and readable way to work with asynchronous code. An async function returns a Promise, and the await keyword is used inside an async function to pause execution until the awaited Promise is resolved.

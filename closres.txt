@@ -1,0 +1,93 @@
+# What are closures ? their uses, advantages and disadvantages ?
+
+functions bundled together with its lexical scope forms a closure.
+
+function x() {
+    let a = 10;
+    function y() {
+        console.log(a)
+    }
+    a = 100;
+    return y;
+}
+const z = x();
+console.log(z()) // 100
+here froms a closure with its parent scope where a resides. Even after excution of x,
+it still holds a reference to a's memory location.
+# Uses
+- Module Design Pattern
+- Currying
+- Functions like once
+- memoize
+- maintaining state in async world
+- setTimeout
+- Iterators
+- and many more
+
+Advantages:
+##Encapsulation:
+Closures allow you to encapsulate variables within a function's scope, preventing them from polluting the global scope. This helps in avoiding naming conflicts and unintended variable modifications.
+
+##Data Privacy:
+Closures provide a way to create private variables and functions. Variables defined within a closure are not directly accessible from outside the function, offering a level of data privacy and security.
+
+##Function Factories:
+Closures enable the creation of function factories, where a function returns another function with specific behavior based on the context in which it was created. This is useful for creating reusable and configurable components.
+
+##Callback Functions:
+Closures are often used with callback functions, allowing you to maintain the context in which a function was created even when it's called later. This is common in asynchronous operations, event handling, and various design patterns.
+
+# Disadvantages
+##Memory Consumption:
+Closures can lead to increased memory consumption, especially when large amounts of data are enclosed within the closure. This is because the enclosed variables and functions are kept alive as long as the closure exists.
+
+##Potential for Memory Leaks:
+If closures are not handled carefully, they can lead to memory leaks. If a closure retains references to objects that are no longer needed, those objects won't be garbage collected, causing memory to be occupied unnecessarily.
+5. Explain memory leaks due to closure with an exmple.
+function createClosure() {
+    // Data that should be private
+    let data = [1, 2, 3];
+  
+    // Closure function
+    function getData() {
+      console.log(data);
+    }
+  
+    // Return the closure function
+    return getData;
+  }
+  
+  // Create a closure
+  const closure = createClosure();
+  
+  // Call the closure function
+  closure(); // Outputs: [1, 2, 3]
+  
+  // Assume that the data is no longer needed and should be garbage collected
+  // However, the closure still has a reference to the 'data' array
+
+  Solutions:
+  function createClosure() {
+    let data = [1, 2, 3];
+  
+    function getData() {
+      console.log(data);
+    }
+  
+    function releaseData() {
+      // Nullify the reference to 'data'
+      data = null;
+    }
+  
+    return { getData, releaseData };
+  }
+  
+  const { getData, releaseData } = createClosure();
+  
+  getData(); // Outputs: [1, 2, 3]
+  
+  // After using the data, release the reference
+  releaseData();
+  
+  // Now, the 'data' array is eligible for garbage collection
+  

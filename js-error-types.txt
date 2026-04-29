@@ -1,0 +1,10 @@
+# Syntax Error
+# Type Error
+# Reference Error
+
+const a; // Type Error
+console.log(b); // Reference error, can not access b before initialization
+let b = 10;
+console.log(x); // Reference Error, can not access x, x is not defined
+
+let b = 11; // Syntax Error:  Error

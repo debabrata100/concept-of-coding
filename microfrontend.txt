@@ -1,0 +1,17 @@
+# Advantages of micro front end
+- Speed up the development process
+- Faster production rollout
+- Easier code reusability
+- Reduces Dependancy
+- Possibility of using dfferent technology
+- allow multiple teams to work independently, choose their technology stacks, and establish release cycles
+
+# Drawback
+- Lack of control
+- More coordination required(contracts)
+- Complex development & development lfecycle
+
+List of miro frontend libraries: https://itnext.io/11-micro-frontends-frameworks-you-should-know-b66913b9cd20
+- bit
+- Webpack 5 and Module Federation
+- 

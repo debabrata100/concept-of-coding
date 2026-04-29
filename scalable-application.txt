@@ -1,0 +1,36 @@
+# How do you make your application code scalable ?
+
+Making the application code scalable involves adopting practices and principles that allow the codebase to grow, adapt, and handle increasing complexity without sacrificing maintainability and performance. Here are several strategies to make your application code scalable:
+
+## Modularization 
+- Organize your code into modular components with well-defined responsibilities. This promotes code reusability and makes it easier to understand and maintain.
+- Use design patterns (e.g., MVC, MVVM) to separate concerns and keep different aspects of your application loosely coupled.
+
+## Documentation
+- Maintain comprehensive documentation to help new developers understand the codebase and contribute effectively.
+- Document coding conventions, component APIs, and any custom patterns or practices.
+
+## Scalable Database Design:
+Design your database schema to be scalable. Consider normalization and denormalization based on the access patterns of your data.
+Use indexes effectively and optimize database queries for performance.
+
+## Code Reusability:
+- Promote code reusability by encapsulating common functionalities into reusable functions, classes, or modules.
+- Avoid duplicating code; instead, create shared libraries or utilities that can be used across different parts of your application.
+
+## Optimized Algorithms and Data Structures:
+- Choose algorithms and data structures that are efficient for the specific requirements of your application.
+- Regularly review and update algorithms to ensure they remain performant as your application scales.
+
+## Asynchronous Programming:
+- Utilize asynchronous programming to handle concurrent operations efficiently, especially for I/O-bound tasks.
+- Implement asynchronous patterns to improve the responsiveness of your application.
+- ex: requestIdleCallback
+
+## Continuous Integration and Deployment (CI/CD):
+- Set up CI/CD pipelines to automate testing, deployment, and scaling processes.
+- Ensure that your CI/CD pipeline includes checks for code quality, security, and performance.
+
+## Dependency Management:
+- Keep dependencies up to date and regularly audit your project for outdated or deprecated packages.
+- Choose lightweight libraries and dependencies to avoid unnecessary bloat.

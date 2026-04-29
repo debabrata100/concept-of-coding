@@ -1,0 +1,92 @@
+#Minifying 
+is just removing unnecessary white-space and redundant like comments and semicolons. And it can be reversed back when needed.
+
+#Uglifying 
+is transforming the code into an "unreadable" form by changing variable names, function names, etc, to hide the original content. Once it is used there's no way to reverse it back.
+
+#Tree Shaking
+Tree shaking is a term commonly used in the JavaScript context for dead-code elimination. It relies on the static structure of ES2015 module syntax, i.e. import and export. The name and concept have been popularized by the ES2015 module bundler rollup.
+
+#Loaders
+Webpack enables use of loaders to preprocess files. This allows you to bundle any static resource way beyond JavaScript. You can easily write your own loaders using Node.js.
+
+#Code Splitting
+Code splitting is one of the most compelling features of webpack. This feature allows you to split your code into various bundles which can then be loaded on demand or in parallel. It can be used to achieve smaller bundles and control resource load prioritization which, if used correctly, can have a major impact on load time.
+There are three general approaches to code splitting available:
+
+Entry Points: Manually split code using entry configuration.
+Prevent Duplication: Use Entry dependencies or SplitChunksPlugin to dedupe and split chunks.
+Dynamic Imports: Split code via inline function calls within modules.
+
+Advantages of code splitting:
+- Multiple bundle: no need to load all the bundles. can be oaded on demand
+- Prevent duplication (splitchunk plugin)
+- Lazy Loading / Dynamic Imports
+import(/* webpackChunkname: "chunk_name" */, "./component/showmodal").then((module)=> {
+    const showModal = module.default;
+})
+
+Optimization:
+1. Code Spliting:
+    - Dynamic Import
+    - Split Chunk plugin to remove duplicate with sharable bundle(same file downloaded again but browser already cached it)
+2. Extract css to different file
+Reason:
+ - when you request a new page, you have to fetch same css again from server
+ - To avoid flickers
+Plugin: MiniCssExtract Plugin
+3. Shimming
+webpack.ProvidePlugin({
+    mnt: 'moment'
+})
+This will provide global export
+3. Dead css elimination
+Plugins:
+- purge-css-webpack-plugin
+- glob
+New PurgeCss({
+    paths: glob.sync(`${purgePath.src}/**/*`, {nodir: true}),
+    safelist: ["dummy-css"]
+})
+4. Tree Shaking
+Rules:
+- Must be in es6 format modules, not common js
+- Autorun in production modeof webpack
+
+
+
+
+other bundlers:
+- parcel
+- rollup
+
+Questions ?
+1. How to enable css modules using webpack;
+
+2. Explain following configuration:
+use: {
+    loader: "babel-loader",
+    options: {
+      presets: [
+        [
+          "@babel/preset-env",
+          {
+            targets: "defaults",
+          },
+        ],
+        "@babel/preset-react",
+      ],
+    },
+  }
+  This code is part of the webpack configuration and specifies how JavaScript files should be processed by Babel through babel-loader. Here's what each part does:
+
+  use: This specifies the loader or loaders to use for processing the matched files. In this case, it's an object specifying the loader (babel-loader) and its options.
+  
+  loader: This specifies the loader to use, which in this case is "babel-loader". babel-loader is a webpack loader that allows you to transpile JavaScript files using Babel.
+  
+  options: These are the options passed to babel-loader, defining how Babel should transpile the JavaScript code. Inside options, we specify the presets that Babel should use.
+  
+  presets: Presets are pre-configured sets of plugins that enable certain language features or transformations. In this case, two presets are specified:
+  
+  @babel/preset-env: This preset allows Babel to transpile modern JavaScript syntax down to an older version that's compatible with a wide range of target environments. The { targets: "defaults" } option configures Babel to target the default browserslist environment, meaning it transpiles JavaScript syntax to match the environments specified in the .browserslistrc file or in the browserslist field of your package.json.
+  @babel/preset-react: This preset is specifically for React applications. It enables Babel to transpile JSX syntax and provides other React-specific transformations.  

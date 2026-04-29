@@ -1,0 +1,19 @@
+What is Boxing in javascript ?
+Ans: In JavaScript, "boxing" typically refers to the process of converting a primitive data type (such as a string, number, or boolean) into an object. This conversion is necessary when you want to perform operations or access properties and methods that are only available on objects. 
+JavaScript automatically "boxes" primitives when necessary to use them as objects.
+Here's a simple example of boxing a primitive:
+const str = 'Hello'; // This is a primitive string
+const strObject = new String(str); // Boxing the string into a String object
+
+console.log(str.length); // 5 (Accessing string length on a primitive)
+console.log(strObject.length); // 5 (Accessing string length on a String object)
+In this example, the string str is a primitive, but when we access its length property, 
+JavaScript boxes it into a temporary String object to perform the operation. 
+This is called "implicit boxing."
+
+Boxing can happen with other primitive types as well. For example:
+const num = 42; // Primitive number
+const numObject = new Number(num); // Boxing the number into a Number object
+
+console.log(num.toFixed(2)); // 42.00 (Using toFixed() on a primitive)
+console.log(numObject.toFixed(2)); // 42.00 (Using toFixed() on a Number object)

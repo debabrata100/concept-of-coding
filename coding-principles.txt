@@ -1,0 +1,23 @@
+* Single Responsibility Principle (SRP): A class should have only one reason to change, meaning it should have only one responsibility.
+
+* Open/Closed Principle (OCP): Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification.
+
+* Liskov Substitution Principle (LSP): Objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program.
+
+* Interface Segregation Principle (ISP): A class should not be forced to implement interfaces it does not use.
+
+* Dependency Inversion Principle (DIP): High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details; details should depend on abstractions.
+
+In addition to the SOLID principles, there are several other design principles and practices that developers should be aware of. Some of them include:
+
+* KISS (Keep It Simple, Stupid): The KISS principle advocates for simplicity in design. It suggests that systems and designs should be kept as simple as possible to avoid unnecessary complexity.
+
+* DRY (Don't Repeat Yourself): DRY encourages developers to avoid duplicating code. Instead, reusable code should be modularized and shared to reduce redundancy.
+
+* YAGNI (You Ain't Gonna Need It): YAGNI advises against adding functionality to a system until it is actually needed. This helps prevent over-engineering and keeps the focus on delivering features that provide value.
+
+* Composition Over Inheritance: This principle suggests that it's often better to compose objects or behaviors together rather than relying heavily on class inheritance. Composition can lead to more flexible and maintainable code.
+
+* Law of Demeter (LoD): Also known as the "Principle of Least Knowledge," LoD states that a module should not know about the internal details of the objects it interacts with. This reduces coupling and promotes encapsulation.
+
+* Separation of Concerns (SoC): SoC advocates for dividing a system into distinct sections, each addressing a separate concern. This helps manage complexity and makes the codebase more maintainable.

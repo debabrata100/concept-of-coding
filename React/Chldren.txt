@@ -1,0 +1,13 @@
+1. Children lets you manipulate and transform the JSX you received as the children prop.
+const mappedChildren = Children.map(children, child =>
+    <div className="Row">
+      {child}
+    </div>
+  );
+
+Apis:
+2. Children.count(children)
+3. Children.forEach(children, fn, thisArg?)
+4. Children.map(children, fn, thisArg?)
+5. Children.only(children)
+6. Children.toArray(children)

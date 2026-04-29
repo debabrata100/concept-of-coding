@@ -1,0 +1,14 @@
+<StrictMode> lets you find common bugs in your components early during development.
+
+Usage
+Enabling Strict Mode for entire app
+Enabling Strict Mode for a part of the app
+Fixing bugs found by double rendering in development
+Fixing bugs found by re-running Effects in development
+Fixing deprecation warnings enabled by Strict Mode
+
+React 18 introduce concurrency, it means it can pause, stop and continue rendering while user 
+is busy on some more urgent task like typing in a input field. Since it can pause and continue rendering,
+it may call some life effects twice, Strict mode ensures that even if it call twice, it should not
+impact the application.
+# https://react.dev/reference/react/StrictMode#fixing-bugs-found-by-re-running-effects-in-development

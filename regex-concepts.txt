@@ -1,0 +1,30 @@
+
+    Example 1: Replacing and adding characters
+    const varName = 'thisIsAVariable';
+    const var_name = varName.replace(/([A-Z])/g, '_$1').toLowerCase();
+    
+    Example 2: Extracting Dates
+    You can use regex to extract dates from a text.
+
+    const text = "The meeting is scheduled for 2023-11-15. Don't forget!";
+    const datePattern = /\d{4}-\d{2}-\d{2}/;
+    const dates = text.match(datePattern);
+
+    Example 3: Replacing Words
+    Regex can be used for replacing words in a text with other words.
+    const text = "I like cats, but I prefer dogs.";
+    const replacePattern = /cats/g;
+    const newText = text.replace(replacePattern, "dogs");
+
+    Example 4: Extracting characters
+    const inputString = "IAmAVariable";
+    const capitalLetters = inputString.match(/[A-Z]/g);
+    console.log(capitalLetters);
+
+    const a = "7800";
+    const o = a.replace(/(\d)(\d)(\d)(\d)/,'$1-$2-$3-$4');
+    o: 7-8-0-0
+
+    const str = 'this is 33 and i am at 23';
+    const o = str.replace(/\d/g,''); // this is and i am at
+    const list = str.match(/\d{2}/g).map(Number); // [33, 23]

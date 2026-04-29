@@ -1,0 +1,12 @@
+- typeahead search
+- Implement Google Lke Calender
+- Microsoft excel like speadsheet
+- Dynamic forms using config
+- Implement Progressbar
+- Implement star rating
+- Twitter Post Like text area
+- Create todo application
+- Design Cart page
+- ProductListing Page with filters
+- Build tic tac toe
+- 

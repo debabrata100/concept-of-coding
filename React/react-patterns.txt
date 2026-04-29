@@ -1,0 +1,6 @@
+1. HOC
+When multiple components need same data or same logic 
+2. Render Props Pattern
+3. Compound Pattern
+4. Hooks Pattern
+5. Container / Presentational Pattern
