@@ -1,0 +1,194 @@
+# Objects / Functions
+
+Both can be used to describe the shape of an object or a function signature. But the syntax differs.
+
+interface Point1 {
+    x: number;
+    y: number;
+}
+interface setPoint {
+    (x: number, y: number): void;
+}
+
+type Point2 = {
+    x: number;
+    y: number;
+}
+
+type SetPoint = (x: number, y: number) => void;
+
+const updatePoint: SetPoint = (x: number, y: number) => {
+    this.x = x;
+    this.y = y;
+}
+
+# Other Types
+Unlike an interface, the type alias can also be used for other types such as primitives, unions, and tuples.
+
+// primitive
+type Name = string;
+
+// object
+type PartialPointX = { x: number; };
+type PartialPointY = { y: number; };
+
+// union
+type PartialPoint = PartialPointX | PartialPointY;
+
+// tuple
+type Data = [number, string];
+
+# Extend
+
+Both can be extended, but again, the syntax differs. Additionally, note that an interface and type alias are not mutually exclusive. An interface can extend a type alias, and vice versa.
+
+# Interface extends interface
+
+interface PartialPointX { x: number; }
+interface Point extends PartialPointX { y: number; }
+
+# Type alias extends type alias
+
+type PartialPointX = { x: number; };
+type Point = PartialPointX & { y: number; };
+
+# Interface extends type alias
+
+type PartialPointX = { x: number; };
+interface Point extends PartialPointX { y: number; }
+
+# Type alias extends interface
+
+interface PartialPointX { x: number; }
+type Point = PartialPointX & { y: number; }; // Intersection
+
+# Implements
+
+A class can implement an interface or type alias, both in the same exact way. Note however that a class and interface are considered static blueprints. Therefore, they can not implement / extend a type alias that names a union type.
+
+interface Point {
+    x: number;
+    y: number;
+  }
+  
+  class SomePoint implements Point {
+    x = 1;
+    y = 2;
+  }
+  
+  type Point2 = {
+    x: number;
+    y: number;
+  };
+  
+  class SomePoint2 implements Point2 {
+    x = 1;
+    y = 2;
+  }
+  
+  type PartialPoint = { x: number; } | { y: number; }; // Union
+  
+  // FIXME: can not implement a union type
+  class SomePartialPoint implements PartialPoint {
+    x = 1;
+    y = 2;
+  }
+
+# Declaration merging
+Unlike a type alias, an interface can be defined multiple times, and will be treated as a single interface (with members of all declarations being merged).
+
+// These two declarations become:
+// interface Point { x: number; y: number; }
+interface Point { x: number; }
+interface Point { y: number; }
+
+const point: Point = { x: 1, y: 2 };
+
+# Intersection, Union and inheritance
+
+interface emp {
+    name: string;
+}
+interface student {
+    degree: string;
+}
+type studentEmployee = emp & student;
+type eligible = student | emp;
+
+# Type aliases has cleaner syntax than interfaces:
+* Tuples 
+// type Address = [number, string];
+interface Address extends Array<number | string> {
+    0: number;
+    1: string;
+}
+* Can declare primitive values | not possible with interface
+type Address = string;
+const address: Address = "16th main street";
+* can describe union types | not possible with interfaces
+type Address = string | string[];
+* Utility Types, interface has ugly syntax
+type UserProps = {
+  name: string;
+  age: number;
+  createdAt: Date;
+}
+type GuestProps = Omit<UserProps, "name" | "age">
+interface GuestProps extends Omit<UserProps, "name" | "age">{}
+* Extracting types from something else | Ugly with interface
+const project = {
+  name: "Inversion",
+  specification: {
+      areaSize: 300,
+      room: 3
+  }
+} as const;
+
+type Specification = typeof project.specification;
+* Interfaces can be merged
+"Interfaces are open" and "type aliases are closed"
+type User {
+  name: string;
+  age: number;
+}
+type User {
+  role: string
+}
+* Interfaces are unpredictable since they are open. Anyone can put anything
+type User = {
+  name: string;
+  age: number;
+}
+type User2 = User & {
+  role: string;
+}
+* type aliases can be used for classes too
+type TUser {
+  name: string;
+  age: number;
+}
+class User implements TUser{
+  name: string;
+  age: string;
+}
+
+* as const types:
+
+const routes = {
+  home: "/",
+  admin: "/admin",
+  users: "/user"
+} as const; // freezes all levels
+
+function gotoRoutes(route: "/" | "/admin" | "/user") {
+  //
+}
+type RouteKeys = keyof typeof routes;
+
+type Route = (typeof routes)["home" | "admin" | "users"];
+type Route2 = (typeof routes)[keyof typeof routes];
+function gotoRoutes2(route: Route2) {
+  //
+}
+
+gotoRoutes(routes.admin)

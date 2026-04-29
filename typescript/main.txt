@@ -1,0 +1,67 @@
+1. What is TypeScript, and how does it differ from JavaScript?
+
+2. What are the benefits of using TypeScript?
+
+3. Explain TypeScript's static typing. How does it help in development?
+
+4. What are the basic data types in TypeScript?
+
+5. How do you declare variables in TypeScript?
+
+6. Differentiate between "interface" and "type" in TypeScript. When would you use one over the other?
+
+7. What are generics in TypeScript, and how do you use them?
+
+8. Explain the concept of type inference in TypeScript.
+
+9. How does TypeScript handle compilation and transpilation?
+
+10. Discuss the use of access modifiers (public, private, protected) in TypeScript classes.
+
+11. Explain the concept of modules in TypeScript.
+
+12. What is the purpose of "tsconfig.json" file in a TypeScript project?
+
+13. How does TypeScript support JavaScript libraries and frameworks?
+
+14. Discuss the role of decorators in TypeScript.
+
+15. How do you handle asynchronous programming in TypeScript?
+
+16. What are the key differences between "null" and "undefined" in TypeScript?
+
+17. How do you ensure type safety while working with third-party libraries in TypeScript?
+
+18. Explain the concept of "declaration merging" in TypeScript.
+
+19. Discuss the role of namespaces in TypeScript and when to use them.
+
+20. What are some of the common pitfalls or challenges developers might face when working with TypeScript?
+
+21. What are the other benefits of typescript other than type checking ?
+
+
+
+1. What is TypeScript, and how does it differ from JavaScript?
+TypeScript is a superset of JavaScript developed by Microsoft. It adds static typing and other features to the language, which helps in writing more robust, maintainable, and scalable applications.
+
+🔑 Key Differences Between TypeScript and JavaScript
+Feature	        JavaScript	                        TypeScript
+Typing	        Dynamically typed	                Statically typed (optional and can be inferred)
+Compilation	    Interpreted directly by browsers	Compiled to JavaScript before execution
+Error Detection	Runtime errors	                    Compile-time type checking to catch errors early
+
+8. Explain the concept of type inference in TypeScript.
+If you don’t explicitly write a type, TypeScript will guess it based on the assigned value.
+let isLoggedIn = true; // TypeScript infers: boolean
+isLoggedIn = "yes";    // ❌ Error: 'string' is not assignable to 'boolean'
+
+6. Differentiate between "interface" and "type" in TypeScript. When would you use one over the other?
+a. you can create type alias with primitive types, can not do with interface.
+b. you can combine multiple inerfaces and create a new type 
+c. Unlike type, you can declare same interfaces multiple time. They will be merged into one.
+d. Interfaces are unpredictable since they are open. Anyone can put anything.
+
+12. What is the purpose of "tsconfig.json" file in a TypeScript project?
+The tsconfig.json file is a critical configuration file in any TypeScript project. It tells the TypeScript compiler (tsc) how to compile your code.
+

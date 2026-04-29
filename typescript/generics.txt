@@ -1,0 +1,179 @@
+************* for object literal ***********
+type ApiResponse<Data extends object> = {
+    data: Data,
+    isError: boolean
+}
+
+type UserResponse = ApiResponse<{name: string, age: number}>;
+
+const response: UserResponse = {
+    data: {
+        name: "deb",
+        age: 30
+    },
+    isError: false
+}
+
+******* For Html Elements *******
+const input = document.querySelector<HTMLInputElement>("#name");
+input.value
+******* For functions *********
+function getFirstElement<ArrType>(arr:ArrType[]) {
+    return arr[0];
+}
+
+getFirstElement([1,2,3]);
+getFirstElement(["a","b"]);
+
+# Define a Generic API Response Interface
+interface ApiResponse<T> {
+    success: boolean;
+    message: string;
+    data: T;
+  }
+type bodyType = {
+  name: 'Deb'
+}
+# Create a Generic API Service Class
+class ApiService {
+  async get<T extends object>(url: string): Promise<ApiResponse<T>> {
+    const response = await fetch(url);
+    const json = await response.json();
+    return json as ApiResponse<T>
+  }
+  
+  async post<T extends object>(url: string, body: bodyType): Promise<ApiResponse<T>> {
+ 
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+    const json = await response.json();
+    return json as ApiResponse<T>
+  }
+}
+# Define a model type:
+
+type User = {
+    id: number;
+    name: string;
+    email: string;
+  };
+
+  ## Fetch user data:
+  const api = new ApiService();
+
+  async function loadUser() {
+    const result = await api.get<User>("https://api.example.com/user/1");
+  
+    if (result.success) {
+      console.log("User name:", result.data.name);
+    } else {
+      console.error("Error:", result.message);
+    }
+  }
+    
+## Post some data
+type NewUserRequest = {
+    name: string;
+    email: string;
+  };
+  
+  async function createUser() {
+    const newUser: NewUserRequest = {
+      name: "John",
+      email: "john@example.com"
+    };
+  
+    const result = await api.post<User, NewUserRequest>(
+      "https://api.example.com/users",
+      newUser
+    );
+  
+    if (result.success) {
+      console.log("Created user ID:", result.data.id);
+    } else {
+      console.error("Error:", result.message);
+    }
+  }
+  #Summary
+  What	            Description
+  ApiResponse<T>	Reusable response wrapper for all API calls
+  ApiService	    Generic class to handle GET/POST methods
+  Generics	        Enforce and infer correct types dynamically  
+
+
+# Make this object type readonly
+type Example = {
+  name: string;
+  age: number;
+  sex: string;
+  single: boolean;
+};
+
+type ObjReadOnly<T> = {
+  readonly [K in keyof T]: T[K]
+}
+
+type ReadonlyExample = ObjReadOnly<Example>;
+
+const wifi = {
+  a: 1,
+  b: {
+      c: "4"
+  }
+} as const;
+
+type wifiType = typeof wifi;
+
+# Make readonly to recursive object
+
+type BuiltIn = Function | Date | Error | RegExp | Map<any, any> | Set<any>;
+
+type DeepReadOnly<T> = 
+T extends BuiltIn ? T : 
+T extends Array<infer U> ? readonly DeepReadOnly<U>[] : 
+T extends object ? {
+  readonly [K in keyof T]: DeepReadOnly<T[K]>
+}: T;
+
+type Example2 = {
+  user: {
+    name: string;
+    address: {
+      city: string;
+      zip: number;
+    };
+  };
+  tags: string[];
+  greet: () => void;
+};
+
+type ReadonlyExample2 = DeepReadOnly<Example2>;
+
+const arr = [
+  {
+    name: "deb",
+    age: 32,
+    events: [
+      {
+          id: 1,
+          name: "ABC"
+      }
+    ]
+  }
+];
+
+
+type arrType = DeepReadOnly<typeof arr>
+
+type DeepMutable<T> =
+  T extends Builtin ? T :
+  T extends ReadonlyArray<infer U> ? DeepMutable<U>[] :
+  T extends object ? {
+    -readonly [K in keyof T]: DeepMutable<T[K]>;
+  } :
+  T;

@@ -1,0 +1,9 @@
+const STATUS = {
+  PENDING: "Request is pending",
+  FAILED: "Request failed",
+  SUCCESS: "REQUEST WAS SUCCESSFUL",
+} as const;
+
+type StatusObj = typeof STATUS;
+type status = StatusObj[keyof StatusObj];
+// "Request is pending" | "Request failed" | "REQUEST WAS SUCCESSFUL"

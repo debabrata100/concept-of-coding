@@ -1,0 +1,24 @@
+class Singleton {
+    private className: string;
+    private static instance: Singleton;
+    private constructor(cn: string) {
+        this.className = cn;
+    }
+    static getInstance() {
+        if(this.instance){
+            return this.instance;
+        }
+        this.instance = new Singleton("Singleton class");
+        return this.instance;
+    }
+    generateOtp() {
+        // this.instance is not accessible inside no static methods
+        console.log(this.className);
+        return Math.floor(Math.random()*1000).toString().padStart(3, '')
+    }
+}
+// const s = new Singleton() //  not allowed
+const s1 = Singleton.getInstance();
+const s2 = Singleton.getInstance();
+
+console.log(s1 === s2)

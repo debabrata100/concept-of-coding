@@ -1,0 +1,47 @@
+## Interfaces define a contract with no implementation, while abstract classes provide partial implementation and can enforce structure along with shared behavior.
+
+# Need for abstract class:
+- When you want all inhertited class implement common properties and methods.
+
+# What are abstract classes
+- In TypeScript, an abstract class is a class that cannot be directly instantiated. It serves as a blueprint for other classes to inherit from and provides a way to define common behavior and structure that subclasses can share.
+
+- Abstract classes can have abstract methods, which are methods without a body. Subclasses must provide an implementation for these abstract methods. This allows abstract classes to define a contract for subclasses to follow while providing flexibility in implementation details.
+
+# can we declare proporties as abstract as well ?
+No, you cannot declare properties as abstract in TypeScript. Abstract properties are not supported in TypeScript.
+
+However, you can enforce the existence of certain properties in subclasses by using constructor parameters or getter methods in the abstract class. Here's an example to illustrate this:
+
+abstract class Shape {
+    protected color: string;
+    constructor(){
+        this.color = "BLUE";
+    }
+    abstract calculateArea(): void;
+    get Color(){
+        return this.color;
+    }
+}
+class Rectangle extends Shape {
+    constructor(public height: number, public width: number){
+        super();
+    }
+    calculateArea(): void {
+        console.log(this.height * this.width); // 120
+    }
+}
+class Circle extends Shape {
+    constructor(public radius: number){
+        super();
+    }
+    calculateArea(): void {
+        console.log(2 * Math.PI * this.radius);
+    }
+}
+
+const r = new Rectangle(10,12);
+r.calculateArea()
+console.log(r.Color) // BLUE
+const c = new Circle(10)
+c.calculateArea();

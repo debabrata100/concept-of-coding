@@ -1,0 +1,28 @@
+type Profile = {
+    username: string;
+    email: string;
+    active: boolean;
+}
+
+type PrfileKeys = keyof Profile; // "username" | "email" | "active"
+type ValueFrom<T> = T[keyof T];
+
+type ProfileValue = ValueFrom<Profile>; // string | boolean
+
+
+type ProfileValues = Profile[keyof Profile]; // string | boolean
+
+type ReadOnlyProfile = {
+    readonly [K in keyof Profile]: Profile[K]
+}
+
+const routes = {
+  Home: '/',
+  Admin: '/admin',
+  users: '/users'
+} as const;
+
+type routesType = typeof routes;
+type RouteKey = keyof routesType;
+
+type Route = (routesType)[RouteKey]

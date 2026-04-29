@@ -1,0 +1,123 @@
+# Utility Types:
+type User = {
+    id: string;
+    name: string;
+    age: number;
+}
+
+// Partial<T>: make all properties optional in a type
+const updatedUser: Partial<User> = {};
+
+// ReadOnly<T>: make all properties readonly in a type
+
+const readOnlyUser: Readonly<User> = {
+    id: '123',
+    name: 'deb',
+    age: 20
+}
+readOnlyUser.id = '122'; // wrong
+console.log(readOnlyUser);
+
+// ReadOnly type Examples
+type State1 = Readonly< {
+  user: string;
+}>
+type State2 = Readonly< {
+  products: string;
+}>
+
+type State3 = State1 & State2;
+
+const userProducts: State3 = {
+  user: '',
+  products: ''
+}
+
+// Redux state
+type State = Readonly<{
+  count: 0
+}>
+
+function getNewState(state: State) {
+  // return {
+  //   ...state,
+  //   count: state.count + 1
+  // }
+  state.count += 1; // Wrong
+  return state;
+}
+
+
+// Pick<T, K>: Creates a new type by picking specific properties from an existing type.
+const PublicUser: Pick<User, 'age' | 'name'> = {
+    name: 'deb',
+    age: 23
+}
+
+// Record<K, T>: reates a type with a set of keys of type K, where each key maps to a value of type T.
+
+type Role = 'admin' | 'user' | 'guest';
+const rolePermissions: Record<Role, string[]> = {
+    admin: ['read', 'write', 'delete'],
+    user: ['read'],
+    guest: ['read']
+}
+
+// Omit<T, K>: Creates a new type by removing specific properties from an existing type.
+
+type UserWithoutAge = Omit<User, 'age'>;
+
+const u: UserWithoutAge = {
+    name: 'deb',
+    id: '234'
+}
+
+# Type Assertions
+let someValue: any = "Hello world";
+let strLength: number = (someValue as string).length;
+
+# Generics
+function identity<T>(value: T): T {
+    return value;
+  }
+  
+  let output = identity<string>("Hello");
+# Type Narrowing
+
+function printId(id: string | number) {
+    if (typeof id === "string") {
+      console.log("String ID:", id.toUpperCase());
+    } else {
+      console.log("Number ID:", id);
+    }
+  }
+# Union & Intersection Types
+let value: string | number; // union (either A or B or both)
+
+type Admin = { admin: true };
+type User = { name: string };
+
+type AdminUser = Admin & User; // intersection (A and B together)
+
+# Tuple
+In TypeScript, a tuple is a typed array with a fixed number of elements, where each element can have a different type. Tuples are useful when you want to represent a collection of values where the order and type of each element are known and important.
+
+function useUserData(): [User | null, Error | null, boolean] {
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/user')
+      .then(res => res.json())
+      .then(setUser)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, []);
+
+  return [user, error, loading];
+}
+
+const [user, error, isLoading] = useUserData();
+
+

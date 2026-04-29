@@ -1,0 +1,98 @@
+# What is the difference between JSX.Element, ReactNode and ReactElement?
+type Key = string | number
+
+ interface ReactElement<P = any, T extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>> {
+    type: T;
+    props: P;
+    key: Key | null;
+}
+What is the difference between JSX.Element, ReactNode and ReactElement?
+
+A ReactElement is an object with a type and props.
+
+ type Key = string | number
+
+ interface ReactElement<P = any, T extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>> {
+    type: T;
+    props: P;
+    key: Key | null;
+}
+A ReactNode is a ReactElement, a ReactFragment, a string, a number or an array of ReactNodes, or null, or undefined, or a boolean:
+
+type ReactText = string | number;
+type ReactChild = ReactElement | ReactText;
+
+interface ReactNodeArray extends Array<ReactNode> {}
+type ReactFragment = {} | ReactNodeArray;
+
+type ReactNode = ReactChild | ReactFragment | ReactPortal | boolean | null | undefined;
+
+# learn more
+1. React.CSSProperties
+2. type ButtonProps = {
+    borderRadius: Record<string, number>
+}
+usage: <Button borderRadius={{
+    topLeft: 5,
+    topRight: 5,
+    bottomLeft: 5,
+    bottomright: 5,
+}}>
+3. type Props = {
+    onClick: () => void;
+    onTest: (test: string) => number;
+    children: React.ReactNode // React.JsxElement is more restricted then ReactNode
+}
+3. const [count, setCount] = useState(0);
+type Props = {
+    setCount: React.Dispatch<React.SetStateAction<number>>
+}
+4. for default values you do not need to type it
+function Button({count = 0}){}
+5. type ButtonProps = React.ComponentProps<"button">
+6. type ImageProps = React.ComponentProps<"img">
+7. type React.ComponentWithRef<"button">
+8. type React.ComponentWithoutRef<"button">
+9. export default function Button() {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        // 
+    }
+    return <button onClick={handleClick}>Click me</button>
+}
+10. hooks
+type User {
+    name: string;
+    age: number;
+}
+const [user, setUser] = useState<User | null>(null);
+const name = user?.name;
+11. const ref = useRef<HTMLButtonElement>(null);
+12. type User = {
+    name: string;
+    sessionId: string;
+}
+type Guest = Omit<User, "name">
+13. 
+estalished a relation using generics
+type ButtonProps = {
+    countValue: T;
+    countHistory: T[];
+}
+function Button({
+    countValue,
+    countHistory
+}: ButtonProps<T>) {
+    return <button> click me</button>
+}
+14. import {type Color} from "@lib/types"
+15. Schema Validation
+useEffect(()=> {
+    fetch("https://jsonplaceholder.typicode.com/todos/1")
+    .then(res=> res.json())
+    .then(data: unknown=> {
+        // run it through zod
+        const todo = zod.parse(data)
+    })
+})
+16. next.env.d.ts
+17. zod, trpc, ts-reset

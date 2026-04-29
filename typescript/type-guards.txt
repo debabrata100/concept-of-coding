@@ -1,0 +1,54 @@
+type Combinable = string | number;
+type Numeric = number | boolean;
+
+function add(a: Combinable, b: Combinable) {
+    // This is called a type guard
+    if(typeof a  === "string" || typeof b === "string"){
+        return a.toString() + b.toString();
+    }
+    return a + b;
+}
+// for interfaces
+
+interface Admin {
+    name: string;
+    priviledges: ["create user"]
+}
+interface emp {
+    name: string;
+    startDate: Date;
+}
+
+type UnknowownEmp = emp | Admin;
+
+function printEmp(e: UnknowownEmp) {
+    if('priviledges' in e){
+        console.log(e.priviledges)
+    }
+    if('startDate' in e){
+        console.log(e.startDate)
+    }
+}
+printEmp({name: "Krishna", startDate: new Date()})
+
+class Car {
+    drive() {
+        console.log(" Car drives")
+    }
+}
+class Truck {
+    drive() {
+        console.log("Truck drives")
+    }
+    loadCargo() {
+        console.log("loads cargo")
+    }
+}
+
+type Vehicle = Car | Truck;
+
+function useVehicle(vehicle: Vehicle) {
+    if(vehicle instanceof Truck){
+        vehicle.loadCargo();
+    }
+}

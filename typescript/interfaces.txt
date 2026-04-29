@@ -1,0 +1,29 @@
+#In TypeScript, interfaces 
+are a way to define contracts for object shapes. They describe the structure of an object by specifying the types of its properties and methods. Interfaces are purely a compile-time construct and do not have any implementation associated with them.
+
+# Defining Readonly Interfaces:
+To define readonly interfaces in TypeScript, you can simply use the readonly keyword before the property name in the interface definition. This ensures that the properties cannot be modified after object creation.
+
+interface ReadonlyPerson {
+    readonly name: string;
+    readonly age: number;
+}
+
+const person: ReadonlyPerson = { name: "Alice", age: 30 };
+
+// Error: Cannot assign to 'name' because it is a read-only property
+person.name = "Bob";
+
+# Extending Interfaces:
+Interfaces in TypeScript can be extended using the extends keyword, similar to class inheritance. When one interface extends another, it inherits all of the members of the extended interface.
+
+interface Shape {
+    color: string;
+}
+
+interface Circle extends Shape {
+    radius: number;
+}
+
+const circle: Circle = { color: "red", radius: 5 };
+
