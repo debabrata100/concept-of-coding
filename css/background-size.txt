@@ -1,0 +1,3 @@
+# Difference between background-size contain vs cover
+
+The key word cover tells the browser to cover the whole area of an element. contain , on the other hand, tells the browser to show the whole image.

@@ -1,0 +1,21 @@
+# LDAP (Lightweight Directory Access Protocol)
+
+* Purpose: It’s a protocol used to authenticate and manage user identities in a centralized directory (like Microsoft Active Directory).
+
+* Use case: Instead of storing users separately in each application, LDAP lets apps verify user credentials against one central user directory.
+
+* Example: When you log into a company app with your corporate credentials, the app uses LDAP to validate your username/password from the company’s directory server.
+
+# AppRole (in HashiCorp Vault)
+
+* Purpose: AppRole is a Vault authentication method designed for machines or applications, not humans.
+
+* How it works: An app uses a Role ID (public identifier) and a Secret ID (private credential) to authenticate with Vault and get a token.
+
+* Use case: Ideal for CI/CD pipelines or backend services that need to securely access secrets (like database credentials or API keys) without manual intervention.
+
+* In short:
+
+LDAP → Human user authentication via centralized directory.
+
+AppRole → Machine or app authentication to securely access Vault.

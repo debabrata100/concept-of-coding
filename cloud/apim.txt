@@ -1,0 +1,32 @@
+# What is Azure API Management (APIM)?
+
+* Azure API Management (APIM) is a fully managed API gateway service in Azure.
+* Think of it as the front door for all your APIs.
+* It helps you secure, manage, monitor, and publish APIs to internal teams, partners, or external customers.
+
+👉 Without APIM, your APIs are just endpoints exposed directly from services (App Services, Functions, Containers, etc.). With APIM, you place a gatekeeper in front that adds:
+
+* Security (auth, rate limiting, throttling)
+* Monitoring & analytics (who is using the API, how much traffic, errors)
+* Developer experience (API documentation, developer portal)
+* Versioning & transformation (modify requests/responses without changing backend code)
+
+# AWS Equivalent of Azure APIM
+The closest equivalent in AWS is Amazon API Gateway.
+* Both APIM (Azure) and API Gateway (AWS) are fully managed API management/gateway services.
+* Both act as the front door for your APIs.
+
+👉 But there are some differences in scope:
+* AWS API Gateway focuses heavily on the runtime gateway (securing, scaling, transforming APIs).
+* Azure APIM adds stronger management & developer experience features (like built-in Developer Portal, subscription management, monetization).
+
+# Key Feature Comparison
+Feature	            Azure APIM	                                AWS API Gateway
+Core Function	    API Gateway + Management	                API Gateway
+Security	        OAuth 2.0, JWT, subscription keys	        IAM roles, Cognito, JWT, API keys
+Policies	        Rich XML-based policy engine	            Request/response mapping templates
+Developer Portal	Built-in (docs, try APIs, subscription mgmt)No built-in portal (must integrate with tools like Postman, SwaggerHub, or build your own)
+Monitoring	        Azure Monitor, App Insights	CloudWatch
+Caching	Built-in	Built-in
+Versioning	        First-class version & revision support	    Stage-based versioning
+Monetization	    Possible via APIM portal & subscriptions	Not built-in

@@ -1,0 +1,81 @@
+# What are web hooks, short polling, long polling, web socket, server sent events ?
+
+# Webhooks: 
+- Autmated post request sent from apps, when some event occurs.
+ex: After order is placed to send an email to customer.
+- They allow real-time data delivery from one application to another by triggering events and sending HTTP POST requests to a specified URL
+
+# Short Polling:
+
+* Definition: 
+In short polling, the client periodically sends HTTP requests to the server at regular intervals (e.g., every few seconds) to check for updates.
+* How it Works: 
+The client sends a request to the server, and the server immediately responds with the latest data, whether there are updates or not. If there are no updates, the client waits for the next polling interval and repeats the process.
+* Use Cases: 
+Short polling is simple to implement but can be inefficient as it generates frequent requests, even when there are no updates. It's suitable for scenarios where real-time updates are not critical or when the server load is not a concern.
+
+#Long Polling:
+
+* Definition: 
+Long polling is an enhancement of short polling where the server keeps the client connection open until new data is available.
+* How it Works: 
+The client sends a request to the server, and the server holds the request open until new data is available or a timeout occurs. When new data is available, the server responds to the request, and the client immediately sends another request to maintain the connection.
+* Use Cases: 
+Long polling reduces the frequency of requests compared to short polling, making it more efficient for scenarios requiring real-time updates. It's suitable for applications like chat applications, real-time notifications, and live feeds.
+
+#WebSocket:
+
+* Definition: 
+WebSocket is a full-duplex communication protocol that provides a persistent connection between the client and the server, allowing bidirectional data transfer in real-time.
+* How it Works: 
+WebSocket establishes a single TCP connection between the client and the server, enabling low-latency communication without the overhead of HTTP headers. Once the connection is established, either party can initiate communication at any time.
+* Use Cases: 
+WebSocket is ideal for applications requiring real-time, interactive communication, such as online gaming, collaborative editing, live streaming, and financial trading platforms.
+
+#Server-Sent Events (SSE):
+
+* Definition: 
+SSE is a unidirectional communication technology that allows the server to push updates to the client over a single HTTP connection.
+* How it Works: 
+The client establishes an SSE connection by sending a request to the server, and the server sends a stream of updates to the client as text/event-stream. The connection remains open indefinitely until explicitly closed by either the client or the server.
+* Use Cases: 
+SSE is suitable for applications where the server needs to push updates to the client in real-time, such as live sports scores, stock tickers, or weather updates.
+
+# micro service communication
+
+Other Methods of Microservice Communication
+Microservices communicate using different methods depending on the use case:
+
+1. Synchronous Communication
+REST (HTTP APIs)
+    Services communicate using RESTful APIs.
+    Uses JWT or OAuth2 for security.
+    Example: GET /users/123
+gRPC (Google Remote Procedure Call)
+    High-performance RPC framework.
+    Uses Protocol Buffers (Protobuf) instead of JSON.
+    Supports TLS for security and JWT for authentication.
+2. Asynchronous Communication
+
+# Message Brokers (Event-Driven Communication)
+    Services communicate via an event/message queue.
+    Examples:
+        Kafka (high-throughput pub/sub messaging)
+        RabbitMQ (queue-based messaging)
+        AWS SQS (fully managed queue service)
+
+# Event Sourcing
+    Instead of direct API calls, services emit events.
+    Other services listen and react to these events.
+    Example: Order Service emits OrderPlaced → Inventory Service updates stock.
+3. Service Mesh (Istio, Linkerd)
+    A dedicated network layer to handle service-to-service communication.
+    Provides security, observability, and traffic control.
+    Uses mTLS (Mutual TLS) for authentication instead of JWT.
+
+# Choosing the Right Method
+Method	            Best For	                                    Example Technologies
+JWT + REST	        API authentication & external clients	        Express.js, Flask, Spring Boot
+gRPC	            High-performance, low-latency communication	    gRPC, Protocol Buffers
+Kafka/RabbitMQ	    Event-driven architecture	                    Apache Kafka, RabbitMQ, AWS SQS
+Service Mesh	    Secure and scalable microservice communication	Istio, Linkerd

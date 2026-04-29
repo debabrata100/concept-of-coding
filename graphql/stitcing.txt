@@ -1,0 +1,30 @@
+What is graphql schema stitching ?
+GraphQL schema stitching is a technique used to combine multiple GraphQL schemas into a single, unified schema. This allows you to create a single entry point for your GraphQL API that aggregates data from different sources or services. This can be especially useful in microservices architectures or when dealing with existing APIs that expose their data through GraphQL.
+
+Here's a breakdown of the key concepts and steps involved in GraphQL schema stitching:
+
+Multiple Schemas:
+
+Remote Schemas: These are GraphQL schemas that are hosted on different servers or services. Each service may have its own GraphQL schema representing its data model.
+
+Local Schemas: These are GraphQL schemas that you define locally, representing data or functionality specific to your application.
+
+Schema Stitching:
+
+Merging Schemas: Schema stitching involves combining these multiple schemas into a single, coherent schema. This is typically done by creating a gateway schema that imports and merges types, queries, and mutations from the individual schemas.
+
+Resolving Conflicts: If there are naming conflicts or overlapping types between the schemas, schema stitching provides mechanisms to resolve these conflicts. Aliases and renaming are common approaches.
+
+Delegation and Federation:
+
+Delegation: In some cases, you might want to delegate specific queries or mutations to the underlying services. This means that when a particular query is executed, only the relevant service processes and responds to that part of the query.
+
+Federation: GraphQL schema federation is an extension of schema stitching that involves breaking down your overall schema into smaller, independently deployable parts. Each part (a.k.a. a subgraph) represents a service that can be developed, deployed, and scaled independently.
+
+Execution and Fetching Data:
+
+Query Execution: When a query is made against the stitched schema, the stitching mechanism takes care of distributing the query to the appropriate services or fetching data from the local schema, depending on the nature of the query.
+
+Data Fetching: Data fetching can involve making requests to multiple underlying services or APIs, combining the results, and returning the unified response to the client.
+
+Schema stitching simplifies the development and maintenance of GraphQL APIs by allowing you to compose a larger schema from smaller, modular schemas. It provides a more flexible and scalable approach, especially in distributed and microservices-based architectures. Tools and libraries, such as Apollo Federation and graphql-tools, are commonly used for implementing schema stitching in GraphQL applications.

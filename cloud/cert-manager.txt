@@ -1,0 +1,141 @@
+What is AWS Certificate Manager (ACM)?
+
+- AWS Certificate Manager (ACM) is a managed service in AWS that helps you create, manage, and deploy SSL/TLS certificates.
+- These certificates are what enable HTTPS (the secure padlock you see in your browser) and ensure encrypted communication between:
+- Your users (clients/browsers)
+- Your application (running on AWS like ELB, CloudFront, API Gateway, etc.)
+- So instead of you manually buying certificates, renewing them, and uploading them everywhere → ACM does all of this automatically.
+
+⚙️ How Does ACM Work?
+
+Think of it in 3 simple steps:
+
+1. Request a Certificate
+- You ask ACM for a certificate for your domain (e.g., www.myapp.com).
+- You prove you own the domain → either by:
+- DNS validation (adding a CNAME record in Route 53 or other DNS provider), or
+- Email validation (approve via email).
+- Once validated, ACM issues you a free certificate.
+
+2. Store and Manage the Certificate
+
+- ACM keeps your certificates securely in AWS.
+- ACM automatically renews certificates before expiry (so you don’t wake up at 3AM fixing expired cert issues 😅).
+- You can also import third-party certificates if you already purchased one.
+
+3. Deploy the Certificate
+
+- You attach the certificate to AWS services where you need HTTPS:
+- Elastic Load Balancers (ALB/NLB/CLB) – so traffic from the internet to your app is secure.
+- Amazon CloudFront – for global CDN with HTTPS.
+
+API Gateway / App Runner / Elastic Beanstalk – for APIs and web apps.
+
+IoT Core, etc.
+
+👉 ACM does not install certificates on EC2 directly (you’d need to export/import them if you want that). It’s mostly for AWS-managed services.
+
+🏗️ Why Architects Love ACM
+
+- As an architect, here’s how you think of ACM in a project:
+- Security by default → All user-facing endpoints must use HTTPS.
+- Zero-maintenance certs → No manual renewal or downtime due to expired certificates.
+- Cost savings → Public ACM certificates are free.
+- Integration → Works seamlessly with AWS services (Route 53, ALB, CloudFront).
+- Scalability → A single cert can cover multiple domains (example.com, *.example.com).
+
+🔥 Example Scenario
+
+Let’s say you’re building an e-commerce app:
+
+- You buy a domain myshop.com.
+- You create an Application Load Balancer (ALB) for your EC2 instances or containers.
+- You request a certificate in ACM for myshop.com and www.myshop.com.
+- ACM validates ownership (via Route 53).
+- You attach the certificate to the ALB.
+- Now when users hit https://myshop.com, they see the 🔒 secure padlock.
+- ACM keeps renewing it automatically → you never worry again. ✅
+
+# What is the Equivalent of ACM in Azure?
+
+In Azure, the comparable service is 
+1. Azure App Service Certificates (ASC) and 
+2. Azure Key Vault integration.
+But the workflow is a little different from AWS. Instead of one single service (like ACM), Azure uses a combination of services to achieve the same outcome:
+
+- Azure App Service Certificates → Lets you purchase, issue, and manage SSL/TLS certs (from DigiCert).
+- Azure Key Vault → Securely stores your certificates (so they can be reused across resources).
+- Azure Application Gateway / Azure Front Door / Azure CDN / App Services → These are the services where you bind the certificates to enable HTTPS.
+
+* So ACM in AWS = ASC + Key Vault + Integration with Azure networking/app services.
+
+⚙️ How It Works in Azure (Step by Step)
+
+Think of it in the same 3-step model as AWS:
+
+1. Request a Certificate
+
+* You either:
+ - Buy an App Service Certificate directly in Azure,
+ - Or upload your own certificate into Key Vault.
+* Validation is done via domain ownership (similar to DNS/Email validation in AWS).
+
+Example: Prove you own myshop.com via DNS TXT record.
+
+2. Store and Manage the Certificate
+
+* Certificates are stored securely in Azure Key Vault.
+* Unlike AWS ACM, automatic free renewal is not always built-in.
+ * If you buy a cert via Azure → it can be auto-renewed and updated in Key Vault.
+ * If you bring your own cert → you must handle renewal.
+
+3. Deploy the Certificate
+
+Attach the certificate from Key Vault to services like:
+ - Azure Application Gateway (Layer 7 Load Balancer)
+ - Azure Front Door (Global CDN + WAF)
+ - Azure App Service (Web Apps)
+ - Azure API Management (API Gateway)
+
+👉 Just like AWS ACM only works with managed services (not directly on VMs), in Azure you attach certs to managed services. If you’re running your app on a VM, you’ll have to manually install the certificate on the VM OS (Windows/Linux).
+
+🏗️ Why Architects Care in Azure
+
+* Security & Compliance → HTTPS everywhere, just like AWS.
+* Flexibility → Certificates can be stored centrally in Key Vault and reused across multiple apps.
+* Integration → Works with Azure networking stack (App Gateway, Front Door, CDN).
+* Cost → Unlike AWS (where ACM public certs are free), in Azure you pay for certs if using App Service Certificates (or you can bring Let’s Encrypt certs for free).
+
+🔥 Example Scenario (E-commerce app in Azure)
+
+Let’s map the AWS example to Azure:
+* You own the domain myshop.com.
+* You buy or upload a certificate into Azure Key Vault.
+* You set up Azure Application Gateway in front of your web app.
+* You attach the certificate from Key Vault to the App Gateway → all user traffic comes via HTTPS.
+
+Behind the gateway, your Azure App Service or VMs handle the application logic.
+
+Certificate renewal (if ASC) is automatic, if BYOC (Bring Your Own Cert) you must renew manually or via automation.
+
+🚀 Quick Mental Model (Azure vs AWS)
+
+* AWS ACM = Free certs + Auto-renew + Integrated with AWS services.
+* Azure = Certs (ASC) + Stored in Key Vault + Bound to Azure services.
+* AWS is more “hands-off” (automatic free certs),
+* Azure is more “modular” (Key Vault acts as central certificate store).
+
+# Does AWS ACM issue certificates for free?
+* AWS ACM issues and manages public SSL/TLS certificates for free, as long as you use them with AWS-managed services like:
+    Elastic Load Balancer (ALB / NLB)
+    Amazon CloudFront
+    AWS API Gateway
+    AWS Elastic Beanstalk
+    AWS App Runner
+* But — not free in every case
+
+If you want to:
+    * Export that ACM certificate (for example, to install it on your on-prem server or third-party system),
+        → You can’t do it with an ACM public certificate.
+    * If you need a certificate that can be exported or used outside AWS,
+        → You need to issue it through ACM Private CA (Certificate Authority), which costs extra (around $400/month for the CA + per certificate fee).

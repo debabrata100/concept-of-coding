@@ -1,0 +1,48 @@
+Ref Video: https://www.youtube.com/watch?v=klyAhaklGNU
+# What Is HashiCorp Vault?
+HashiCorp Vault is a secrets management and data protection tool designed to secure, store, and control access to sensitive information—often referred to as secrets—across various environments, including on-premises, cloud, and hybrid infrastructures.
+
+## Core Capabilities & Features
+
+* Centralized Secrets Management
+Vault provides a unified interface for managing secrets like API keys, credentials, certificates, and encryption keys, with strong access control and auditing built-in. 
+GitHub
+HashiCorp Developer
+
+* Dynamic Secrets
+It can generate "just-in-time" credentials (e.g., for AWS, databases) that are time-limited and automatically revoked—reducing the risk of credential misuse. 
+GitHub
+configu.com
+
+* Encryption as a Service
+Vault can encrypt and decrypt data on demand without storing the raw data, enabling teams to offload encryption complexity securely. 
+GitHub
+sensu.io
+
+* Identity-Based Access Control
+Access is governed by authenticated identities—be they human or machine—leveraging auth methods like tokens, LDAP, AppRole, GitHub, and more, with granular policy enforcement. 
+HashiCorp Developer
+configu.com
+sensu.io
+
+* Auditing & Compliance
+All access attempts—successful or not—are logged, enabling full traceability and regulatory compliance. 
+HashiCorp Developer
+
+* Plugin Ecosystem
+Vault supports modular extensions, allowing integrations with authentication systems, secret engines, external systems, and custom workflows. 
+Has
+
+💰 Pricing & Licensing
+Aspect	                HashiCorp Vault	                                        Azure Key Vault
+Open Source	            ✅ Yes, free	                                            ❌ No
+Enterprise Edition	    Paid	                                                Pay-per-use 
+Managed Option	        HCP Vault (HashiCorp Cloud Platform)	                Fully managed by Azure
+
+🔐 Secrets & Key Management
+Aspect	                    HashiCorp Vault	                                                        Azure Key Vault
+Secrets Storage	            Supports dynamic and static secrets 	                                Stores static secrets, keys, and certificates
+Dynamic Secrets	            ✅ Yes – can auto-generate temporary credentials                        ❌ No – all secrets are static; you manage rotation manually or via Azure automation
+Secret Rotation	            Automatic rotation via secret engines	                                Manual or via Azure Logic Apps / Key Vault rotation policies
+Encryption-as-a-Service	    ✅ Built-in — encrypt/decrypt arbitrary data via API without storing it	✅ Yes — with managed HSM and key operations
+Secret Engines / Backends	Highly extensible: AWS, GCP, databases, 	                            Limited to Azure and supported integrations (e.g., Azure SQL, VM disks)

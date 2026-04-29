@@ -1,0 +1,70 @@
+# What is an Azure Function App?
+
+* An Azure Function App is a serverless compute service that lets you run small pieces of code (“functions”) in the cloud without managing servers or infrastructure.
+
+* Think of it like AWS Lambda, but with some more flexible hosting options and deeper integration with Azure services.
+
+# How it Works
+
+Here’s the lifecycle when your Azure Function runs:
+* Event Trigger
+    * Something happens → a new HTTP request, a queue message, a blob upload, a timer tick, etc.
+    * Azure Functions supports multiple triggers, like:
+        HTTP Trigger
+        Timer Trigger (like a cron job)
+        Queue Trigger (Azure Storage Queue / Service Bus)
+        Blob Trigger
+        Event Hub Trigger
+
+* Function Executes
+    * Your function code executes just long enough to handle the event.
+    * It scales automatically — Azure spins up more instances when demand increases.
+
+* Auto Scale and Auto Stop
+     When there are no incoming events, Azure can scale down to zero (if using Consumption Plan) — saving cost.
+# Hosting Plans
+Azure Functions can run in different hosting plans:
+* Consumption Plan (Serverless)
+    * You pay only for the compute time your functions use.
+    * Scales automatically based on demand.
+    * Can scale down to zero when idle.
+* Premium Plan
+    * Always on, with pre-warmed instances for low latency.
+    * Supports VNET integration, larger memory/CPU.
+    * More predictable pricing.
+* Dedicated (App Service) Plan
+    * Runs on dedicated VMs (like regular App Services).
+    * You manage scaling and pricing.
+    * Good for long-running functions or when you need more control.
+
+# What is Remote Debugging?
+
+Remote debugging allows you to:
+
+“Attach your local IDE (like Visual Studio Code or Visual Studio) to a Function App running in Azure, and debug it as if it were running on your local machine.”
+
+"You can set breakpoints, inspect variables, and step through code — even though the function is actually running in the cloud."
+
+⚙️ How it Works (Under the Hood)
+
+1. Enable Remote Debugging
+When you deploy your Function App, you can enable remote debugging from:
+    Azure Portal → “Configuration” → “General Settings” → “Remote Debugging: ON”
+    Or from VS/VS Code deployment settings.
+
+2. Establish Secure Tunnel
+    * The IDE (Visual Studio/VS Code) creates a secure SSH tunnel (over port 4022 or similar) between your local machine and the Azure App Service sandbox hosting the function.
+    * Authentication happens via your Azure credentials (and session tokens).
+
+3. Attach Debugger
+Once the tunnel is open, your IDE attaches a remote debugging session to the running process inside Azure.
+    It uses standard debugging protocols:
+        VS / .NET → msvsmon.exe remote debugger service
+        VS Code / Node.js → node --inspect protocol
+
+4. Runtime Sync
+    * Your local breakpoints are mapped to the deployed code (via PDB symbols or source maps).
+    * When the function executes in Azure, the debugger pauses execution on your local IDE at the exact line.
+
+5. Inspect & Resume
+    You can view variable states, modify them, or continue execution — exactly like local debugging.

@@ -1,0 +1,9 @@
+Key concepts:
+1. Entities
+2. Referening
+3. Extending
+
+Apollo Server Libraries:
+- @apollo/federation
+- @apollo/gateway
+- apolo-server
