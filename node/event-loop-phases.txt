@@ -1,0 +1,90 @@
+# Node.js Event Loop Phases
+Node.js event loop consists of multiple phases, and each has a specific job. Here they are in
+order:
+
+Timers              Executes callbacks from setTimeout and setInterval whose time has expired.
+Pending Callbacks   Executes I/O callbacks that were deferred to the next loop.
+Idle, Prepare       Internal use (not commonly relevant).
+Poll                Retrieves new I/O events; node will block here if needed.
+Check               Executes setImmediate() callbacks.
+Close Callbacks     For things like socket.on('close') events.
+
+🧠 Between each phase, microtasks like process.nextTick and Promise.then() are run.
+
++----------------------+
+| Start of Event Loop  |
++----------------------+
+        |
+        v
+ Run expired setTimeout/setInterval callbacks (Timers phase)
+        |
+        v
+ process.nextTick() (if any) ✅ (always runs before moving to next phase)
+        |
+        v
+ Run deferred I/O callbacks (Pending callbacks phase)
+        |
+        v
+ process.nextTick() (if any)
+        |
+        v
+ Do I/O operations (Poll phase)
+        |
+        v
+ process.nextTick() (if any)
+        |
+        v
+ Run setImmediate() callbacks (Check phase)
+        |
+        v
+ process.nextTick() (if any)
+        |
+        v
+ Close callbacks (e.g., socket.close)
+        |
+        v
+ Repeat loop...
+
+ 🔁 Between each phase, the engine checks the microtask queue, and runs all process.nextTick callbacks before moving to the next phase.
+
+ Execution Order Summary
+
+Function	        Runs after	Before what?
+process.nextTick	Current op	Any I/O, timers
+setTimeout	        Timer delay	Next event loop
+setImmediate	    I/O events	Before timers if no delay
+
+Fun fact: In some scenarios (like inside an I/O callback), setImmediate may execute before setTimeout.
+
+🔁 Now let's see what happens inside an I/O operation like fs.readFile:
+const fs = require('fs');
+
+fs.readFile(__filename, () => {
+  console.log('\nInside fs.readFile callback');
+
+  process.nextTick(() => {
+    console.log('process.nextTick (from I/O)');
+  });
+
+  setTimeout(() => {
+    console.log('setTimeout (from I/O)');
+  }, 0);
+
+  setImmediate(() => {
+    console.log('setImmediate (from I/O)');
+  });
+});
+
+Output:
+Inside fs.readFile callback
+process.nextTick (from I/O)
+setImmediate (from I/O)
+setTimeout (from I/O)
+
+
+
+# Task Types in the Event Loop
+Task Type	Examples	                                          When it runs
+Microtask	Promise.then, async/await, queueMicrotask	              Runs immediately after the current stack finishes, before any macrotasks
+
+Macrotask	setTimeout, setInterval, setImmediate, DOM events, I/O	Runs after microtasks, in the next tick of the event loop

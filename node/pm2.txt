@@ -1,0 +1,17 @@
+# What is pm2 library in node js ?
+
+PM2 is not a library but rather a production process manager for Node.js applications. It is a popular tool used to manage and keep Node.js applications running in production environments. PM2 provides features like process management, monitoring, clustering, hot reload, and many others to streamline the deployment and maintenance of Node.js applications.
+
+## Some key features of PM2 include:
+
+* Process Management: PM2 can start, stop, restart, and manage Node.js processes efficiently.
+
+* Monitoring: It provides real-time monitoring of CPU, memory usage, and other metrics for each application process.
+
+* Logging: PM2 can handle logging, allowing you to manage and rotate logs easily.
+
+* Reload without Downtime: PM2 supports hot reload and zero-downtime reloads, allowing you to update your application without interrupting the service.
+
+* Clustering: PM2 can run multiple instances of your application across multiple CPU cores, improving performance and reliability.
+
+* Integration with Ecosystem: It integrates well with other tools and services commonly used in production environments, such as Nginx or Apache.

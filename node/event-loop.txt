@@ -1,0 +1,117 @@
+🔁 What is the Event Loop (intuitive view)
+
+Node.js is single-threaded, but it can handle thousands of concurrent operations because it doesn’t block on I/O.
+
+The event loop is the mechanism that:
+
+Continuously checks what work needs to be done and executes it in the right order.
+
+Think of it like:
+
+A smart scheduler that keeps picking tasks from different queues and executing them.
+
+🧠 Core Idea
+
+There are 3 main players:
+
+Call Stack → Executes synchronous code
+Node APIs / libuv → Handles async operations (file system, network, timers)
+Queues → Store callbacks to be executed later
+🔄 High-Level Flow
+Execute synchronous code (call stack)
+Async operations are offloaded (libuv / OS)
+When done → callbacks go into queues
+Event loop picks callbacks and executes them
+⚙️ Event Loop Phases (VERY IMPORTANT for interviews)
+
+The event loop has multiple phases, and each phase has its own queue.
+
+Execution order:
+1. Timers
+2. Pending Callbacks
+3. Idle/Prepare
+4. Poll  ← most important phase
+5. Check
+6. Close Callbacks
+🧩 Phase Breakdown
+1. Timers Phase
+Executes callbacks from:
+setTimeout()
+setInterval()
+2. Pending Callbacks
+Executes I/O callbacks deferred from previous cycle
+3. Idle / Prepare
+Internal use (you can ignore in interviews)
+4. Poll Phase ⭐ (MOST IMPORTANT)
+
+This is where:
+
+New I/O events are processed
+Most callbacks are executed
+
+👉 If nothing to do:
+
+It may wait here for new events
+5. Check Phase
+Executes:
+setImmediate()
+6. Close Callbacks
+e.g. socket.on('close')
+⚡ Microtasks vs Macrotasks (Critical distinction)
+Microtasks (executed immediately after current execution)
+Promise.then()
+queueMicrotask()
+process.nextTick() (special case, runs even before other microtasks)
+Macrotasks (handled by event loop phases)
+setTimeout
+setImmediate
+I/O callbacks
+🔥 Execution Priority
+1. Synchronous code
+2. process.nextTick()
+3. Promises (microtasks)
+4. Event loop phases (macrotasks)
+🧪 Example (INTERVIEW GOLD)
+console.log("start");
+
+setTimeout(() => console.log("timeout"), 0);
+
+setImmediate(() => console.log("immediate"));
+
+Promise.resolve().then(() => console.log("promise"));
+
+process.nextTick(() => console.log("nextTick"));
+
+console.log("end");
+Output:
+start
+end
+nextTick
+promise
+timeout / immediate (order may vary)
+⚠️ Important Real-World Insights
+1. Node is NOT truly single-threaded
+JS runs on one thread
+But libuv uses a thread pool (for FS, DNS, etc.)
+2. Blocking code is dangerous
+while(true) {}
+
+This will:
+❌ Block event loop
+❌ No requests handled
+
+3. Why Node is great for I/O-heavy apps
+
+Because:
+
+It doesn’t wait for I/O
+It delegates and continues execution
+4. CPU-heavy tasks are bad for Node
+
+Use:
+
+Worker Threads
+Child Processes
+🎯 Interview Summary (what I’d say in 30 seconds)
+
+Node.js uses an event loop to handle asynchronous operations in a non-blocking way. It runs on a single thread, offloads I/O to the system via libuv, and processes callbacks through different phases like timers, poll, and check. Microtasks like promises and process.nextTick run before the event loop continues. This architecture makes Node highly efficient for I/O-bound workloads but not ideal for CPU-heavy tasks.

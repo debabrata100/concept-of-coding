@@ -1,0 +1,41 @@
+
+
+Feature	                SQS	                    SNS	                            EventBridge
+Messaging Model	        Point-to-point (Queue)	Pub/Sub (Fan-out)	            Event Bus (Advanced Pub/Sub)
+Subscribers	            1 receiver	            Multiple	                    Multiple
+
+Target Types	        App/Worker service	    Email, SMS, Lambda, SQS, HTTP	Lambda, SQS, Step Functions, APIs
+
+Message Routing	None	Basic topic-based	    Advanced filtering + transformation
+
+Order Guarantee	        FIFO (optional)	        No ordering	                    No strict ordering
+
+Message Retention	    Messages stored until 
+                        consumed	            No storage (push immediately)	Short retention (24h by default)
+Pull vs Push	        Pull (poll)	            Push	                        Push
+Event Schema 
+Registry	            No	                    No	                            Yes (event schemas)
+
+* So, when to use SQS?
+When you need task queues and reliable handoff.
+When one producer sends a job that one consumer will handle.
+Good for background processing, retry logic, buffering workloads.
+
+* When to use EventBridge?
+When you want event-driven architecture where one event triggers multiple different actions.
+When you want decoupled systems that subscribe to events and react independently.
+Good for real-time workflows, multi-service orchestration, serverless applications.
+
+* When to Use SNS?
+When you simply want to broadcast a message.
+When you want low latency fan-out to multiple endpoints (SMS, email, SQS, Lambda).
+When you don't need complex routing or event transformations.
+
+* Example:
+"Order Shipped" event → Notify user via SMS → Notify admin via Email → Trigger a Lambda to update tracking.
+
+In modern event-driven systems, people often design like this:
+
+EventBridge for "orchestration" (events happening in the system),
+SNS for "notifications" (informing multiple listeners),
+SQS for "task queues" (background work handling).

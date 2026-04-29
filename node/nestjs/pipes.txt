@@ -1,0 +1,18 @@
+# NestJS Pipes
+NestJS uses pipes for input validation, transformation, and data sanitization. Pipes can be 
+built-in or custom-defined. Here’s a list of the built-in pipes that NestJS provides out of 
+the box:
+
+Built-in Pipes in NestJS
+
+Pipe Name	        Description
+ValidationPipe	    Automatically validates incoming requests using class-validator and class-transformer decorators.
+ParseIntPipe	    Transforms a string into an integer. Throws an error if the value cannot be parsed.
+ParseBoolPipe	    Transforms a string ('true' or 'false') into a boolean.
+ParseFloatPipe	    Transforms a string into a float (number with decimals).
+ParseArrayPipe	    Parses a string into an array. Supports delimiter and item type parsing.
+ParseUUIDPipe	    Validates and transforms a string into a UUID.
+DefaultValuePipe	Provides a default value if the input is undefined.
+ParseEnumPipe	    Validates if a value is part of a specific enum and transforms it.
+
+

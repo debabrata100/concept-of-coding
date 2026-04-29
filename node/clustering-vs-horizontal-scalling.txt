@@ -1,0 +1,4 @@
+# Clustering vs Horizontal Scaling
+
+Clustering improves performance within a single machine using multiple processes, while horizontal scaling increases system capacity by adding more machines and distributing load.
+

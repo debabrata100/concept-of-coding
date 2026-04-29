@@ -1,0 +1,57 @@
+HTTP (Hypertext Transfer Protocol) defines several methods (also known as HTTP verbs) that indicate the desired action to be performed on a resource. Each method has specific semantics and use cases. Here are the main HTTP methods along with their common use cases:
+
+# GET:
+Use Case: Retrieve data from the server.
+Idempotent: Yes. Multiple identical requests will yield the same result.
+
+# POST:
+Use Case: Submit data to be processed to a specified resource.
+Idempotent: No. Sending the same POST request multiple times may result in different outcomes (e.g., creating a new resource each time).
+
+#PUT:
+Use Case: Update or replace the entire content of a resource at a specified URL.
+Idempotent: Yes. Multiple identical requests will yield the same result.
+
+#PATCH:
+Use Case: Partially update a resource at a specified URL.
+Idempotent: No. Sending the same PATCH request multiple times may have different outcomes if the resource state changes between requests.
+
+#DELETE:
+Use Case: Remove a resource from the server.
+Idempotent: Yes. Multiple identical requests will yield the same result (the resource will be deleted).
+
+#HEAD:
+Use Case: Retrieve the headers of a resource without the body content.
+Idempotent: Yes. Multiple identical requests will yield the same result.
+
+#OPTIONS:
+Use Case: Get information about the communication options available for a resource.
+Idempotent: Yes. Multiple identical requests will yield the same result.
+
+#TRACE:
+Use Case: Echo back the received request to the client, which can be useful for debugging or diagnostic purposes.
+Idempotent: Yes. Multiple identical requests will yield the same result.
+
+#CONNECT:
+Use Case: Establish a tunnel to the server for a specific purpose, such as SSL/TLS-encrypted communication through an HTTP proxy.
+Idempotent: No.
+
+#OPTIONS:
+Use Case: Request information about the communication options available for the target resource.
+Idempotent: Yes.
+
+These HTTP methods, along with status codes, headers, and other elements of the HTTP protocol, provide a standardized way for clients and servers to communicate and interact with resources on the web. Each method serves a specific purpose and has its own semantics, making them suitable for different types of interactions between clients and servers.
+
+# What is the use case to retrive only headers data ?
+
+Retrieving only the headers of a resource without the body content can be useful in several scenarios:
+
+Network Performance Optimization: When a client is interested in fetching resource metadata or determining resource availability without downloading the entire content, a HEAD request can provide essential information such as content type, content length, caching headers, etc., allowing the client to make informed decisions about whether to fetch the full content.
+
+Caching Mechanisms: HEAD requests are commonly used by caching proxies or CDN (Content Delivery Network) servers to determine whether a cached copy of a resource is still valid without downloading the entire content. By examining the headers, these systems can check for changes (e.g., modification timestamps or ETag values) and avoid unnecessary data transfer if the resource hasn't been modified since the last request.
+
+Resource Existence Verification: When verifying the existence of a resource (e.g., checking if a file exists on a server), retrieving only the headers can be faster and more efficient than downloading the entire content. This is particularly useful in scenarios where downloading the content is unnecessary or undesirable, such as in conditional requests.
+
+Bandwidth Conservation: In situations where bandwidth is limited or expensive, retrieving only the headers allows clients to conserve bandwidth by avoiding unnecessary data transfer. This is especially important in mobile applications or low-bandwidth environments where minimizing data usage is a priority.
+
+Security Considerations: In some cases, retrieving the headers may provide valuable security-related information about the resource, such as its content type, content encoding, or security headers (e.g., Content-Security-Policy). Analyzing these headers can help detect potential security vulnerabilities or misconfigurations in the server's response

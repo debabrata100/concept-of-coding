@@ -1,0 +1,19 @@
+# Process streams in Node.js
+
+Process streams in Node.js (stdin, stdout, and stderr) are built-in stream interfaces used to handle data from the terminal. They're commonly used in CLI tools for input/output or to interact with child processes. For example, process.stdin is a readable stream to get user input from the terminal
+
+In Node.js, the process object provides built-in stream interfaces to handle input/output from the command line (terminal).
+
+They are used when you:
+
+Read from the terminal (e.g., user input)
+
+Write to the terminal (e.g., logging or output)
+
+Communicate with child processes
+
+# The 3 Core Process Streams
+Stream	        Type	    Description
+process.stdin	Readable	Input from the terminal (e.g., user typing)
+process.stdout	Writable	Output to the terminal (e.g., console output)
+process.stderr	Writable	Output for errors (e.g., console.error)

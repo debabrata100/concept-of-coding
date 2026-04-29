@@ -1,0 +1,7 @@
+https://www.youtube.com/watch?v=VWEhIPSRE8A
+
+Two ways:
+- Run and Debug Option
+- Chrome dev tool
+    - node --inspect app.js
+

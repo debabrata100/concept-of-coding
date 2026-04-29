@@ -1,0 +1,41 @@
+# Distributed Tracing in Microservices
+What is Distributed Tracing?
+When you have multiple microservices involved in handling a single request, it becomes difficult to track where things went wrong or how long each part took.
+
+Distributed tracing tracks a request as it travels across multiple services, creating a trace of its path, which helps in:
+
+🔍 Debugging errors
+
+📈 Monitoring performance bottlenecks
+
+🛠 Understanding dependencies
+
+# How It Works
+Each service participating in a request:
+Adds a unique trace ID and span ID to outgoing requests.
+These IDs are propagated through headers (e.g., trace-id, parent-id, etc.).
+Tracing tools collect and visualize this data.
+
+#Key Concepts
+Term	        Description
+Trace	        The complete journey of a request through the system.
+Span	        A single operation or step in that journey.
+Trace ID	    Unique ID for the full request chain.
+Span ID	        Unique ID for a single operation.
+Parent-Child	Spans are linked as parent/child to build a hierarchy of operations.
+
+Distributed Tracing Tools
+Tool	            Features
+Jaeger	            Open-source by Uber, supports OpenTracing, great visualizations.
+Zipkin	            Open-source by Twitter, supports OpenTracing, simple setup.
+OpenTelemetry	    Vendor-neutral standard for traces, metrics, and logs.
+Elastic APM	        Part of the Elastic Stack, offers tracing, metrics, and logs.
+Datadog APM	        Cloud-based, advanced tracing and monitoring.
+New Relic	        Full observability suite including tracing.
+AWS X-Ray	        AWS-native tracing system.
+
+Integrating Tracing
+Middleware in each service (HTTP/gRPC, DB calls) injects trace info.
+Use OpenTelemetry SDKs or instrumented libraries.
+Export traces to backend (e.g., Jaeger, Zipkin).
+

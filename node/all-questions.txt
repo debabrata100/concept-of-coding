@@ -1,0 +1,20 @@
+- Explain Node Js Event Loop
+- How Node js is event driven
+- NodeJs Event Loop vs Browser Event Loop
+- How node jd differs from traditional multi threaded backend like java
+- Explain how libuv thread pool behaves
+- Difference between cluster and worker thread
+- setImmediate vs setTimeout
+- How to optimize filtering, sorting and pagination in node js application.
+- How would you scale a Node API to 1M users?(context window: Nodejs vs java backend)
+- Difference between cluster and worker thread
+- Clustering vs horizontal scaling
+- components of node js event loop
+- Relation between thread pool and cpu cores ?
+- how to optimize filtering, sorting and pagination in node js application
+- debouncing, thrtling, cashing, pm2, cluster, partition, replication, sharding, statefull, stateless, 
+- error handling, logging, how many types of error, streams, child process, peroformance optiomization, how to update env without manual
+- retry mechanism, load balancer strategy
+- Different Authentication methods
+- Race condition problems in refresh tokens: Acess Token + Refresh Token: Race condition: If refresh token expires at the saem time for 3 /refresh call
+- 

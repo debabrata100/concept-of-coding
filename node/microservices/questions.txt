@@ -1,0 +1,145 @@
+* Question: How do you secure inter-service communication in a Node.js-based microservices system?
+
+Options:
+- mTLS (Mutual TLS): 
+    Ensure encryption + identity verification. Used with Istio, Linkerd, or NGINX.
+- JWT tokens: Services authenticate requests with signed tokens.
+    Include roles/claims.
+    Verify token signatures using public keys.
+- API Gateway:
+    Centralize auth and rate limiting.
+    Ensure only registered services can call specific APIs.
+- Secret Management:
+    Use Vault/KMS/AWS Secrets Manager for secure credential storage.
+    Avoid hardcoding secrets in code or environment variables.
+- Schema Contracts:
+    Validate inter-service communication via OpenAPI, gRPC, or Protobuf.
+    Prevent schema drift.
+
+* Key Differences
+Feature	                        TLS	                    mTLS
+Server Authentication	        ✅ Yes	                ✅ Yes
+Client Authentication	        ❌ No	                ✅ Yes
+Certificate Required on Client	❌ No	                ✅ Yes
+Use Case	                    Public APIs, websites	Internal APIs, secure B2B
+Trust Model	                    Server-only trust	    Mutual trust
+
+* Question: How would you detect and fix a memory leak in a long-running Node.js microservice?
+
+Answer:
+Memory leaks in Node.js typically arise from:
+Global object references
+Unremoved event listeners
+Closures retaining large references
+
+# Detection Strategy:
+
+Monitor Memory Usage:
+    Use process.memoryUsage(), heapUsed, and rss.
+    Deploy Prometheus + Grafana or APMs (New Relic, Datadog) to visualize trends.
+
+Heap Snapshots:
+    Use heapdump or Chrome DevTools via --inspect.
+    Compare snapshots over time for growing retained objects.
+
+Profiling Tools:
+    Use clinic.js (clinic heapprofiler) or 0x.
+
+Fixes:
+    Remove unused listeners (EventEmitter.removeListener).
+    Avoid accidental global references.
+    Ensure async operations do not retain context unnecessarily.
+    Use WeakMap/WeakRef to prevent unnecessary retention.
+
+# Node.js Event Loop Blocking
+
+* Question: Explain how the event loop works in Node.js, particularly under high load. How would you identify and resolve event loop blocking in a production system?
+
+Answer:
+Node.js uses a single-threaded event loop that handles I/O asynchronously. Under high load, the event loop can be blocked by long-running synchronous tasks like JSON parsing, encryption, or image processing. This causes latency spikes and degraded throughput.
+
+To identify blocking:
+    Use tools like clinic.js, 0x, --inspect, or node --trace-events to profile blocking calls.
+    Monitor event loop lag via libraries like event-loop-lag or APM tools (Datadog, New Relic).
+
+To resolve:
+    Offload CPU-intensive work to Worker Threads (worker_threads module).
+    Use child processes or queue such tasks using Redis + BullMQ or RabbitMQ.
+    Implement streaming for large file processing and avoid readFileSync-like calls in production.
+
+# Worker Threads
+Worker Threads allow you to run JavaScript code in parallel threads (within the same process) without blocking the main event loop.
+🔹 Key Points:
+    Introduced in Node.js v10.5.0 (stable in v12+).
+    Ideal for CPU-intensive tasks (e.g., data processing, image manipulation).
+    Runs in the same memory space, so it can share memory using SharedArrayBuffer.
+    Communicates with the main thread via postMessage() and event listeners.
+# Child Processes
+Child processes are used to spawn a new OS process. These are separate processes with their own memory and event loop.
+🔹 Key Points:
+    Useful for parallel execution of non-JavaScript code or heavy tasks.
+    Can run any command-line script or binary, e.g., Python, Bash, etc.
+    Communicates via standard input/output (stdin, stdout, stderr).
+
+# Distributed Transactions in Microservices
+Question: How would you design a reliable distributed transaction mechanism across services communicating over HTTP or Kafka?
+    
+Answer:
+Use the Saga pattern:
+    Choreography: Each service emits and listens to events to trigger the next step.
+    Orchestration: A central controller coordinates the steps and compensations.
+Key principles:
+    Ensure idempotency for all endpoints (e.g., with request IDs or state transitions).
+    Implement compensating actions (e.g., if a payment fails, cancel inventory reservation).
+    Use message deduplication with unique message IDs and idempotent handlers.
+    Store outgoing messages in a transactional outbox pattern (MongoDB or relational).
+    Ensure eventual consistency, not strict ACID compliance across services.
+
+# MongoDB Data Modeling: Embedding vs Referencing
+Question: When designing a high-throughput e-commerce catalog system in MongoDB, how would you decide between embedding vs referencing, especially when handling product variants and inventory updates?
+Follow-up expectation: Trade-offs in terms of read/write performance, atomic operations, and data duplication. May also touch on sharding and document growth.
+
+Answer:
+Embed when:
+    The data is read together frequently (e.g., product + variants + pricing).
+    Document size is below 16MB.
+    Updates are infrequent or small (MongoDB replaces entire documents on write).
+Reference when:
+    The data grows indefinitely (e.g., reviews, logs).
+    Data is accessed independently or shared (e.g., category references).
+
+# Cross-topic (Node.js + Microservices + MongoDB)
+Question: You're building a Node.js-based microservice that processes user uploads, stores metadata in MongoDB, and communicates with other services via message queues. What failure scenarios do you plan for, and how would you implement retries, deduplication, and eventual consistency?
+Follow-up expectation: Cover message idempotency, at-least-once delivery, transactional outbox, retry policies, and MongoDB schema versioning.
+
+Answer:
+Failure Scenarios:
+    Message delivered, DB write failed.
+    DB write succeeded, but message acknowledgment failed.
+    Service crash between Mongo write and event publish.
+Solutions:
+    - Use Transactional Outbox: Save events in Mongo within the same DB transaction. Use a background worker to publish them to Kafka/RabbitMQ.
+    - Implement deduplication: Include a unique messageId in Mongo. Upserts or filters prevent processing duplicates.
+    - Use retry policies with exponential backoff, dead-letter queues, and circuit breakers (e.g., resilience4js, bull, or nestjs-bull).
+    - Design for idempotency: Every update should be safe to apply multiple times.
+
+# Performance & Scalability
+Question: How would you scale a Node.js + MongoDB-based microservice architecture for 1000+ requests per second? What bottlenecks would you anticipate, and how would you mitigate them?
+Follow-up expectation: Discuss horizontal scaling, connection pooling, caching layers, MongoDB replication and sharding, rate limiting, bulk writes, circuit breakers, and observability (metrics, tracing).
+
+Answer:
+Node.js Layer:
+    Use clustering (node:cluster) or PM2 to utilize multi-core CPUs.
+    Horizontal scale with Kubernetes, Docker Swarm, or AWS ECS.
+    Add caching with Redis or CDN (e.g., Cloudflare) for repeated reads.
+    Use reverse proxy (Nginx, HAProxy) and API Gateway for routing and throttling.
+
+MongoDB Layer:
+    Use replica sets for high availability.
+    Apply sharding based on access patterns (e.g., by tenant or region).
+    Tune indexes, use compound indexes, and avoid full document updates.
+    Monitor slow queries and use explain() to optimize them.
+Infrastructure:
+    Add observability: Prometheus + Grafana, distributed tracing (Jaeger, OpenTelemetry).
+    Implement rate limiting, circuit breakers, and bulk writes where applicable.
+    Perform load testing using tools like Artillery, k6, or Locust.

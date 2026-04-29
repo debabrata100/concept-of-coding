@@ -1,0 +1,41 @@
+# What is a REST API?
+To understand REST, we need to review some key terms first:
+
+A client is the person or program using the API. The client makes requests to the API in order to retrieve some information or change something within the application. Your web browser is a client — it interacts with APIs different websites to get page content from them. The requested info is sent back to your browser and displayed on your screen.
+A resource is any piece of information that the API can provide the client. For instance, a resource in Facebook’s API could be a user, a page, a photo, or a post. Each resource has a unique name, called the resource identifier.
+A server is used by the application that receives client requests, and contains resources that the client wants. The server has an API to interact with clients without giving them direct access to content stored in its database.
+Now for our definition. REST is a set of guidelines that software can use to communicate over the internet in order to make integrations simple and scalable. A REST API (also called a “RESTful” API) is a specific type of API that follows these guidelines.
+
+REST stands for Representational State Transfer. This means that when a client requests a resource using a REST API, the server transfers back the current state of the resource in a standardized representation.
+
+What is a REST API?
+To understand REST, we need to review some key terms first:
+
+A client is the person or program using the API. The client makes requests to the API in order to retrieve some information or change something within the application. Your web browser is a client — it interacts with APIs different websites to get page content from them. The requested info is sent back to your browser and displayed on your screen.
+A resource is any piece of information that the API can provide the client. For instance, a resource in Facebook’s API could be a user, a page, a photo, or a post. Each resource has a unique name, called the resource identifier.
+A server is used by the application that receives client requests, and contains resources that the client wants. The server has an API to interact with clients without giving them direct access to content stored in its database.
+Now for our definition. REST is a set of guidelines that software can use to communicate over the internet in order to make integrations simple and scalable. A REST API (also called a “RESTful” API) is a specific type of API that follows these guidelines.
+
+REST stands for Representational State Transfer. This means that when a client requests a resource using a REST API, the server transfers back the current state of the resource in a standardized representation.
+
+The Six Rules of REST APIs
+To fully benefit from the functionality that REST provides, APIs must follow six requirements. (Well, technically five are required and one is optional.) Each requirement lays the groundwork for a fast and versatile API.
+
+1. Client-Server Separation
+Under REST architecture, the client and server can only interact in one way: The client sends a request to the server, then the server sends a response back to the client. Servers cannot make requests and clients cannot respond — all interactions are initiated by the client.
+
+By simplifying communication between clients and servers, RESTful APIs keep the two conveniently independent. This way, client software can grow their builds without worrying about affecting any other servers, and server contents can be modified without inadvertently affecting clients.
+
+2. Uniform Interface
+This guideline states that all requests and all responses must follow a common protocol, or a way of formatting their messages. Applications and servers are written in all sorts of different languages that don’t do a great job of working together without an intermediary. A uniform interface is a common language for any client to communicate with any REST API.Without standardized communication, translating requests and responses between software would be a total mess. Minor discrepancies would cause information to be jumbled and lost, and applications would have to update their request processes whenever APIs updated theirs. A uniform interface eliminates this possibility.For most REST APIs, this common language is HTTP, or Hyper-Text Transfer Protocol. HTTP wasn’t created specifically for REST. Rather, REST adopted this communication protocol as the standard for applications that use it.To use HTTP with a REST API, the client sends a request in a specific format that might look familiar to you. 
+
+3. Stateless
+All calls with a REST API must be stateless. This means that every interaction is independent, and each request and response provides all the information required to complete the interaction. Every request by the client is interpreted by the server as a brand new ask — the server remembers nothing about past requests.Stateless transfers greatly reduce the amount of server memory needed and improve the odds of a successful response, since the server is not required to take additional action to retrieve old data. This ensures that these interactions are scalable: As software grows and makes more requests, developers don’t need to worry about significantly more memory being used, or overloading the server with requests.
+
+4. Layered System
+So far I’ve described API requests as a simple interaction between a client and server, but this is a bit of a simplification. In reality, there are typically more servers between these two entities. These servers, or layers, are there to add security, handle and distribute traffic, or assist with a number of other important functions.This principle requires that messages between the client and target server should always be formatted and processed the same way, regardless of layers that sit between them. Additional layers should not affect client-server interactions.When developers follow this guideline, server systems can be rearranged, updated, or otherwise modified with no effect on the core request-response.
+
+5. Cacheable:
+Caching occurs when media is stored on a client’s device when visiting a website. When a client returns to that site, the cached data is loaded quickly from local storage instead of being fetched again from the server. Caching saves server resources and bandwidth while decreasing page load time, which is why most large websites do it.REST APIs are created with data caching in mind. When a server sends its response to a client, the response should indicate whether the resource provided can be cached, and for how long.
+6. Code on Demand (Optional):
+The final REST principle is optional. If desired, an API can send computer code to clients in its response. This empowers the client to run the code in its own backend.As long as an API adheres to this set of rules, it is considered RESTful. However, these rules leave plenty of room for developers to customize the functionality of their API. This flexibility distinguishes REST APIs from another common web API method, the Simple Object Access Protocol (SOAP)." https://blog.hubspot.com/website/what-is-rest-api

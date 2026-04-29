@@ -1,0 +1,71 @@
+In a typical Node.js environment (and thus in NestJS), your application runs on a single thread by default — meaning it only utilizes one CPU core. To leverage all CPU cores, you need to create worker processes using Node.js' cluster module or leverage PM2 or Docker container orchestration to run multiple instances.
+
+Example: Nest Js
+// main.ts
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import * as cluster from 'cluster';
+import { cpus } from 'os';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
+}
+
+if (cluster.isPrimary) {
+  const numCPUs = cpus().length;
+  console.log(`Primary process running. Forking for ${numCPUs} CPUs`);
+
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died. Restarting...`);
+    cluster.fork();
+  });
+
+} else {
+  bootstrap();
+}
+
+# Use PM2 process manager (easiest way)
+
+npm install -g pm2
+pm2 start dist/main.js -i max
+Check CPU usage
+You can verify if all CPU cores are being used:
+
+Use htop or top in Linux/macOS.
+
+On Windows, use Task Manager > Performance > CPU.
+
+Run 
+- pm2 monit if you're using PM2.
+- pm2 list
+- pm2 stop main
+- pm2 stop all
+- pm2 delete all
+* ecosystem.config.js is PM2's way of defining and managing your Node.js apps in a config file
+✅ Basic ecosystem.config.js example
+// ecosystem.config.js
+module.exports = {
+  apps: [
+    {
+      name: 'my-nest-app',
+      script: 'dist/main.js',      // Your entry point
+      instances: 'max',            // Use all CPU cores
+      exec_mode: 'cluster',        // Cluster mode to leverage multi-core
+      watch: false,                // Restart on file changes (useful in dev)
+      env: {
+        NODE_ENV: 'development',
+      },
+      env_production: {
+        NODE_ENV: 'production',
+      },
+      log_file: './logs/combined.log',
+      error_file: './logs/error.log',
+    },
+  ],
+};
+pm2 start ecosystem.config.js --env production

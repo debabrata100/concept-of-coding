@@ -1,0 +1,159 @@
+# What is a JWT Token?
+A JWT (JSON Web Token) is a compact, URL-safe token used for authentication and secure data exchange between parties. It is commonly used in stateless authentication systems, like APIs and web apps.
+
+## Structure of a JWT Token
+A JWT consists of three parts, separated by dots (.):
+- HEADER.PAYLOAD.SIGNATURE
+
+## Header (Base64-encoded)
+
+Specifies the token type (JWT) and the signing algorithm (HS256, RS256, etc.)
+{
+    "alg": "HS256",
+    "typ": "JWT"
+  }
+
+## Payload (Base64-encoded)
+Contains claims (user info, expiration, roles, etc.).
+{
+    "sub": "1234567890",
+    "name": "John Doe",
+    "iat": 1711490123,
+    "exp": 1711493723
+  }
+  Common claims:
+  sub (Subject) → User ID
+  iat (Issued At) → Timestamp of creation
+  exp (Expiration) → When the token expires
+  
+## Signature
+
+Ensures the token integrity and authenticity.
+Created using
+HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret)
+If altered, the token becomes invalid.
+
+## How JWT Works in Authentication
+Login: User logs in with credentials.
+Token Issued: Server generates a JWT and sends it to the client.
+Token Storage: Client stores the token (e.g., in localStorage or a cookie).
+
+Authorization: Bearer <JWT>
+Verification: Server verifies the signature and extracts the payload.
+
+## Why Use JWT?
+✅ Stateless Authentication → No need to store session data on the server.
+✅ Secure (if used correctly) → Signed to prevent tampering.
+✅ Scalable → Ideal for microservices & API authentication.
+
+## JWT vs. Session-Based Authentication
+Feature	            JWT (Token-Based)	                Session-Based
+State	            Stateless	                        Stateful
+Storage	            Client (Browser/LocalStorage)	    Server
+Scalability	        High (No need for session storage)	Low (Sessions must be stored on the server)
+Security Concern	Token theft (if stored insecurely)	Session hijacking
+
+## When to Use JWT?
+API authentication (REST, GraphQL)
+Single Sign-On (SSO)
+Microservices communication
+
+# Create custom JWT
+
+const crypto = require("crypto");
+
+// Helper to encode Base64 URL-safe
+function base64urlEncode(str) {
+  return Buffer.from(str)
+    .toString("base64")
+    .replace(/=/g, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
+}
+
+// Helper to decode Base64 URL-safe
+function base64urlDecode(str) {
+  str = str.replace(/-/g, "+").replace(/_/g, "/");
+  while (str.length % 4) str += "=";
+  return Buffer.from(str, "base64").toString();
+}
+
+// Create JWT
+function sign(payload, secret, options = {}) {
+  const header = {
+    alg: "HS256",
+    typ: "JWT",
+    ...options.header,
+  };
+
+  const data = {
+    ...payload,
+    iat: Math.floor(Date.now() / 1000),
+    ...options.claims,
+  };
+
+  const encodedHeader = base64urlEncode(JSON.stringify(header));
+  const encodedPayload = base64urlEncode(JSON.stringify(data));
+  const signature = createHmac(encodedHeader + "." + encodedPayload, secret);
+
+  return `${encodedHeader}.${encodedPayload}.${signature}`;
+}
+
+// Verify JWT
+function verify(token, secret) {
+  const [encodedHeader, encodedPayload, givenSignature] = token.split(".");
+
+  const expectedSignature = createHmac(
+    `${encodedHeader}.${encodedPayload}`,
+    secret
+  );
+  if (givenSignature !== expectedSignature) return null;
+
+  const payload = JSON.parse(base64urlDecode(encodedPayload));
+  const now = Math.floor(Date.now() / 1000);
+  if (payload.exp && now > payload.exp) return null;
+
+  return payload;
+}
+
+// HMAC SHA-256 signer
+function createHmac(data, secret) {
+  return crypto
+    .createHmac("sha256", secret)
+    .update(data)
+    .digest("base64")
+    .replace(/=/g, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
+}
+
+// module.exports = { sign, verify };
+
+const secret = "supersecretkey";
+
+const token = sign(
+  { userId: 1, role: "admin", exp: Math.floor(Date.now() / 1000) + 60 },
+  secret
+);
+console.log("Generated Token:", token);
+
+const decoded = verify(token, secret);
+console.log("Decoded:", decoded);
+
+1. Does JWT issues mutiple tokens before expiry when we create a new token?
+Ans: yes can issue multiple valid tokens for the same user at the same time — all usable until their individual expiry times.
+2. Can we invalidate a JWT before expiry?
+Ans: JWTs are stateless and cannot be invalidated server-side before their expiry. To handle this, you can implement token blacklisting or use short-lived tokens with refresh tokens.
+3. What is the difference between JWT and OAuth?
+Ans: JWT is a token format used for securely transmitting information, while OAuth is an authorization framework that can use JWTs as part of its token system.
+4. How JWT token blacklisting with redis works?
+# JWT Blacklisting with Redis
+  - Add a unique ID (jti) when issuing each JWT.
+  - Store revoked token IDs in Redis (keyed as blacklist:<jti>) with a TTL equal to the token’s expiry.
+  - Check Redis on every request — if the token’s jti is found, reject the request (token revoked).
+  - When issuing a new token, blacklist the old token’s jti.
+  - Redis automatically removes expired entries, so the blacklist stays clean.
+5. What are other ways to invalidate JWT?
+Ans: Other ways to invalidate JWTs include:
+- Refresh tokens: Use Short-lived tokens and refresh tokens to obtain new JWTs, allowing you to revoke access by invalidating the refresh token.
+- Token versioning: Include a version number in the JWT payload and increment it on sensitive actions (like password changes). Reject tokens with outdated versions. 

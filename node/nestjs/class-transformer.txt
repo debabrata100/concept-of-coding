@@ -1,0 +1,48 @@
+📦 Transformers (Decorators) from class-transformer
+
+Decorator	                Description
+@Expose()	                Explicitly marks a property to be included in the output (if using @Exclude() globally).
+@Exclude()	                Prevents a property from appearing in the output when transforming to plain object.
+@Transform()	            Applies custom transformation logic to the value. Very powerful and flexible.
+@Type()	                    Specifies the type of a nested object or array to help with proper transformation.
+@TransformClassToPlain()	Class method decorator to transform the instance into a plain object (rarely used in Nest, better to use plainToInstance or instanceToPlain).
+@TransformPlainToClass()	Transforms a plain object into an instance of the class (also not commonly used as a decorator in Nest).
+
+🔨 Examples
+1. @Expose() & @Exclude()
+@Exclude()
+class UserDto {
+  @Expose()
+  id: number;
+
+  @Expose()
+  username: string;
+
+  password: string; // will be excluded
+}
+2. @Transform()
+class ProductDto {
+    @Transform(({ value }) => Number(value))
+    price: number;
+  }
+3. @Type() (for nested objects)  
+
+📌 What it does:
+@Type() helps class-transformer understand the type of nested objects or arrays, so it can
+recursively convert them too.
+
+Without it, nested objects stay as plain JS objects, and decorators like @ValidateNested() 
+won't work correctly.
+
+class AddressDto {
+    street: string;
+    city: string;
+}
+  
+class UserDto {
+    name: string;
+  
+    @Type(() => AddressDto)
+    address: AddressDto;
+}
+  

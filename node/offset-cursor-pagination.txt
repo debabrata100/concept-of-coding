@@ -1,0 +1,40 @@
+
+Offset Based Pagination:
+- Best suited for apps that use small dataset
+- Client need to jump around pages and can tolerate duplicate and missing items
+
+Cursor-based Pagination:
+- Best suited for apps that use large datasets
+- Consistency of results is critical
+- Traversing Pages is acceptable
+- Efficient performance,since offset gets slower with large values
+
+
+
+Cursor-Based Pagination (for high-scale apps)
+Offset pagination breaks at scale. Cursor pagination is O(1) regardless of dataset size — used by Twitter, Slack, GitHub.
+
+// ❌ Offset pagination — slow at high offsets (DB scans all skipped rows)
+// SELECT * FROM products LIMIT 20 OFFSET 1000000
+
+// ✅ Cursor pagination — always fast, uses indexed field
+const getCursorPaginated = async (req, res) => {
+  const { cursor, limit = 20, sort = 'createdAt' } = req.query;
+
+  const filter = cursor
+    ? { [sort]: { $lt: new Date(Buffer.from(cursor, 'base64').toString()) } }
+    : {};
+
+  const data = await Product.find(filter)
+    .sort({ [sort]: -1 })
+    .limit(parseInt(limit) + 1); // fetch one extra to check if next page exists
+
+  const hasNext = data.length > limit;
+  if (hasNext) data.pop();
+
+  const nextCursor = hasNext
+    ? Buffer.from(data[data.length - 1][sort].toISOString()).toString('base64')
+    : null;
+
+  res.json({ data, nextCursor, hasNext });
+};

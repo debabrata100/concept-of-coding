@@ -1,0 +1,49 @@
+# Reverse Proxy servers
+They sit between client and server. They enable following features:
+1. Load balancing
+2. caching
+3. SSL termination
+4. Serving Static content
+5. Manage SSL certificates
+6. DDos protection
+7. WAF protection
+8. SSL offloading
+
+🧰 General-Purpose Reverse Proxies
+# Nginx
+Extremely popular for load balancing, SSL termination, caching, and serving static content.
+Can be used both as a web server and a reverse proxy.
+✅ Lightweight, performant, widely supported.
+
+# Apache HTTP Server (with mod_proxy)
+Traditional web server that can act as a reverse proxy via modules like mod_proxy, mod_proxy_http.
+✅ Good for compatibility with legacy systems.
+
+# HAProxy
+High-availability, load-balancing reverse proxy.
+Frequently used in large-scale and high-traffic environments.
+✅ Offers advanced load balancing features and fine-grained control.
+
+# Caddy
+Modern reverse proxy with automatic HTTPS via Let’s Encrypt.
+Configuration is simpler than Nginx or Apache.
+✅ Great for developers who want minimal config.
+
+# Traefik
+Dynamic reverse proxy specially designed for containerized environments (e.g., Docker, Kubernetes).
+Auto-discovers services via labels.
+✅ Very popular in microservices setups.
+
+🔒 Cloud & CDN-based Reverse Proxies
+# Cloudflare
+Operates as a global CDN and reverse proxy.
+Provides DDoS protection, caching, WAF (Web Application Firewall), and SSL offloading.
+✅ Managed, easy to use, excellent global reach.
+
+# AWS Application Load Balancer (ALB)
+Acts as a reverse proxy with advanced routing (path-based, host-based) in AWS.
+✅ Integrated with AWS ecosystem, supports containerized and Lambda backends.
+
+# Google Cloud Load Balancer / Azure Front Door
+Cloud-native reverse proxies for GCP and Azure respectively.
+✅ Built-in integration with cloud services and global edge networks.

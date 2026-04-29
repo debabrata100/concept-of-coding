@@ -1,0 +1,52 @@
+# streams in node js
+
+"Streams in Node.js are used when you work with large or continuous data — like files, HTTP requests/responses, or sockets — to avoid loading everything into memory. They come in types: readable, writable, duplex, and transform."
+
+##  1. HTTP Request & Response
+req.on('data')     // Readable stream
+res.write()        // Writable stream
+✅ Used for streaming POST bodies in and responses out.
+
+
+## 2. File System
+
+const fs = require('fs');
+
+const readable = fs.createReadStream('input.txt');
+const writable = fs.createWriteStream('output.txt');
+
+readable.pipe(writable);
+✅ fs.createReadStream() and fs.createWriteStream() give you readable and writable file streams — much more memory-efficient than fs.readFile() for large files.
+
+## 3. Process Streams
+
+process.stdin.on('data', (chunk) => {
+    console.log('You typed:', chunk.toString());
+  });
+  
+  process.stdout.write('Hello\n');
+  ✅ These are built-in streams:
+
+  stdin = readable
+  
+  stdout, stderr = writable
+  
+    
+
+## 4. TCP/Net Sockets
+const net = require('net');
+
+const server = net.createServer((socket) => {
+  socket.write('Hello');
+  socket.on('data', (data) => {
+    console.log('Client says:', data.toString());
+  });
+});
+✅ socket is a duplex stream (read + write)
+
+## 5. Zlib Compression
+const zlib = require('zlib');
+const gzip = zlib.createGzip();
+
+readable.pipe(gzip).pipe(writable);
+✅ zlib provides transform streams for compression and decompression.

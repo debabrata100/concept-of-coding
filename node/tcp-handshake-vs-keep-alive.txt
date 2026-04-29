@@ -1,0 +1,65 @@
+TCP Handshake
+💡 What it is:
+The TCP handshake is a 3-step process that happens when two systems want to establish a reliable connection over the internet.
+
+📶 3-Way Handshake (SYN → SYN-ACK → ACK):
+Client → Server: sends a SYN (synchronize) packet to start a connection.
+
+Server → Client: replies with SYN-ACK (synchronize-acknowledge).
+
+Client → Server: responds with ACK (acknowledge).
+
+➡️ After this, a TCP connection is established.
+
+⚙️ Characteristics:
+Takes time (latency penalty).
+
+Happens once per new connection.
+
+Happens before any HTTP data is sent.
+
+🔹 HTTP Keep-Alive (a.k.a. Connection Reuse)
+💡 What it is:
+An HTTP-level feature that keeps the TCP connection open after the first request-response cycle, allowing multiple HTTP requests to be sent over the same TCP connection.
+
+✉️ Normally, in HTTP/1.0:
+Each request → new TCP handshake → response → connection closed.
+
+With HTTP/1.1 (default: keep-alive):
+The connection stays open.
+
+No new TCP handshakes are needed for further requests.
+
+Saves time on subsequent requests.
+
+🔄 Example:
+Without keep-alive:
+1. TCP handshake
+2. HTTP request/response
+3. Connection closed
+4. Repeat for next request
+With keep-alive:
+1. TCP handshake
+2. HTTP request/response
+3. Wait
+4. Next request (same connection)
+5. Next response
+Key Differences
+
+Feature	        TCP Handshake	                    HTTP Keep-Alive
+Layer	        Transport Layer (TCP)	            Application Layer (HTTP)
+Purpose	        Establish reliable connection	    Reuse connection for multiple HTTP requests
+Overhead	    Initial connection time (3 steps)	Less overhead after first connection
+When it happens	Before any HTTP traffic	            After connection is established
+Duration	    One-time setup per connection	    Persistent across multiple HTTP calls
+Controlled by	OS/network stack	                Web server/client settings (headers)
+
+🔐 Security Tip
+Both use the same underlying connection, so TLS handshakes (for HTTPS) add another layer. If you don’t reuse the connection (no keep-alive), you repeat both the TCP and TLS handshakes, which adds more latency.
+
+* In Practice (Node.js / NestJS / Nginx)
+NestJS uses HTTP keep-alive by default.
+
+Nginx also supports and manages keep-alive connections efficiently.
+
+PM2 (or clustering) doesn’t interfere with it — it just ensures multiple processes are ready to handle incoming requests.

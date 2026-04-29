@@ -1,0 +1,164 @@
+Node.js Event Loop Components
+The Node.js event loop is what allows Node.js to perform non-blocking I/O operations despite JavaScript being single-threaded. Here are its core components:
+
+1. Call Stack
+The JavaScript runtime executes synchronous code here. Functions are pushed when called and popped when they return. The event loop only runs when the call stack is empty.
+
+2. Event Loop Phases
+The loop cycles through these phases in order:
+   ┌───────────────────────────┐
+┌─>│         timers            │  ← setTimeout, setInterval callbacks
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │     pending callbacks     │  ← I/O errors deferred from last tick
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │       idle, prepare       │  ← internal use only
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │           poll            │  ← retrieve new I/O events (MAIN phase)
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │           check           │  ← setImmediate callbacks
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+└──┤      close callbacks      │  ← socket.on('close', ...) etc.
+   └───────────────────────────┘
+PhaseDescriptionTimersExecutes setTimeout and setInterval callbacks whose delay has expiredPending CallbacksExecutes I/O callbacks deferred to the next loop iterationIdle / PrepareUsed internally by Node.jsPollRetrieves new I/O events; blocks here if queue is emptyCheckExecutes setImmediate() callbacksClose CallbacksHandles close events like socket.on('close', ...)
+
+3. Microtask Queue
+Runs between every phase (highest priority). Contains:
+
+process.nextTick() callbacks — runs before Promises
+Resolved Promise callbacks (.then(), async/await)
+
+
+process.nextTick always runs before Promises, even though both are microtasks.
+
+
+4. Thread Pool (libuv)
+For expensive operations that can't be done asynchronously by the OS (like file system, DNS, crypto), Node.js uses a thread pool (default: 4 threads) managed by libuv. When done, the callback is queued into the event loop.
+
+5. Execution Order Summary
+synchronous code
+  → process.nextTick()
+    → Promise microtasks
+      → timers (setTimeout/setInterval)
+        → poll (I/O)
+          → check (setImmediate)
+            → close callbacks
+
+Quick Example
+jsconsole.log('1 - sync');
+
+setTimeout(() => console.log('2 - setTimeout'), 0);
+setImmediate(() => console.log('3 - setImmediate'));
+
+Promise.resolve().then(() => console.log('4 - Promise'));
+process.nextTick(() => console.log('5 - nextTick'));
+
+console.log('6 - sync');
+
+// Output:
+// 1 - sync
+// 6 - sync
+// 5 - nextTick
+// 4 - Promise
+// 2 - setTimeout
+// 3 - setImmediate
+The event loop is the heart of Node's concurrency model — it keeps the main thread free while offloading heavy work to the OS or thread pool.You said: What are different queues present in event loopWhat are different queues present in event loop19:36Claude responded: Queues in the Node.Queues in the Node.js Event Loop
+Node.js maintains multiple queues across two categories:
+
+Category 1: Microtask Queues (run between every phase)
+These have the highest priority and are fully drained before moving to the next event loop phase.
+1. process.nextTick() Queue
+
+Highest priority of all queues
+Runs before anything else — even Promises
+Can cause starvation if called recursively
+
+jsprocess.nextTick(() => console.log('nextTick 1'));
+process.nextTick(() => console.log('nextTick 2'));
+// Always runs before any Promise or I/O callback
+2. Promise Microtask Queue
+
+Holds resolved/rejected Promise callbacks (.then(), .catch(), async/await continuations)
+Runs after nextTick queue is empty
+
+jsPromise.resolve().then(() => console.log('Promise 1'));
+Promise.resolve().then(() => console.log('Promise 2'));
+
+⚠️ Both microtask queues are fully drained before the event loop proceeds to the next phase.
+
+
+Category 2: Macrotask Queues (one callback per loop phase)
+Each phase of the event loop has its own queue. Only one phase's queue is processed at a time.
+3. Timers Queue
+
+Holds callbacks from setTimeout() and setInterval()
+Callback runs when the delay expires (not exact — depends on poll phase)
+
+jssetTimeout(() => console.log('timer'), 100);
+4. Pending I/O Callbacks Queue
+
+Holds deferred I/O error callbacks from the previous iteration
+Example: TCP errors, certain system-level errors
+
+5. Poll Queue
+
+The main I/O queue — holds callbacks from completed I/O operations
+Examples: file reads, network responses, database queries
+Event loop waits/blocks here if queue is empty and no timers are pending
+
+jsfs.readFile('file.txt', (err, data) => {
+  console.log('I/O done'); // goes into poll queue
+});
+6. Check Queue (setImmediate)
+
+Holds callbacks registered with setImmediate()
+Always runs after the poll phase, before timers in next iteration
+
+jssetImmediate(() => console.log('immediate'));
+7. Close Callbacks Queue
+
+Holds close event callbacks
+Examples: socket.on('close'), server.on('close')
+
+jssocket.on('close', () => console.log('socket closed'));
+
+Queue Priority Order
+                  ┌─────────────────────────────────────┐
+  HIGHEST         │  1. process.nextTick() queue         │  ← Microtask
+  PRIORITY        │  2. Promise microtask queue          │  ← Microtask
+                  ├─────────────────────────────────────┤
+                  │  3. Timers queue                     │  ← setTimeout/setInterval
+                  │  4. Pending I/O callbacks queue      │  ← deferred I/O errors
+                  │  5. Poll queue                       │  ← main I/O
+                  │  6. Check queue (setImmediate)       │  ← setImmediate
+  LOWEST          │  7. Close callbacks queue            │  ← close events
+  PRIORITY        └─────────────────────────────────────┘
+
+🔁 After every macrotask callback, Node.js checks and drains both microtask queues before continuing.
+
+
+Execution Demo
+jsconsole.log('--- Start ---');
+
+setTimeout(() => console.log('setTimeout'), 0);         // Timers queue
+setImmediate(() => console.log('setImmediate'));         // Check queue
+
+Promise.resolve().then(() => console.log('Promise'));   // Promise queue
+process.nextTick(() => console.log('nextTick'));        // nextTick queue
+
+console.log('--- End ---');
+
+// Output:
+// --- Start ---
+// --- End ---
+// nextTick          ← microtask (nextTick queue)
+// Promise           ← microtask (Promise queue)
+// setTimeout        ← macrotask (timers queue)
+// setImmediate      ← macrotask (check queue)
+
+Key Rules to Remember
+RuleDetailMicrotasks firstBoth microtask queues drain between every phasenextTick before Promisesprocess.nextTick has higher priority than PromisesPoll blocksEvent loop waits at poll if nothing else is pendingsetImmediate vs setTimeoutIn I/O callbacks, setImmediate always wins over setTimeout(fn, 0)Starvation riskRecursive nextTick or Promises can block the event loop

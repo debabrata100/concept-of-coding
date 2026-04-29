@@ -1,0 +1,74 @@
+Performance Optimization in Node.js
+* a. Avoid Blocking the Event Loop
+Node.js is single-threaded, so any blocking code will slow down your app.
+
+Don’t use synchronous functions like fs.readFileSync(), crypto.pbkdf2Sync(), etc.
+
+Use setImmediate(), process.nextTick(), and worker_threads for heavy computation.
+
+📌 Interview Tip: Explain how blocking the event loop affects all incoming requests.
+
+* b. Use Asynchronous I/O
+Always prefer non-blocking I/O operations:
+// Good
+fs.readFile('file.txt', (err, data) => {
+  // handle response
+});
+* c. Enable HTTP Keep-Alive
+Avoid TCP handshake overhead by enabling Keep-Alive:
+const server = http.createServer(app);
+server.keepAliveTimeout = 60 * 1000;
+* d. Use Gzip/Compression
+Compress responses using compression middleware:
+npm install compression
+const compression = require('compression');
+app.use(compression());
+* e. Optimize Middleware and Routing
+Only use required middleware for each route
+
+Order routes efficiently (frequently-used routes should come first)
+
+* f. Use Caching (Redis, memory-cache)
+Reduce load on your app and database using caching.
+
+2. Throughput Optimization
+✅ a. Use Cluster Module
+Leverage all CPU cores using cluster:
+const cluster = require('cluster');
+const os = require('os');
+
+if (cluster.isMaster) {
+  for (let i = 0; i < os.cpus().length; i++) cluster.fork();
+} else {
+  // Start server
+}
+
+* b. Load Balancing
+Use Nginx or a cloud load balancer in front of your Node.js processes.
+
+* c. Efficient DB Queries
+Use indexes
+
+Avoid SELECT *
+
+Use connection pools (pg, mongoose, etc.)
+
+Use batching/bulk inserts
+
+* d. Handle Backpressure in Streams
+When dealing with high throughput (like file uploads), manage backpressure using stream .pause() and .resume().
+
+* e. Rate Limiting & Throttling
+Protect your app and maintain consistent throughput using express-rate-limit:
+
+3. Key Interview Talking Points
+
+Topic	        What to Say
+Event Loop	    “I design async workflows to avoid blocking it, especially during I/O and CPU-bound tasks.”
+Clustering	    “I use cluster or PM2 to fully utilize multi-core systems.”
+Caching	        “For throughput, I cache DB responses using Redis, improving latency for high-frequency queries.”
+Streaming	    “For large file uploads, I use Node.js streams and apply backpressure handling.”
+Memory Leaks	“I monitor heap usage using heapdump, clinic, or Chrome DevTools to prevent memory leaks.”
+Monitoring	    “I set up APM (like New Relic or Datadog) and use structured logging (like Winston + Morgan).”
+DB Optimization	“I use connection pooling, efficient indexes, and async query batching to keep DB round trips low.”
+Load Testing	“I validate throughput using tools like autocannon, k6, or artillery.”

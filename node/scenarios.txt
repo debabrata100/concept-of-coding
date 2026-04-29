@@ -1,0 +1,170 @@
+Q. How do you design a rest api service ? What is the thought process ?
+1. Understand the Business Context & Requirements
+- Gather functional requirements: What resources/entities are involved? (e.g., users, products, orders)
+- Non-functional requirements: Performance expectations, scalability, security, compliance (e.g., GDPR).
+- Client expectations: Is it a mobile-first API, web app, third-party integration?
+2. Define the API Contract
+- Identify resources and design endpoints (/users, /products/:id)
+- Use RESTful principles: nouns for endpoints, HTTP methods for actions (GET, POST, PUT, DELETE).
+- Use OpenAPI/Swagger to document the contract early.
+- Consider versioning from day one (/v1/products)
+3. Design the Architecture
+- Modular architecture: Separate layers (Controller, Service, Repository)
+- Middleware stack: Logging, CORS, auth, input validation, error handling
+- Configuration management: .env, config.js or config service
+- Asynchronous patterns: Use async/await, proper error handling
+- Rate limiting, Caching, Pagination patterns
+- Service boundaries: Where does this API end? Will it evolve into microservices?
+
+4. Security by Design
+- Input validation & sanitization
+- AuthN/AuthZ: Roles, permissions, token scopes
+- Rate limiting: Avoid brute force
+- Secure headers: Helmet
+- Avoid common OWASP issues: SQL injection, XSS, CSRF
+
+1. When you do pagination, How do you implement it. Suppose you fetch 1st page and it take 500ms. How do you ensure that any page get fetched take same amount of time ?
+
+"Pagination can be implemented using offset-based or cursor-based strategies. The issue with offset-based pagination is that it becomes slower as you go deeper into the data set — because the database has to scan and skip more rows."
+
+"To ensure every page fetch takes approximately the same amount of time — especially under heavy data load — I avoid offset-based pagination for high-volume data. I use cursor-based pagination, typically on an indexed and immutable field like created_at or id. This lets me query just the next page of data using a WHERE clause, which keeps the query time consistent regardless of page depth."
+
+2. When building an order creation API, how do you ensure that if the client retries the request due to a network failure, a duplicate order is not created?
+
+In production systems, clients (especially mobile or external ones) may retry POST requests if they don’t receive a timely response. To avoid creating duplicate orders, we implement idempotency keys.
+
+🛠️ Approach:
+Client sends a unique Idempotency-Key header per logical request.
+Server stores a mapping of idempotency_key → response/result in a separate DB or Redis table.
+If a repeat request is received with the same key, the stored response is returned.
+
+- Example (Express.js + MySQL or Redis):
+const idempotencyKey = req.headers['idempotency-key'];
+const existingOrder = await redis.get(idempotencyKey);
+
+if (existingOrder) {
+  return res.json(JSON.parse(existingOrder));
+}
+
+// process order creation...
+const newOrder = await createOrder(req.body);
+
+// cache the response
+await redis.set(idempotencyKey, JSON.stringify(newOrder));
+
+res.json(newOrder);
+
+✅ Bonus:
+- Keys should expire after X minutes/hours to avoid memory bloat.
+- Only apply idempotency to safely retryable endpoints (e.g., order creation, not payment webhook callbacks).
+
+3. Race Conditions and Consistency: If two API requests are updating the same user's cart at the same time, how do you handle consistency and avoid overwriting changes?
+
+✅ Ideal Answer:
+To prevent race conditions, you can use either:
+
+Optimistic locking (preferred in stateless APIs)
+
+Pessimistic locking (only if strict guarantees are needed)
+
+🛠️ Optimistic Locking:
+Add a version or updated_at column to the cart row.
+
+When updating, check that the version hasn’t changed.
+UPDATE carts
+SET items = '...', version = version + 1
+WHERE id = ? AND version = ?
+
+If the query doesn’t affect any rows → throw Conflict.
+
+🛠️ Pessimistic Locking (e.g., MySQL):
+START TRANSACTION;
+SELECT * FROM carts WHERE id = ? FOR UPDATE;
+-- update cart
+COMMIT;
+
+✅ Bonus:
+- Optimistic locking is lighter and good for HTTP APIs.
+- Pessimistic locking is stronger but increases contention.
+4. Handling Long-Running Tasks
+You have an API that processes a large file and stores parsed records in the database. How do you design the system so the client isn't waiting for minutes?
+
+✅ Ideal Answer:
+You should offload the file processing to a background job system and return immediately.
+
+🛠️ Architecture:
+- Client uploads the file → gets a job ID.
+- Server pushes job to a queue (e.g., Bull + Redis).
+- Background worker processes and updates job status in DB.
+Client can:
+- Poll /status/:jobId
+- Or receive a webhook when completed
+
+💡 Code Snippet (Bull.js):
+await queue.add('processFile', {
+    filePath,
+    userId
+  });
+res.status(202).json({ message: 'File is being processed', jobId });
+  
+5. Caching for Performance: A product listing API takes 2 seconds to load due to complex DB joins. How do you improve its performance without changing the schema?
+
+✅ Ideal Answer:
+Introduce read caching, which may include:
+
+🛠️ Application-level Cache (e.g., Redis)
+Cache frequently accessed queries or computed responses.
+const cacheKey = `products_page_1`;
+const cached = await redis.get(cacheKey);
+if (cached) return res.json(JSON.parse(cached));
+
+// DB call, then cache
+await redis.set(cacheKey, JSON.stringify(data), 'EX', 60);
+
+🛠️ CDN or Reverse Proxy Cache
+* If it’s a public API, cache entire responses via Nginx/Varnish/CDN (like Cloudflare).
+* Use cache headers like Cache-Control: public, max-age=60.
+
+🛠️ Query Optimization
+* Move expensive joins to materialized views (refreshed periodically).
+* Use covering indexes for key fields.
+
+6. Database Scalability: Your order table has grown to 100M records, and queries have slowed down. How do you improve performance without deleting data?
+
+✅ Ideal Answer:
+You don’t have to delete data — you can improve performance via:
+
+🛠️ Solutions:
+✅ 1. Indexing
+Ensure created_at, user_id, or other filter fields are indexed properly.
+
+✅ 2. Partitioning
+Use MySQL partitioning on date or ID ranges:
+
+✅ 3. Read Replicas
+Offload reads to replicas.
+
+Write to master, read from slave.
+
+✅ 4. Materialized Views
+Precompute heavy aggregations (e.g., orders per day).
+
+✅ 5. Archiving
+Move old data to an orders_archive table or separate DB.
+
+Keep only recent 1 year in orders.
+
+✅ 6. Pagination Optimization
+Use cursor-based pagination to reduce query scan times.
+
+7. Duplicate Message Handling in Event-Driven Systems: You're consuming messages from a queue (e.g., Kafka or RabbitMQ) to update user balances. If a message gets delivered twice, how do you avoid applying the same update multiple times?
+
+8. API Versioning Strategy: Your product API is now used by 3 third-party clients. You need to introduce a breaking change to an endpoint. How do you roll this out safely without disrupting existing clients?
+
+9. Timeouts and Retries: You're calling a payment gateway from your backend. Sometimes, it takes 4–5 seconds to respond or times out. How do you structure your retry logic to avoid duplicate charges and ensure reliability?
+
+10. Slow Query Debugging: A product search API has become slow over time. Explain how you would debug and resolve this at the database level.
+
+11. Data Consistency Between Microservices: You have a user service and an order service. When a user is deleted, you must also cancel their orders. How do you maintain consistency between these services?
+
+12. 
