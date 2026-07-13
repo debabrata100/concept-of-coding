@@ -1,0 +1,2 @@
+# Memoization
+Memoization improves performance by trading space for time, caching results of pure functions to avoid redundant computations.

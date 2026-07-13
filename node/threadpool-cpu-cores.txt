@@ -1,0 +1,41 @@
+# CPU Core vs Thread
+
+A CPU core executes instructions.
+A thread is a unit of execution.
+The operating system schedules threads onto available cores.
+
+Threads > Cores is completely normal.
+For example:
+3 CPU Cores
+20 Threads
+The OS rapidly switches between threads, giving the illusion that many threads are running simultaneously.
+CPU Core = Worker station
+Thread    = Worker
+
+The thread pool owns workers.
+The OS decides which worker gets which station.
+The thread pool belongs to the Node.js process, not to any individual CPU core.
+A thread pool is simply a collection of OS threads managed by libuv.
+
+# Does every async operation use the thread pool?
+No.
+Operations like:
+
+File System (fs)
+DNS (dns.lookup)
+Some crypto operations (pbkdf2, bcrypt, scrypt)
+Compression (zlib)
+
+use the libuv thread pool.
+
+But network operations such as:
+http.get()
+fetch()
+TCP sockets
+WebSockets
+typically use OS event notification mechanisms like:
+
+epoll (Linux)
+kqueue (macOS)
+IOCP (Windows)
+do not consume thread pool workers.
