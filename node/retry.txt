@@ -1,0 +1,65 @@
+1. What is a retry mechanism and why is it needed?
+
+Expected answer:
+A retry mechanism is used to re-attempt a failed operation, usually due to transient failures like:
+
+network issues
+temporary service downtime
+rate limiting
+
+👉 Key point:
+Not all failures should be retried.
+
+Senior-level insight:
+
+Retry is part of resilience engineering
+Works best with idempotent operations
+
+
+
+
+async function retryWithExponentialBackoff(apiCall, retryCount = 3, initialDelay = 2) {
+  if(typeof apiCall !== 'function') {
+        throw new Error('Provide a valid apiCall function')
+  }
+  let attempt = 1;
+  let result = null;
+  let lastError = null;
+  const wait = async (delay) => {
+    return new Promise((resolve)=> {
+      setTimeout(()=> {
+        console.log("waiting finished at:", new Date().toISOString());
+        resolve();
+      }, delay)
+    })
+  }
+
+  while(attempt < retryCount) {
+    try {
+      result = await apiCall();
+      console.log(result);
+      return result;
+    } catch(error) {
+      lastError = error;
+      const delay = Math.pow(initialDelay, attempt)*1000;
+      console.log(`Retrying in ${delay}ms...`);
+      await wait(delay);
+    }
+    attempt += 1;
+  }
+  throw lastError;
+}
+
+let count = 1;
+async function apiCall() {
+  return new Promise((resolve, reject) => {
+    setTimeout(()=> {
+      if(count % 3 === 0){
+        resolve({success: true});
+      }
+      count += 1;
+      reject({success: false})
+    }, 100)
+  })
+}
+retryWithExponentialBackoff(apiCall);

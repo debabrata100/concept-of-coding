@@ -1,0 +1,9 @@
+1. Refresh Token and Access Token:
+
+res.cookie("refreshToken", token, {
+  httpOnly: true,  // Protects against XSS (JavaScript cannot read the cookie)
+  secure: true,    // Protects against Man-in-the-Middle (Only sent over HTTPS)
+  sameSite: "strict" // Protects against CSRF (Only sent from your domain)
+});
+
+On client side, save access token in memory (e.g., React state) and use it for API requests. When access token expires, make a request to refresh token endpoint to get a new access token using the refresh token stored in the cookie.

@@ -1,0 +1,5 @@
+#Etag (Entity Tag)
+# https://www.youtube.com/watch?v=tWu9lBlghOc
+Etag solved two problems:
+- Waste of bandwidth and resources
+- Changed Data Update
