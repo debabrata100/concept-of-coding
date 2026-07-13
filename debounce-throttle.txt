@@ -4,7 +4,7 @@ Both debounce and throttling are techniques used to control the rate at which a 
 
 
 #Debounce
-Debouncing is useful when you want to ensure that a function is only called after a certain amount of time has passed since the last invocation.
+Debouncing is useful when you want to ensure that a function is only called after a certain amount of time has passed since the last invocation. (after certain amount of inacivity by the user)
 function debounce(fn, delay) {
   let timer = null;
   let context = this;

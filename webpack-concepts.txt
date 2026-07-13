@@ -19,7 +19,7 @@ Prevent Duplication: Use Entry dependencies or SplitChunksPlugin to dedupe and s
 Dynamic Imports: Split code via inline function calls within modules.
 
 Advantages of code splitting:
-- Multiple bundle: no need to load all the bundles. can be oaded on demand
+- Multiple bundle: no need to load all the bundles. can be loaded on demand
 - Prevent duplication (splitchunk plugin)
 - Lazy Loading / Dynamic Imports
 import(/* webpackChunkname: "chunk_name" */, "./component/showmodal").then((module)=> {

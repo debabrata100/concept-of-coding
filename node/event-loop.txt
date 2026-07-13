@@ -115,3 +115,18 @@ Child Processes
 🎯 Interview Summary (what I’d say in 30 seconds)
 
 Node.js uses an event loop to handle asynchronous operations in a non-blocking way. It runs on a single thread, offloads I/O to the system via libuv, and processes callbacks through different phases like timers, poll, and check. Microtasks like promises and process.nextTick run before the event loop continues. This architecture makes Node highly efficient for I/O-bound workloads but not ideal for CPU-heavy tasks.
+
+check phase: setImmediate:
+If one setImmediate registers another setImmediate inside its callback, the newly registered one is deferred to the next iteration's check phase, not the current one.
+
+setImmediate(() => {
+  console.log('Immediate 1');
+  setImmediate(() => console.log('Immediate 1.1 — runs NEXT loop iteration'));
+});
+
+setImmediate(() => console.log('Immediate 2'));
+
+// Output:
+// Immediate 1
+// Immediate 2
+// Immediate 1.1  ← deferred to next check phase

@@ -2,6 +2,35 @@
 # Aggregation Pipeline
 The aggregation pipeline lets you transform, filter, group, and calculate — think of it as MongoDB’s SQL GROUP BY + JOIN + WHERE + SELECT.
 
+
+# What problem mongo db query aggregation solve ?
+MongoDB Aggregation solves the problem of processing and transforming data inside the database itself, instead of fetching raw documents into your application and manually processing them in Node.js/JavaScript.
+
+Think of it as MongoDB’s equivalent of:
+
+SQL GROUP BY
+SQL JOIN
+analytics pipelines
+reporting engines
+ETL/data transformation
+
+The Core Problem Aggregation Solves
+
+Without aggregation:
+
+Fetch many documents from DB
+Loop through them in application code
+Filter, group, calculate totals
+Transform structure
+Send final result
+
+This causes:
+
+More network transfer
+More memory usage in app server
+Slower performance
+Complex backend logic
+
 ## Basic Structure
 - db.collection.aggregate(pipeline, options);
 

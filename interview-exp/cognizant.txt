@@ -3,6 +3,7 @@
 2. how do you destructure 1st and third variable from a array of 4 values
 3. Difference between class and functional component
 4. Difference between useState and older state logic
+Ans: useState: Does not merge the state, it replaces the state with new value. Older state logic: Merges the state with new value. Batch Logic: older state logic batches only inside event handlers but not inside promises, setTimeout, native event handlers. useState batches inside event handlers, promises, setTimeout, native event handlers.
 5. Why do you use context api
 6. Context Api vs Redux
 7. Can we use Redux as a caching layer

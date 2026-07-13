@@ -2,7 +2,7 @@
 
 Options:
 - mTLS (Mutual TLS): 
-    Ensure encryption + identity verification. Used with Istio, Linkerd, or NGINX.
+    Ensure encryption + identity verification. Used with Service Mesh (Istio, Linkerd, or NGINX.)
 - JWT tokens: Services authenticate requests with signed tokens.
     Include roles/claims.
     Verify token signatures using public keys.

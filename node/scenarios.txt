@@ -1,27 +1,30 @@
 Q. How do you design a rest api service ? What is the thought process ?
-1. Understand the Business Context & Requirements
-- Gather functional requirements: What resources/entities are involved? (e.g., users, products, orders)
-- Non-functional requirements: Performance expectations, scalability, security, compliance (e.g., GDPR).
-- Client expectations: Is it a mobile-first API, web app, third-party integration?
-2. Define the API Contract
-- Identify resources and design endpoints (/users, /products/:id)
-- Use RESTful principles: nouns for endpoints, HTTP methods for actions (GET, POST, PUT, DELETE).
-- Use OpenAPI/Swagger to document the contract early.
-- Consider versioning from day one (/v1/products)
-3. Design the Architecture
-- Modular architecture: Separate layers (Controller, Service, Repository)
-- Middleware stack: Logging, CORS, auth, input validation, error handling
-- Configuration management: .env, config.js or config service
-- Asynchronous patterns: Use async/await, proper error handling
-- Rate limiting, Caching, Pagination patterns
-- Service boundaries: Where does this API end? Will it evolve into microservices?
 
-4. Security by Design
-- Input validation & sanitization
-- AuthN/AuthZ: Roles, permissions, token scopes
-- Rate limiting: Avoid brute force
-- Secure headers: Helmet
-- Avoid common OWASP issues: SQL injection, XSS, CSRF
+Clarify → Architecture → Core Implementation → 
+Security → Error Handling → Scalability → Observability → Testing
+
+1. Clarity in terms of functional and non functional requirements.
+functional: Scope of the service(What is does), Expected load(scale), clarity about database schema, reources involved, clarity about api contract,
+non functional: Any SLA requirements(latency and uptime)
+2. Architecture
+- Layered architecture — Route → Controller → Service → Repository
+- separation of concerns (business logic ≠ DB logic ≠ HTTP logic)
+- Choosing between REST, GraphQL, or gRPC depending on the use case
+3. Core Implementation
+- Identify Cpu heavy task / Background Jobs
+4. Production Readiness:
+- Auth, Input Validation
+- Error handling
+- Rate Limiting
+- Security
+- Environment Config
+5. Dependancy and Tooling choices
+Why Express vs Fastify vs NestJS?
+ORM choice — Prisma, TypeORM, raw queries — and when to use which
+Why a message queue? Why a cache (Redis)?
+6. Observability
+- Logging, Monitoring and Tracing
+7. Unit Testing
 
 1. When you do pagination, How do you implement it. Suppose you fetch 1st page and it take 500ms. How do you ensure that any page get fetched take same amount of time ?
 

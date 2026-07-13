@@ -28,11 +28,11 @@ Distributed Tracing Tools
 Tool	            Features
 Jaeger	            Open-source by Uber, supports OpenTracing, great visualizations.
 Zipkin	            Open-source by Twitter, supports OpenTracing, simple setup.
-OpenTelemetry	    Vendor-neutral standard for traces, metrics, and logs.
+OpenTelemetry	      Vendor-neutral standard for traces, metrics, and logs.
 Elastic APM	        Part of the Elastic Stack, offers tracing, metrics, and logs.
 Datadog APM	        Cloud-based, advanced tracing and monitoring.
-New Relic	        Full observability suite including tracing.
-AWS X-Ray	        AWS-native tracing system.
+New Relic	          Full observability suite including tracing.
+AWS X-Ray	          AWS-native tracing system.
 
 Integrating Tracing
 Middleware in each service (HTTP/gRPC, DB calls) injects trace info.

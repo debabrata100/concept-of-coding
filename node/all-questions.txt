@@ -11,10 +11,21 @@
 - Clustering vs horizontal scaling
 - components of node js event loop
 - Relation between thread pool and cpu cores ?
-- how to optimize filtering, sorting and pagination in node js application
 - debouncing, thrtling, cashing, pm2, cluster, partition, replication, sharding, statefull, stateless, 
 - error handling, logging, how many types of error, streams, child process, peroformance optiomization, how to update env without manual
 - retry mechanism, load balancer strategy
 - Different Authentication methods
 - Race condition problems in refresh tokens: Acess Token + Refresh Token: Race condition: If refresh token expires at the saem time for 3 /refresh call
-- 
+
+----------- Async Messaging ------------
+- What are different open source tools for using asynchronous messaging between micro services, explain like a teacher, also tell when to use what
+- What is the actual difference between rabbit MQ and NATS. Tell me 5 major points that ll explain evrthing. Try providing to the point answer not unnecessary description
+- for one message of rabbitMQ, How many consumers will be there ?
+- in kafka, for one event, how may consumers are there? Or correct me if my understanding is not correct
+- I want you to provide me 1 real example for rabbit MQ, 1 real example for Kafka, 1 real example of NATS streaming server and 1 for BULL MQ_Redis. You should explain the example in a way that sounds like real project implementation, that can be a answer to a real interview question. It will also clear my doubts and easy to remember with example fit in mind. Interviewer can ask where did you used this in your project. So that I would be ready for that. Think deeply about common corporate tech projects and formulate your answer.
+---------- Retry--------
+- What are mostly asked node js interview questions on retry mechanism ?
+
+-------- communication ------
+- Server Sent Events vs Webhook. Can you explain how they work and what protcol hey use. How bith differs
+- Do these internally use tcp ? or udp ?

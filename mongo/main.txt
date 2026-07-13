@@ -12,6 +12,22 @@ Speed	            Slower read (needs join)	Faster read (one query)
 Flexibility	        Better if many-to-many	    Best for one-to-few
 Update overhead	    Easier updates	            Update whole document
 
+#Decission Rule:
+Embed when data is read together & owned by one entity. Reference when data is shared, large, or updated independently.
+
+# embedding
+✓ Fast reads — no joins
+✓ Atomic writes
+✓ Low latency
+✗ Duplication if data is shared
+
+# references
+✓ No data duplication
+✓ Easier to update shared data
+✓ Flexible relationships
+✗ Extra queries / $lookup
+✗ No single-op atomicity
+
 # Example: Embed Posts inside User
 * User Schema with Embedded Posts
 const mongoose = require('mongoose');

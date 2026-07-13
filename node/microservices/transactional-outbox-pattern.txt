@@ -1,3 +1,4 @@
+# https://www.youtube.com/watch?v=tQw99alEVHo
 1. ✅ Transactional Outbox Pattern
 🔍 What It Is:
 A way to reliably publish events/messages after a database update, ensuring that DB writes and event publication are atomic (even if the broker is down).

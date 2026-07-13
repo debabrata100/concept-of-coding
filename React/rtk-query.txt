@@ -31,6 +31,7 @@ React Query: Treats server state as external and lets components manage it direc
 
 RTK Query: Treats server state as part of the Redux state, managed through slices and reducers.
 Both are excellent choices, and you won't go wrong with either.
+
 Use React Query if you're building a React app without Redux or want fine-grained caching control.
 Use RTK Query if you already use Redux and want to eliminate extra boilerplate for API calls.
 

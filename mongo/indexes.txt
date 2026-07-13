@@ -108,3 +108,20 @@ Keys = field values, Values = document pointers.
 Fast lookups, moderate write overhead.
 Maintained automatically during document changes.
 Stored compressed inside WiredTiger engine.
+
+
+9. Senior-Level Insight
+
+“Indexes are for READ performance, but they slow WRITE performance”.
+For every write, it has to update indexes
+So always balance:
+Scenario	            Strategy
+Read-heavy system	    More indexes
+Write-heavy system	    Fewer indexes
+
+10. Why index order matters?
+👉 Because MongoDB uses prefix matching
+11. How do you debug slow query?
+Use .explain()
+Look for COLLSCAN
+Add index accordingly

@@ -18,7 +18,7 @@ However, if bandwidth is limited, it may slow down other downloads.
 Feature	        Purpose	                                                When to Use?	                        Blocks Parsing?
 Preload	        Fetch critical resources early(before browser dicovers)	When a resource is needed soon	        ❌ No (but competes for bandwidth)
 Preconnect	    Establish early connection (DNS, TCP, TLS)	            When fetching from third-party origins	❌ No
-Prefetch	    Fetch resources for next page navigation	            When expecting future page visits	    ❌ No (low priority)
+Prefetch	    Fetch resources for next page navigation	                When expecting future page visits	      ❌ No (low priority)
 
 Summary
 Type	     Best For	                                        Example
