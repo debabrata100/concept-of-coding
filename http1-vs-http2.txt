@@ -1,0 +1,33 @@
+# HTTP1. vs HTTP2 | http1-vs-http2
+
+HTTP/1.1 and HTTP/2 differ fundamentally in how they transport data between client and server. Here's a breakdown of the key differences:
+Protocol Format
+HTTP/1.1 is a text-based protocol. Requests and responses are human-readable strings, which makes debugging easy but is inefficient to parse.
+HTTP/2 is a binary protocol. Data is broken into frames — a much more efficient format for machines, though not human-readable.
+
+Multiplexing (The Biggest Deal)
+HTTP/1.1 suffers from head-of-line blocking: each connection can only handle one request at a time. Browsers work around this by opening 6–8 parallel TCP connections per domain, which is wasteful.
+HTTP/2 introduces multiplexing: multiple requests and responses can be in-flight simultaneously over a single TCP connection, each tagged with a stream ID. No more waiting in line.
+
+Header Compression
+HTTP/1.1 sends headers as plain text on every single request — including repetitive fields like User-Agent, Accept, Cookie, etc.
+HTTP/2 uses HPACK compression, which maintains a shared header table between client and server. Repeated headers are sent as tiny index references instead of full strings, dramatically reducing overhead.
+
+Server Push
+HTTP/2 allows servers to proactively send resources the client hasn't asked for yet. For example, when a browser requests index.html, the server can push style.css and app.js immediately — before the browser even parses the HTML and discovers it needs them.
+HTTP/1.1 has no such mechanism; it's strictly request → response.
+
+Stream Prioritization
+HTTP/2 lets clients assign priority weights to streams, so the server can decide which resources to send first (e.g., CSS before images).
+HTTP/1.1 has no built-in prioritization — the order is simply sequential.
+
+Connection Management
+HTTP/1.1HTTP/2Connections per domain6–8 (browser hack)1Keep-AliveOptional, commonAlways persistentTLSOptionalRequired in practice
+
+Real-World Impact
+
+Latency: HTTP/2 is significantly faster on high-latency connections (e.g., mobile) because multiplexing eliminates round-trip stalls.
+Page load: Fewer connections + header compression + server push = faster page loads, especially for asset-heavy pages.
+Caveat: HTTP/2 still has TCP-level head-of-line blocking. If a TCP packet is lost, all streams stall — which HTTP/3 (built on QUIC/UDP) solves.
+
+The core philosophy shift: HTTP/1.1 was designed for a web of simple documents; HTTP/2 was redesigned for the modern web of dozens of simultaneous asset requests.

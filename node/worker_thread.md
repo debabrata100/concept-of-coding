@@ -31,3 +31,34 @@ Creating a new thread for every request is expensive. A thread pool maintains a 
 | **Performance** | Lower (due to startup) | Higher (reused threads) |
 | **Resource Usage** | Risk of exhaustion | Controlled |
 | **Best For** | Simple background tasks | High-traffic Express servers |
+
+
+
+// server.js
+const express = require('express');
+const { Worker } = require('worker_threads');
+const app = express();
+
+function runHeavyTask(input) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker('./heavy-worker.js', { workerData: input });
+    worker.on('message', resolve);   // worker finished → resolve the promise
+    worker.on('error', reject);
+    worker.on('exit', (code) => {
+      if (code !== 0) reject(new Error(`Worker stopped with code ${code}`));
+    });
+  });
+}
+
+// Heavy endpoint — offloads to a worker
+app.get('/heavy', async (req, res) => {
+  const result = await runHeavyTask(40);   // ⏸ THIS request pauses here...
+  res.json({ result });                    // ...resumes and responds when worker is done
+});
+
+// Light endpoint — proves the event loop is NOT blocked
+app.get('/ping', (req, res) => {
+  res.json({ pong: true });
+});
+
+app.listen(3000);

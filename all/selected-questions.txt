@@ -1,0 +1,102 @@
+code practice: http module, worker threads, cluster. Event Emitter.
+Node Js:
+1. Explain Event loop.
+2. What is an error-first callback?
+Answer: Error-first callbacks are used to pass errors and data. The first argument is always an error object that the programmer has to check if something went wrong. Additional arguments are used to pass data.
+3. What is control flow function? 
+Answer: Control flow functions are used to control the execution of asynchronous functions. They help manage the order in which functions are executed, ensuring that certain tasks are completed before others.
+4. What is the difference between process.nextTick() and setImmediate()?
+5. Could we run an external process with Node.js?
+Ans: Yes, we can run an external process with Node.js using the child_process module. This module provides the ability to spawn new processes, execute commands, and communicate with them through standard input/output streams. Functions like exec(), spawn(), and fork() are commonly used for this purpose.
+- mainly used for running shell commands, executing scripts, and managing subprocesses in a Node.js application.
+6. How to handle uncaught exceptions in Node.js?
+Ans: Uncaught exceptions can be handled in Node.js by using the process.on('uncaughtException', callback) event. This allows you to catch and handle errors that were not caught by any try-catch blocks. However, it's generally recommended to use proper error handling techniques and avoid relying solely on uncaught exception handling, as it may lead to unexpected behavior or application crashes.
+process.on('uncaughtException', function(err) {
+  console.log('Caught exception: ' + err);
+});
+7. What are the core modules of Node,js
+8. What is the difference between cluster and worker thread?
+Ans: Cluster module allows you to create child processes that share the same server port, enabling better utilization of multi-core systems. Worker threads, on the other hand, allow you to run JavaScript code in parallel within the same process, sharing memory and resources. Clustering is suitable for scaling applications across multiple CPU cores, while worker threads are useful for CPU-intensive tasks that can be offloaded from the main thread.
+9. What are V8 and libuv?
+Ans: V8 is the JavaScript engine developed by Google that compiles and executes JavaScript code. It is used in Node.js to run JavaScript on the server side. Libuv is a multi-platform support library that provides asynchronous I/O capabilities, event loops, and other utilities for Node.js. It handles tasks such as file system operations, networking, and timers, allowing Node.js to perform non-blocking I/O operations efficiently. It also manages 4 default for handling some blocking task which are not possible to do using os async io like DNS lookup, file system operations, compression, encryption, etc. It uses a thread pool to handle these tasks in the background while the main event loop continues to process other events.
+10. What is REPL in context of Node? (Read Eval Print Loop)
+11. What is the difference between CommonJS and ES modules in Node.js?
+Ans: CommonJS is the module system used in Node.js, where modules are loaded synchronously using the require() function. ES modules (ECMAScript modules) are a standardized module system introduced in ECMAScript 2015 (ES6) that allows for asynchronous loading of modules using the import and export syntax. CommonJS is widely used in Node.js, while ES modules are becoming more popular and are supported in modern JavaScript environments.
+12. What is Event Emmitter?
+13. What is purpose of Buffer class in Node?
+Ans: The Buffer class in Node.js is used to handle binary data. It provides a way to work with raw memory allocations, allowing you to read and write binary data efficiently. Buffers are particularly useful when dealing with streams, file I/O, and network communication, as they enable you to manipulate binary data without the overhead of converting it to strings or other formats.
+14. What are streams?
+Ans: Streams are a way to handle reading and writing data in a continuous manner, allowing for efficient processing of large amounts of data without loading it all into memory at once. Node.js provides several types of streams, including 
+- readable streams, 
+- writable streams, 
+- duplex streams (which can be both read from and written to), and 
+- transform streams (which can modify the data as it passes through). Streams are commonly used for file I/O, network communication, and data processing tasks.
+15. What are the global objects of Node.js?
+Ans: Global objects in Node.js are objects that are available in all modules without the need for importing them. Some of the commonly used global objects include:
+- global: The global object itself, which provides access to global variables and functions.
+- process: Provides information and control over the current Node.js process, including environment variables, command-line arguments, and process management.
+- Buffer: Used for handling binary data.
+- setTimeout, setInterval, setImmediate: Functions for scheduling asynchronous tasks.
+- console: Provides methods for logging and debugging.
+16. What is Piping in Node?
+Ans: Piping in Node.js is a mechanism that allows you to connect the output of one stream to the input of another stream. It enables the flow of data from a readable stream to a writable stream, allowing for efficient data processing and transformation. Piping is commonly used in scenarios such as reading data from a file and writing it to another file, or streaming data from an HTTP request to a response. The pipe() method is used to establish this connection between streams.
+17. How can you listen on port 80 with Node?
+Ans: Ports below 1024 (including port 80) require root/admin privileges on Linux and Mac. Windows doesn't have this restriction the same way. Follwing are the options to listen on port 80 with Node.js:
+- Run as root (sudo node server.js) — works, bad practice, security risk
+- Use setcap to allow Node to bind low ports without full root
+- Reverse proxy (Nginx, Caddy, load balancer) in front, Node runs on a high port
+- Docker with port mapping (-p 80:3000) — same idea as option 3, but Docker's networking layer does the forwarding instead of Nginx
+18. How to use Buffer in Node.js?
+19. When should I use EventEmitter?
+Ans: EventEmitter as a tool for asynchronous decoupling. You should reach for it when you want two parts of your application to communicate without the "emitter" needing to know anything about the "listener."
+20. How do you debug Node.js applications?
+21. Rewrite promise-based Node.js applications to Async/Await 
+22. What is N-API in Node.js?
+Ans: N-API is an API for building native Addons.\
+23. Rewrite the code sample without try/catch block
+async function check(req, res) {
+  try {
+    const a = await someOtherFunction();
+    const b = await somethingElseFunction();
+    res.send("result")
+  } catch (error) {
+    res.send(error.stack);
+  }
+}
+Ans:
+async function check2(req, res) {
+  const a = await someOtherFunction().catch((error) => {
+    res.send(error);
+  });
+  const b = await somethingElseFunction().catch((error) => {
+    res.send(error);
+  });
+  if(a&b)res.send("result");
+}
+24. How to implement dependancy injection in node js?
+25. Explain the result of this code execution
+var EventEmitter = require("events");
+
+var crazy = new EventEmitter();
+
+crazy.on('event1', function () {
+    console.log('event1 fired!');
+    crazy.emit('event2');
+});
+
+crazy.on('event2', function () {
+    console.log('event2 fired!');
+    crazy.emit('event3');
+
+});
+
+crazy.on('event3', function () {
+    console.log('event3 fired!');
+    setTimeout(function () {
+        crazy.emit('event1');
+    }, 5000);
+});
+
+crazy.emit('event1');
+25. What is Write Ahead Log(WAL).
+Ans: A Database Technique where all data modifications are sequencially recorded to a persistent log file on disk before they are applied to real database files.

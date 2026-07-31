@@ -1,0 +1,3 @@
+# Flyway
+
+Flyway maintains a flyway_schema_history table in the database. Every time a migration is successfully executed, Flyway records its version, description, checksum, execution time, and success status in this table. On subsequent runs, it compares the migration files in the project with the records in the history table, executes only the pending migrations in version order, and validates checksums to detect changes to previously applied migrations. This ensures every environment evolves through the same sequence of schema changes consistently and safely

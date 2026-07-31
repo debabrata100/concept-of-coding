@@ -1,0 +1,37 @@
+In some internal Node Interview:
+
+1. WHat is output of :
+app.use((req, res, next) => {
+  console.log("Middleware1");
+  next();
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log("Middleware2");
+  next();
+});
+app.get("/users", (req, res) => {
+  console.log("Controller");
+  res.send("Users");
+});
+
+2. I have a requirement, while executing any api, I have to validate all my requirements as valid then only it will execute other code and send response. Provide approach for it.
+3. Is this below code is correct reading a 100gb logs ?
+fs.readFile("100GB.log", (err, data) => {
+   console.log(data.length);
+})
+Asn: Node's Buffer limit. A Buffer can't hold 100GB. The max is buffer.constants.MAX_LENGTH — around 2GB on 32-bit and up to ~4GB (or Number.MAX_SAFE_INTEGER-bounded but practically capped) on 64-bit builds. You'll get an error like ERR_FS_FILE_TOO_LARGE before you even run out of RAM.
+correct:
+const readStream = fs.createReadStream("100GB.log");
+let totalLength = 0;
+readStream.on("data", (chunk)=> {
+  totalLength += chunk.length;
+})
+readStream.on("end", ()=> {
+  console.log(totalLength);
+})
+readStream.on("error", ()=> {
+
+})
+4. 

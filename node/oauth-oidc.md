@@ -3,7 +3,7 @@
 When you use "Log in with Facebook," Facebook actually uses a modified, proprietary version of OAuth 2.0 to handle identity, rather than the strict OIDC standard.
 
 Here is the breakdown of how they differ and how they work together.
-# The Core DifferenceOAuth 2.0 (The Foundation): 
+# The Core Difference OAuth 2.0 (The Foundation): 
 
 - It is a framework designed to give an application an Access Token to perform actions on behalf of a user (like reading tweets or posting to Facebook). It does not natively provide user profile details.
 

@@ -1,0 +1,20 @@
+const ob = [
+  {
+    name: "A",
+    score: 100
+  },
+  {
+    name: "B",
+    score: 200
+  },
+  {
+    name: "C",
+    score: 300
+  }
+];
+// output: ["A-300", "B-100", "C-200"]
+
+function output(ob) {
+  const scores = ob.reverse().map(item=> item.score);
+  return ob.map((item2, i) => `${item2.name}-${scores[i]}`).reverse();
+}

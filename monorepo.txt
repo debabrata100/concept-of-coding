@@ -1,0 +1,4 @@
+# Monorepo
+A monorepo (short for monolithic repository) is a single repository that holds the code and assets for multiple projects that may be related or unrelated, often with shared dependencies and tight integration.
+
+The idea behind a monorepo is to manage multiple projects or packages in a single Git repository, rather than having separate repos for each.

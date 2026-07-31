@@ -1,0 +1,8 @@
+# PUT vs PATCH
+
+PUT is used to replace an entire resource. The client sends the full representation, and the server updates the resource to match it. PATCH is used for partial updates, where only the specified fields are modified and all other fields remain unchanged. PUT is defined to be idempotent, while PATCH may or may not be idempotent depending on how the patch operation is implemented.
+
+
+A simple way to remember
+PUT = Replace the whole document.
+PATCH = Edit only the fields you specify.

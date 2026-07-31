@@ -1,0 +1,4 @@
+Q.
+let perform = [ {"team": "A", "score":200}, {"team": "B", "score":200}, {"team": "c", "score":200}, {"team": "A", "score":200}, {"team": "B", "score":200}, {"team": "C", "score":200} ] 
+
+output : final = [{"team": "A", "score":400}, {"team": "B", "score":400}, {"team": "C", "score":400} ]

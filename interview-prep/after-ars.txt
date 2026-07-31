@@ -1,0 +1,78 @@
+ARS Factory Project:
+Move Group Apps:
+  - Sydney Member Shared Services Tools
+  - PSSM-Web Mobile
+  - Anthme Reimagine
+  - Sydney Member APis
+
+Sydney Member Shared Services Tools:
+- Worked for four Apps
+  - SEM-Sydney Exp Manager(react)
+  - MAD-Member Admin UI(Angular)
+  - RCP-Tools UI(Angular)
+  - RCP-Tools Node API(Node Js)
+
+  Code Analysis And changes:
+- Analyse the above four apps and found migration changes needed to be done
+- Collaborate with infra team
+    - Fidning out urls to open fiewall request
+  Handling CI/CD pipelines, Buld and Deployment Failures
+- Debugging build failure
+- Making changes to ci/cd pipeline repo to tekton pipeline changes that includes learning tekton pipeline and modifying code and triigering pipeline build from terminal using kubernetes and tesing
+  Discussion with the app team with right questions
+
+PSSM-Web Mobile
+- Migrated 40 node js micro services
+- Onboarding config server
+- Building and deplying Spring boot cloud config server
+- onboarding, build and deployment of protegrity server
+- Integrating protegrity changes in config server for encryption and decryption of apis
+- finding out features that need to be migrated from aws to azure
+- changes include redis -> AMR, S3 -> Blob Storage, Aws Parameter Store -> Azure Key Vault
+
+devops:
+- 3 Environments:
+  - Silver: For Dev and Test
+  - Gold: For UAT and Pre-Prod
+  - Platinum: For Prod
+- CI/CD pipeline using Tekton
+
+
+
+migrated aws services:
+aws parameter store to azure key Vault
+aws S3 to azure blob Storage
+redis to AMR(Azure Managed Redis)
+aws lambda to azure functions
+
+
+
+As a migration Lead:
+- Review of application analysis document
+- Prepare effort estimation sheet and estimate migration time lines
+- Identify complexity and risks
+- Solution Design
+- Assign Task and Monitor progress
+- Present Migation to status report to Manager and Architech
+- Maintain Migration trackers
+- Update Project Documentation
+
+Happy Path was:
+- Finalize the scope of migration
+- You will get onboarded working micro services(pointing to aws resouces) on EHDS Portal
+- Create appropriate Azure recouces
+- Code changes for targetting azure resources
+- Push code and Apply smoke Test
+- QA Validate
+- Code promotion from sliver to Gold then Platinum
+
+Challenges faced:
+- Expectaion is we ll get onbaorded micro services, But Onboarding was not complete due to kubernetes pod crash issue
+- After reaching out to EHDS team, we found problem is with custom tekton script
+- the onbaorded apps are not working, I had some idea about kubernetes how to debug pods, but that was not eough
+- We have to raise SR for EHDS Team, check how they are debugging
+- Finally after debugging with Argo CD, we found pods are crashing because images are built with wrong s2i script
+- Now Where to find the script, EHDS Team said, someone from App team might know
+- But Before that we raise reach out to App team to get access to ci/cd workflow code repo
+- 
+

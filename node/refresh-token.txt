@@ -1,0 +1,8 @@
+Interview knowledge to lock in
+- Refresh token rotation — single-use tokens; each refresh issues a new one and revokes the old. Minimizes the useful lifetime of a leaked token.
+- Reuse detection — keep revoked rows so a replayed token is a detectable signal of theft; respond by revoking the whole family. This is the industry-standard pattern (OAuth 2.0 BCP recommends it).
+- "Can't tell attacker from victim" — rotation detects that a token was stolen but not who is legitimate, so the safe move is to revoke everything and force re-login. Mention token families / replaced_by chains as a refinement that revokes only the affected lineage.
+- The false-positive tradeoff (nuanced, senior): legitimate concurrent refreshes — two browser tabs, a network retry — can present the same token twice and trip reuse detection unfairly. Real systems mitigate with a short grace window or by keying on the token family. Knowing this edge exists is a standout.
+- Atomic rotation via transaction — revoke + issue must be all-or-nothing (Step 5 callback).
+- Role re-read on refresh — the new access token reflects the current DB role, so privilege changes propagate within one access-token lifetime. This is the practical resolution to "JWTs can't be revoked instantly."
+- Why /refresh isn't behind the access-token guard — the access token is expected to be expired; the cookie is the credential.
