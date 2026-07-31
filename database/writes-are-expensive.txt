@@ -1,0 +1,21 @@
+# Why database writes are expensive?
+Database writes are expensive for several reasons:
+1. Durability Guarantees (fsync)
+When you write data, the database must ensure it survives crashes. This means flushing data from memory to disk — a slow operation since disks (even SSDs) are orders of magnitude slower than RAM.
+2. Write-Ahead Logging (WAL)
+Most databases write to a transaction log before modifying actual data. Every write effectively becomes two writes: one to the log, one to the actual storage. This is necessary for crash recovery and replication.
+3. Random I/O Patterns
+Writes often land in random locations on disk (especially with B-tree indexes), causing expensive random I/O vs. the sequential I/O that reads can often exploit with caching.
+4. Index Maintenance
+Every write must update all relevant indexes, not just the primary data. A table with 5 indexes means 6 structures to update per write, each potentially causing cascading page splits and rebalancing (in B-trees).
+5. MVCC Overhead
+Databases like PostgreSQL use Multi-Version Concurrency Control — writes don't overwrite data in place, they create new versions. Old versions must later be cleaned up (vacuumed), adding background cost.
+6. Locking & Contention
+Writes need exclusive locks on affected rows/pages. Under high concurrency, writers block each other, adding latency and potential deadlocks.
+7. Replication Lag
+In distributed systems, writes must be propagated to replicas — synchronously (slow but consistent) or asynchronously (faster but with lag risk). Either way, the network round-trip adds cost.
+8. Cache Invalidation
+A write dirtifies cache pages. Other queries that cached that data must re-fetch it, adding downstream read cost.
+
+The core tradeoff: reads can often be served from in-memory caches, but writes must eventually touch durable storage to mean anything — and durable storage is slow.
+Common mitigations include write batching, LSM trees (used by Cassandra, RocksDB — converts random writes to sequential), async replication, and connection pooling.

@@ -1,0 +1,6 @@
+NOT NULL	Value cannot be NULL.
+PRIMARY KEY	Uniquely identifies each row (UNIQUE + NOT NULL).
+FOREIGN KEY	Ensures the value exists in another table.
+UNIQUE	Prevents duplicate values.
+CHECK	Enforces a condition on values.
+DEFAULT	Provides a default value if none is specified.
