@@ -1,0 +1,22 @@
+#https://www.youtube.com/watch?v=N5R6NL3UE7I&pp=ygUTdXNldHJhbnNpdGlvbiByZWFjdA%3D%3D
+# useTransition
+
+How automatic batching create Janky user experince?
+Ans: Due to automatic batching feature, react combines all the state updates and do it at once inside an callback handler, Some state updates can have heavy computation. 
+
+import { useTransition } from react.
+
+const [isPending, startTransition] = useTransition();
+
+cosnst searchHandler = (e) => {
+  setState1();
+  setState2();
+  startTransition(async ()=> {
+    const data = await fetchData();
+    setState3();
+  })
+}
+
+transition does not gurrantee order of state updates. use useActionState and debounce
+# Whn to use it.
+Use it when it really needed. by using this, you are actually rendering more ui

@@ -1,0 +1,15 @@
+Write a romot in follwing format.
+Role
+Objective
+Context
+Data
+
+* A prompt for an interview question:
+You are an excellent candidate, senior engineer, You have 15 year of experince,  giving a back interview for nodejs.
+if 10,000 read requests hit your node js server, How would you handle it.
+What is the first solution you will adopt and what are the subsequent steps you will follow.
+
+Will the solution work, if they are write request.
+Asume you are using nodejs, postgrey for current setup.
+
+Provide an answer whichs reflect realistic calculations and realistic assumption.

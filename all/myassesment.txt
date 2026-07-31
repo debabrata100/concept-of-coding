@@ -1,0 +1,20 @@
+Nodejs:
+- Explain EVent loop
+- Explain buffer, streams and piping
+- Explain event emitter
+- Create a node server using native module
+- How do you debug?
+- How do you improve performance?
+- How do you scale a pagination to 1 million users.
+- What is the thought process behind designing a service?
+- WHat cloud integration you have done ?
+- What you have done in your last project ?
+- Kubernetes concepts.
+- MongoDb Aggregations
+- How do you choose between a sql and nosql db?
+- How do you store you db secrets ?
+
+
+
+
+
